@@ -1,10 +1,13 @@
 import './App.css';
+import { BrowserRouter as Router, Route} from "react-router-dom";
+import ListarVentas from './components/ListarVentas';
+
 
 function App() {
   return (
-    <div className="">
-      <h1>Hola mundo!</h1>
-    </div>
+    <Router>
+      <Route path="/" exact component={ListarVentas} />
+    </Router>
   );
 }
 

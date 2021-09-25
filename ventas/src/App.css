@@ -1,0 +1,47 @@
+h1{
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #154360;
+    padding: 2%;
+}
+
+*{box-sizing:border-box;}
+
+form{
+    padding:5%;
+    background-color: #D4E6F1;
+    width: 1000px;
+    margin:auto;
+    border-radius: 10px;
+}
+
+form input{
+    width:200px;
+	font-weight:bold;
+	display:inline-block;
+    border-radius: 8px;
+    padding: 1%;
+}
+
+.buttonIco{
+    padding: 9px 20px;
+    background-color: #2471A3;
+    border-radius: 8%;
+    cursor: pointer;
+}
+
+.button1{
+    cursor: pointer;
+    background-color: #2471A3;
+    border-radius: 8%;
+    padding: 10px 60px;
+}
+
+.right{
+    float: right;
+}
+
+form table{
+    text-align: center;
+}
+
