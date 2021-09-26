@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from "react-router-dom"
 
 const ListarVentas = () => {
     return (
@@ -6,7 +7,7 @@ const ListarVentas = () => {
             <h1>GESTIÓN DE VENTAS</h1>
 
                 <form>
-                    <input type ="text" name="buscar" id="buscar" placeholder="buscar"/>
+                    <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
                     <button class="buttonIco" type="submit"><i class="fas fa-search"></i></button>
                     <button class="button1 right" type="submit" name="nuevaventa">Nueva Venta</button>
                     <br></br><br></br><br></br><br></br>
@@ -25,8 +26,12 @@ const ListarVentas = () => {
                                 <td>15</td>
                                 <td>100</td>
                                 <td>
-                                    <button class="buttonIco" type="submit"><i class="fas fa-search"></i>
-                                    </button><button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
+                                    <Link to="/ActualizarVenta">
+                                        <button class="buttonIco">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </Link>
+                                    <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
                                 </td>
                             </tr>
                             <tr>
@@ -49,7 +54,7 @@ const ListarVentas = () => {
                             </tr>
                         </tbody>
                     </table>
-                </form>
+                </form>                
         </div>
     )
 }

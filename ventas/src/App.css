@@ -15,12 +15,14 @@ form{
     border-radius: 10px;
 }
 
-form input{
-    width:200px;
+form input label{
+    width:300px;
 	font-weight:bold;
 	display:inline-block;
     border-radius: 8px;
     padding: 1%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
 }
 
 .buttonIco{
@@ -41,7 +43,17 @@ form input{
     float: right;
 }
 
+.center{
+    text-align: center;
+}
+
 form table{
     text-align: center;
 }
 
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    list-style: none;
+}
