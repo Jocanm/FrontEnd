@@ -15,14 +15,29 @@ form{
     border-radius: 10px;
 }
 
-form input label{
-    width:300px;
+form input{
+    width:200px;
 	font-weight:bold;
 	display:inline-block;
     border-radius: 8px;
     padding: 1%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+form label{
+    width:200px;
+	font-weight:bold;
+	display:inline-block;
+    border-radius: 8px;
+    padding: 1%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+form select{
+    border-radius: 8px;
+    width: 100px;
+    font-weight:bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 .buttonIco{
@@ -56,4 +71,36 @@ form table{
     justify-content: space-between;
     padding: 10px;
     list-style: none;
+}
+
+a{
+    outline: none;
+    text-decoration: none;
+    color:black;
+}
+
+
+.header{
+	background:url(images/1.jpg) no-repeat center center fixed;
+	background-size:cover;
+	height:80px;
+	width: 100%;
+	position: absolute;
+	left:0;
+	top:0;
+}
+
+.footer{
+   text-align: center;
+   background-color: #D4E6F1;
+   height:80px;
+	width: 100%;
+    position: absolute;
+}
+
+.img{
+    width: 10%;
+    float: left;
+    vertical-align: auto;
+    margin-top: -2%;
 }

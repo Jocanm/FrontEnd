@@ -1,13 +1,12 @@
 import React from 'react'
 
-const ActualizarVenta = () => {
+const CrearVenta = () => {
     return (
         <div>
-            <h1>ACTUALIZAR VENTA</h1>
-
+            <h1>CREAR VENTA</h1>
+            
             <form>
-                <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>                  
-
+                <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>             
                 <br></br><br></br><br></br>
                 <div>
                     <div>
@@ -68,25 +67,9 @@ const ActualizarVenta = () => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>001</td>
-                                <td>Ratón</td>
-                                <td>3</td>
-                                <td>
-                                    <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>002</td>
-                                <td>Teclado</td>
-                                <td>1</td>
-                                <td>
-                                    <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>003</td>
-                                <td>Pantalla</td>
-                                <td>1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
                                 </td>
@@ -109,9 +92,14 @@ const ActualizarVenta = () => {
                     </div>
 
                 </div>
+
+                
             </form>
+
+            
+
         </div>
     )
 }
 
-export default ActualizarVenta
+export default CrearVenta

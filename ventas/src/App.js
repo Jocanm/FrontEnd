@@ -3,12 +3,14 @@ import React from "react";
 import { BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import ListarVentas from './components/ListarVentas';
 import ActualizarVenta from './components/ActualizarVenta';
+import CrearVenta from './components/CrearVenta';
 
     function App() {
       return (
         <div>
           <div>
-            <h1>Aquí va el encabezado</h1>
+            <h1 class="header"><img src="logo.png" class="img"/></h1>
+            <br></br><br></br><br></br><br></br>
           </div>
 
           <div>
@@ -16,11 +18,16 @@ import ActualizarVenta from './components/ActualizarVenta';
               <Switch>
                   <Route exact path="/" component={ListarVentas} />
                   <Route path="/ActualizarVenta" component={ActualizarVenta}/>
+                  <Route path="/CrearVenta" component={CrearVenta}/>
               </Switch>
             </BrowserRouter>
           </div>
           <div>
-            <h1>Aquí va el Pie de Página</h1>
+            <br></br><br></br><br></br><br></br>
+            <h7 class="footer"> 
+              <p>©2021 Derechos reservados</p>
+              <p>info@innovasoft.com</p>
+            </h7>
           </div>
         </div>
         
