@@ -1,11 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 const CrearVenta = () => {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Agregar productos</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                
+                <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+                <br></br><br></br>
+                <table class="table" id="tabla">
+                        <thead>
+                                <tr>
+                                    <th>ID Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Stock</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P001</td>
+                                <td>Ratón</td>
+                                <td>5</td>
+                                <td>
+                                    <input class="inputModal"></input>
+                                    <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P002</td>
+                                <td>Teclado</td>
+                                <td>10</td>
+                                <td>
+                                    <input class="inputModal"></input>
+                                    <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P003</td>
+                                <td>Pantalla</td>
+                                <td>15</td>
+                                <td>
+                                    <input class="inputModal"></input>
+                                    <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cerrar
+                    </Button>
+                    <Button class="button1" variant="primary" onClick={handleClose}>
+                        Guardar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <h1>CREAR VENTA</h1>
-            
             <form>
+
                 <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>             
                 <br></br><br></br><br></br>
                 <div>
@@ -76,8 +140,10 @@ const CrearVenta = () => {
                             </tr>
                             <tr>
                             <td></td>
-                            <td>
-                                <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                            <td>                                
+                                <Button class="buttonIco" variant="primary" onClick={handleShow}>
+                                    <i class="fas fa-plus"></i>
+                                </Button>
                             </td>
                             <td>Valor Total</td>
                             <td>$000000</td>
