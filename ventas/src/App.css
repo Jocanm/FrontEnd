@@ -1,3 +1,70 @@
+.content-select select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.content-input input,
+.content-select select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.content-select select::-ms-expand {
+    display: none;
+}
+
+.content-select{
+	max-width: 250px;
+	position: relative;
+}
+ 
+.content-select select{
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+    padding: 5px 10px;
+    height: 42px;
+    outline: 0; 
+    border: 0;
+	border-radius: 0;
+	background: white;
+	color: black;
+	font-size: 1em;
+	color: #999;
+	font-family: 
+	'Quicksand', sans-serif;
+	border:2px solid rgba(0,0,0,0.2);
+	border:2px solid black;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+
+/* 
+Creamos la fecha que aparece a la izquierda del select.
+Realmente este elemento es un cuadrado que sólo tienen
+dos bordes con color y que giramos con transform: rotate(-45deg);
+*/
+.content-select i{
+	position: absolute;
+	right: 20px;
+	top: calc(50% - 13px);
+	width: 16px;
+	height: 16px;
+	display: block;
+	border-left:4px solid #2AC176;
+	border-bottom:4px solid #2AC176;
+	transform: rotate(-45deg); /* Giramos el cuadrado */
+	transition: all 0.25s ease;
+}
+
+.content-select:hover i{
+	margin-top: 3px;
+}
+
 h1{
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -11,6 +78,14 @@ form{
     padding:5%;
     background-color: #D4E6F1;
     width: 1000px;
+    margin:auto;
+    border-radius: 10px;
+}
+
+.form-usuarios{
+    padding:5%;
+    background-color: #D4E6F1;
+    width: 40%;
     margin:auto;
     border-radius: 10px;
 }
@@ -68,6 +143,14 @@ form select{
     float: right;
 }
 
+.boton-usuario{
+    cursor: pointer;
+    background-color: #2471A3;
+    border-radius: 8%;
+    padding: 10px 60px;
+    text-align: center;
+}
+
 .center{
     text-align: center;
 }
@@ -81,6 +164,19 @@ form table{
     justify-content: space-between;
     padding: 10px;
     list-style: none;
+}
+
+
+.navbar-usuarios{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    margin-top: 10px;
+    list-style: none;
+}
+
+.navbar-usuarios > li{
+    margin: 0px;
 }
 
 a{

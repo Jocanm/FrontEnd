@@ -3,8 +3,7 @@ import { Link } from "react-router-dom"
 
 const ListarUsuarios = () => {
     return (
-        <div>
-
+        <>
             <h1>GESTIÓN DE USUARIOS</h1>
             <form>
                 <input
@@ -90,7 +89,7 @@ const ListarUsuarios = () => {
                     </tbody>
                 </table>
             </form>
-        </div>
+        </>
     );
 };
 
