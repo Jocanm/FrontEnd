@@ -56,6 +56,13 @@ form select{
     cursor: pointer;
 }
 
+.button{
+    cursor: pointer;
+    background-color: #2471A3;
+    border-radius: 20px;
+    padding: 50px 100px;
+}
+
 .button1{
     cursor: pointer;
     background-color: #2471A3;
@@ -73,6 +80,15 @@ form select{
 
 form table{
     text-align: center;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 35px;
+    list-style: none;
+    align-items: center;
+    flex-direction: row;
 }
 
 .navbar{

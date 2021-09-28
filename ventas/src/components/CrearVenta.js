@@ -92,7 +92,7 @@ const CrearVenta = () => {
                     <div>
                         <ul class="navbar">
                                 <li>
-                                    <p><label>Id Venta</label></p>
+                                    <p><input type ="text" name="idventa" id="idventa" placeholder="Id Venta"/></p>
                                     <p>
                                         <label>Fecha de la compra: </label>
                                         <input type ="date" name="fechaventa" id="fechav"/>
