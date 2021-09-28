@@ -1,12 +1,12 @@
 import './App.css';
 import React from "react";
 import { BrowserRouter, Switch, Route, Link} from "react-router-dom";
-import ListarVentas from './components/ListarVentas';
+import CrearProducto from './components/CrearProducto';
 import ActualizarVenta from './components/ActualizarVenta';
 import CrearVenta from './components/CrearVenta';
 
     function App() {
-      return (
+            return (
         <div>
           <div>
             <h1 class="header"><img src="logo.png" class="img"/></h1>
@@ -16,7 +16,7 @@ import CrearVenta from './components/CrearVenta';
           <div>
             <BrowserRouter>
               <Switch>
-                  <Route exact path="/" component={ListarVentas} />
+                  <Route exact path="/" component={CrearProducto} />
                   <Route path="/ActualizarVenta" component={ActualizarVenta}/>
                   <Route path="/CrearVenta" component={CrearVenta}/>
               </Switch>
