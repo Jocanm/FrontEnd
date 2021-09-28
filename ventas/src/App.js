@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import ListarVentas from './components/ListarVentas';
 import ActualizarVenta from './components/ActualizarVenta';
 import CrearVenta from './components/CrearVenta';
+import ListarUsuarios from './components/ListarUsuarios';
 
     function App() {
       return (
@@ -19,6 +20,7 @@ import CrearVenta from './components/CrearVenta';
                   <Route exact path="/" component={ListarVentas} />
                   <Route path="/ActualizarVenta" component={ActualizarVenta}/>
                   <Route path="/CrearVenta" component={CrearVenta}/>
+                  <Route path="/ListaUsuarios" component={ListarUsuarios}></Route>
               </Switch>
             </BrowserRouter>
           </div>
