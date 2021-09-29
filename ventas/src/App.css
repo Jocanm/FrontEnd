@@ -131,6 +131,15 @@ form select{
     cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+.button{
+    cursor: pointer;
+    background-color: #2471A3;
+    border-radius: 20px;
+    padding: 50px 100px;
+}
+>>>>>>> Sp2.CrearVenta
 
 .button1{
     cursor: pointer;
@@ -157,6 +166,15 @@ form select{
 
 form table{
     text-align: center;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 35px;
+    list-style: none;
+    align-items: center;
+    flex-direction: row;
 }
 
 .navbar{
