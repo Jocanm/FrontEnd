@@ -7,9 +7,12 @@ import ActualizarVenta from './components/ActualizarVenta';
 import CrearVenta from './components/CrearVenta';
 import ListarUsuarios from './components/ListarUsuarios';
 import ActualizarUsuario from './components/ActualizarUsuario';
+import CrearProducto from './components/CrearProducto';
+import ListarProductos from './components/ListarProductos';
+import ActualizarProducto from './components/ActualizarProducto';
 
     function App() {
-      return (
+            return (
         <div>
           <div>
             <h1 class="header"><img src="logo.png" class="img" alt="Logo"/></h1>
@@ -26,6 +29,9 @@ import ActualizarUsuario from './components/ActualizarUsuario';
                   <Route path="/CrearVenta" component={CrearVenta}/>
                   <Route path="/ListaUsuarios" component={ListarUsuarios}></Route>
                   <Route path="/ActualizarUsuario" component={ActualizarUsuario}></Route>
+                  <Route path="/CrearProducto" component={CrearProducto}/>
+                  <Route path="/ActualizarProducto" component={ActualizarProducto}/>
+                  <Route path='/ListarProductos' component={ListarProductos}></Route>
               </Switch>
             </BrowserRouter>
             </div>
