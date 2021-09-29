@@ -1,113 +1,114 @@
-h1{
+h1 {
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #154360;
     padding: 2%;
 }
 
-*{box-sizing:border-box;}
+* {
+    box-sizing: border-box;
+}
 
-form{
-    padding:5%;
+form {
+    padding: 5%;
     background-color: #D4E6F1;
     width: 1000px;
-    margin:auto;
+    margin: auto;
     border-radius: 10px;
 }
 
-form input{
-    width:200px;
-	font-weight:bold;
-	display:inline-block;
+form input {
+    width: 200px;
+    font-weight: bold;
+    display: inline-block;
     border-radius: 8px;
     padding: 1%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-.inputModal{
-    width:60px;
-	font-weight:bold;
-	display:inline-block;
+.inputModal {
+    width: 60px;
+    font-weight: bold;
+    display: inline-block;
     border-radius: 8px;
     padding: 4%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-form label{
-    width:200px;
-	font-weight:bold;
-	display:inline-block;
+form label {
+    width: 200px;
+    font-weight: bold;
+    display: inline-block;
     border-radius: 8px;
     padding: 1%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-form select{
+form select {
     border-radius: 8px;
     width: 100px;
-    font-weight:bold;
+    font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-.buttonIco{
+.buttonIco {
     padding: 9px 20px;
     background-color: #2471A3;
     border-radius: 8%;
     cursor: pointer;
 }
 
-.button1{
+.button1 {
     cursor: pointer;
     background-color: #2471A3;
     border-radius: 8%;
     padding: 10px 60px;
 }
 
-.right{
+.right {
     float: right;
 }
 
-.center{
+.center {
     text-align: center;
 }
 
-form table{
+form table {
     text-align: center;
 }
 
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     list-style: none;
 }
 
-a{
+a {
     outline: none;
     text-decoration: none;
-    color:black;
+    color: black;
 }
 
-
-.header{
-	background:url(images/1.jpg) no-repeat center center fixed;
-	background-size:cover;
-	height:80px;
-	width: 100%;
-	position: absolute;
-	left:0;
-	top:0;
+.header {
+    background: url(images/1.jpg) no-repeat center center fixed;
+    background-size: cover;
+    height: 80px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
-.footer{
-   text-align: center;
-   background-color: #D4E6F1;
-   height:80px;
-	width: 100%;
+.footer {
+    text-align: center;
+    background-color: #D4E6F1;
+    height: 80px;
+    width: 100%;
     position: absolute;
 }
 
-.img{
+.img {
     width: 10%;
     float: left;
     vertical-align: auto;

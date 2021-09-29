@@ -13,7 +13,11 @@ const CrearProducto = () => {
                     <div>
                         <ul class="navbar">
                             <li>
-                                <p><input type="file" name="imagen" value="" /></p>
+                            <label for="file-upload" class="subir">
+                                <i class="fas fa-cloud-upload-alt"></i> Subir archivo
+                                    </label>
+                                    <input id="file-upload" onchange='cambiar()' type="file" />
+                                    <div id="info"></div>
                              </li>
                 
                             <li>

@@ -2,8 +2,8 @@ import './App.css';
 import React from "react";
 import { BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import CrearProducto from './components/CrearProducto';
-import ActualizarVenta from './components/ActualizarVenta';
-import CrearVenta from './components/CrearVenta';
+import ListarProductos from './components/ListarProductos';
+import ActualizarProducto from './components/ActualizarProducto';
 
     function App() {
             return (
@@ -16,9 +16,9 @@ import CrearVenta from './components/CrearVenta';
           <div>
             <BrowserRouter>
               <Switch>
-                  <Route exact path="/" component={CrearProducto} />
-                  <Route path="/ActualizarVenta" component={ActualizarVenta}/>
-                  <Route path="/CrearVenta" component={CrearVenta}/>
+                  <Route exact path="/" component={ListarProductos} />
+                  <Route path="/CrearProducto" component={CrearProducto}/>
+                  <Route path="/ActualizarProducto" component={ActualizarProducto}/>
               </Switch>
             </BrowserRouter>
           </div>

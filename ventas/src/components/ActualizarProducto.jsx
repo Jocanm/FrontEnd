@@ -13,11 +13,15 @@ const ActualizarProducto = () => {
                     <div>
                         <ul class="navbar">
                             <li>
-                                <p><input type="file" name="imagen" value="" /></p>
-                             </li>
-                
+                                <label for="file-upload" class="subir">
+                                <i class="fas fa-cloud-upload-alt"></i> Subir archivo
+                                    </label>
+                                    <input id="file-upload" onchange='cambiar()' type="file" />
+                                    <div id="info"></div>
+                            </li>   
+
                             <li>
-                                <p><label type ="text" name="Id_Producto" id="Id_Producto" placeholder="Id Produto"/></p>
+                                <p><label >Id Producto</label></p>
                                 <p><input type ="text" name="Descripcion" id="Descripcion" placeholder="Descripcion"/></p>
                                 <p><input type ="text" name="Valor_Unitario" id="Valor_Unitario" placeholder="Valor unitario"/></p>
                                 <p>
