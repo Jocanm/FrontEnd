@@ -46,6 +46,9 @@ const ListarUsuarios = () => {
                 <button class="buttonIco" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
+                <Link to="/">
+                        <button class="buttonIco right botonuser"><i class="fas fa-home"></i></button>
+                </Link>
                 <br></br><br></br><br></br><br></br>
 
                 <table class="table" id="tabla">

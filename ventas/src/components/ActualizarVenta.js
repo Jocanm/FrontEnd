@@ -107,6 +107,7 @@ const ActualizarVenta = () => {
                                 <li>
                                     <p>
                                         <label>Estado de la venta:</label>
+                                        <div className='content-select'>
                                         <select id="sel1" name="sel1">
                                             <option value="11" selected>Creada</option>
                                             <option value="22" >Embalaje</option>
@@ -115,6 +116,7 @@ const ActualizarVenta = () => {
                                             <option value="55">Ubicación</option>
                                             <option value="66">Recepción</option>
                                         </select>
+                                        </div>
                                     <p/>
                                     </p>
                                 </li>

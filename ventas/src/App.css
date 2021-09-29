@@ -1,3 +1,7 @@
+.botonuser{
+    margin-right: 1.5%;
+}
+
 .content-select select{
 	appearance: none;
 	-webkit-appearance: none;
@@ -131,15 +135,12 @@ form select{
     cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
 .button{
     cursor: pointer;
     background-color: #2471A3;
     border-radius: 20px;
     padding: 50px 100px;
 }
->>>>>>> Sp2.CrearVenta
 
 .button1{
     cursor: pointer;

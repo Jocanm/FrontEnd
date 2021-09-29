@@ -13,7 +13,9 @@ const Escritorio = () => {
                 <Link to="/ListarVentas">
                     <button class="button" type="submit" name="gventa"><h3>GESTIÓN DE VENTAS</h3></button>
                 </Link></li>
-                <li><button class="button" type="submit" name="gusuarios"><h3>GESTIÓN DE USUARIOS</h3></button></li>
+                <Link to='/ListaUsuarios'>
+                    <li><button class="button" type="submit" name="gusuarios"><h3>GESTIÓN DE USUARIOS</h3></button></li>
+                </Link>
             </ul>
             <br></br><br></br><br></br><br></br>
         </div>
