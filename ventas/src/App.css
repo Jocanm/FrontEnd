@@ -58,6 +58,10 @@ form select {
     cursor: pointer;
 }
 
+.botonprodutos {
+    margin-right: 1.5%;
+}
+
 .button1 {
     cursor: pointer;
     background-color: #2471A3;

@@ -8,6 +8,10 @@ const ListarProductos = () => {
             <h1>GESTIÓN DE PRODUCTOS</h1>
 
                 <form>
+                    <Link to="/">
+                        <button class="buttonIco right"><i class="fas fa-home"></i></button> 
+                    </Link><br /><br /><br />
+
                     <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
                     <button class="buttonIco" type="submit"><i class="fas fa-search"></i></button>
                     <Link to="/CrearProducto">
