@@ -8,7 +8,9 @@ const ListarVentas = () => {
             <h1>GESTIÓN DE VENTAS</h1>
 
                 <form>
-                    <button class="buttonIco right"><a href="javascript: history.go(-1)" >Home</a></button>
+                    <Link to="/">
+                        <button class="buttonIco right"><i class="fas fa-home"></i></button>
+                    </Link>
                     <br></br><br></br><br></br><br></br>
 
                     <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>

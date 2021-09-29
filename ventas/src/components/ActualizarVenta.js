@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {Link} from "react-router-dom"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -6,6 +7,9 @@ const ActualizarVenta = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const guardado = (e) =>{
+        alert("La venta ha sido actualizada")
+    }
 
     return (
         <div>
@@ -70,16 +74,18 @@ const ActualizarVenta = () => {
             <h1>ACTUALIZAR VENTA</h1>
 
             <form>
-                <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>                  
+                <Link to="/ListarVentas">
+                    <button class="buttonIco right"><i class="fas fa-arrow-left"></i></button> 
+                </Link>                 
 
                 <br></br><br></br><br></br>
                 <div>
                     <div>
                         <ul class="navbar">
                             <li>
+                                <p><label>Id Venta</label></p>
                                 <p><input type ="text" name="nombreencargado" id="nombree" placeholder="nombre del encargado"/></p>
-                                <p><input type ="text" name="correoencargado" id="correoe" placeholder="correo@innovasoft.com"/></p>
-                                <p><input type ="text" name="idencargado" id="idencargado" placeholder="Id Encargado"/></p>
+                                <p><br></br></p>
                             </li>
                 
                             <li>
@@ -93,13 +99,8 @@ const ActualizarVenta = () => {
                     <div>
                         <ul class="navbar">
                                 <li>
-                                    <p><label>Id Venta</label></p>
                                     <p>
-                                        <label>Fecha de la compra: </label>
-                                        <input type ="date" name="fechaventa" id="fechav"/>
-                                    </p>
-                                    <p>
-                                        <label>Fecha de pago: </label>
+                                        <label>Fecha de venta: </label>
                                         <input type ="date" name="fechaventa" id="fechav"/>
                                     </p>
                                 </li>
@@ -108,12 +109,9 @@ const ActualizarVenta = () => {
                                     <p>
                                         <label>Estado de la venta:</label>
                                         <select id="sel1" name="sel1">
-                                            <option value="11" selected>Creada</option>
-                                            <option value="22" >Embalaje</option>
-                                            <option value="33">Despachada</option>
-                                            <option value="44">Ruta</option>
-                                            <option value="55">Ubicación</option>
-                                            <option value="66">Recepción</option>
+                                            <option value="11" selected>En proceso</option>
+                                            <option value="22" >Cancelada</option>
+                                            <option value="33">Entregada</option>
                                         </select>
                                     <p/>
                                     </p>
@@ -127,6 +125,7 @@ const ActualizarVenta = () => {
                                 <tr>
                                     <th>Id Producto</th>
                                     <th>Descripción</th>
+                                    <th>Precio Unitario</th>
                                     <th>Cantidad</th>
                                 </tr>
                         </thead>
@@ -134,6 +133,7 @@ const ActualizarVenta = () => {
                             <tr>
                                 <td>001</td>
                                 <td>Ratón</td>
+                                <td>$10000</td>
                                 <td>3</td>
                                 <td>
                                     <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
@@ -142,6 +142,7 @@ const ActualizarVenta = () => {
                             <tr>
                                 <td>002</td>
                                 <td>Teclado</td>
+                                <td>$10000</td>
                                 <td>1</td>
                                 <td>
                                     <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
@@ -150,12 +151,14 @@ const ActualizarVenta = () => {
                             <tr>
                                 <td>003</td>
                                 <td>Pantalla</td>
+                                <td>$10000</td>
                                 <td>1</td>
                                 <td>
                                     <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
                                 </td>
                             </tr>
                             <tr>
+                            <td></td>
                             <td></td>
                             <td>
                                 <Button class="buttonIco" variant="primary" onClick={handleShow}>
@@ -171,7 +174,7 @@ const ActualizarVenta = () => {
                     </div>
                     <div class="center">
                         <br></br><br></br><br></br>
-                        <button class="button1" type="submit" name="guardarventa">Guardar</button>
+                        <button class="button1" type="submit" name="guardarventa" onClick={guardado}>Guardar</button>
                     </div>
 
                 </div>
