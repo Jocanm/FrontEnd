@@ -22,7 +22,6 @@ const ActualizarProducto = () => {
                                     <input id="file-upload" onchange='cambiar()' type="file" />
                                     <div id="info"></div>
                             </li>   
-
                             <li>
                                 <p><label >Id Producto</label></p>
                                 <p><input type ="text" name="Descripcion" id="Descripcion" placeholder="Descripcion"/></p>
