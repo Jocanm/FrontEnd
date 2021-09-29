@@ -10,6 +10,11 @@ const UserInfo = ({ usuarios }) => {
     return (
         <>
             {lista.map((e,i) => {
+                // const handleUserInfo = (e) =>{
+                //     return (
+                //         <ActualizarUsuario></ActualizarUsuario>
+                //     )
+                // }
                 return (
                     <tr>
                         <td>{e.id}</td>

@@ -28,10 +28,10 @@ import ActualizarUsuario from './components/ActualizarUsuario';
           </div>
           <div>
             <br></br><br></br><br></br><br></br>
-            <h7 class="footer"> 
+            <h6 class="footer"> 
               <p>©2021 Derechos reservados</p>
               <p>info@innovasoft.com</p>
-            </h7>
+            </h6>
           </div>
         </div>
         

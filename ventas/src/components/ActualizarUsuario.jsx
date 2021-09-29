@@ -26,18 +26,18 @@ const ActualizarUsuario = ({indice}) => {
                         <ul className="navbar-usuarios">
                             <li>
                                 <p>
-                                    <input type="text" name="idencargado" id="idencargado" placeholder="ID usuario" disabled/>
+                                    <input type="text" name="idencargado" id="idencargado" placeholder={usuarios[0].id} disabled/>
                                 </p>
                                 <p>
-                                    <input type="text" name="nombreencargado" id="nombree" placeholder="Nombre usuario" />
+                                    <input type="text" name="nombreencargado" id="nombree" placeholder={usuarios[0].nombre} />
                                 </p>
                                 <p>
-                                    <input type="email" name="correoencargado" id="correoe" placeholder="correo@innovasoft.com" />
+                                    <input type="email" name="correoencargado" id="correoe" placeholder={usuarios[0].email} />
                                 </p>
                                 <p>
                                     <div className='content-select'>
                                         <select name="selEstado" id="selEstado">
-                                            <option value="1">Pendiente</option>
+                                            <option value="1">{usuarios[0].estado}</option>
                                             <option value="2">Autorizado</option>
                                             <option value="3">No autorizado</option>
                                             <i></i>
@@ -47,7 +47,7 @@ const ActualizarUsuario = ({indice}) => {
                                 <p>
                                 <div className='content-select'>
                                         <select name="selRol" id="selRol">
-                                            <option value="1">Administrador</option>
+                                            <option value="1">{usuarios[0].rol}</option>
                                             <option value="2">Vendedor</option>
                                             <i></i>
                                         </select>
