@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ActualizarProducto = () => {
 
@@ -7,7 +8,9 @@ const ActualizarProducto = () => {
             <h1>ACTUALIZAR PRODUCTO</h1>
             <form>
 
-                <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>             
+                <Link to='/ListarProductos'>
+                    <button class="button1 right">Atras</button>             
+                </Link>           
                 <br></br><br></br><br></br>
                 <div>
                     <div>

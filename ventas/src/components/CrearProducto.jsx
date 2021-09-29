@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CrearProducto = () => {
 
@@ -7,7 +8,9 @@ const CrearProducto = () => {
             <h1>CREAR PRODUCTO</h1>
             <form>
 
-                <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>             
+                <Link to='/ListarProductos'>
+                    <button class="button1 right">Atras</button>             
+                </Link>
                 <br></br><br></br><br></br>
                 <div>
                     <div>
@@ -18,7 +21,7 @@ const CrearProducto = () => {
                                     </label>
                                     <input id="file-upload" onchange='cambiar()' type="file" />
                                     <div id="info"></div>
-                             </li>
+                            </li>
                 
                             <li>
                                 <p><input type ="text" name="Id_Producto" id="Id_Producto" placeholder="Id Produto"/></p>
