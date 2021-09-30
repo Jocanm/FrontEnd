@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom'
 
 const ActualizarVenta = () => {
     const [show, setShow] = useState(false);
@@ -70,7 +71,9 @@ const ActualizarVenta = () => {
         <h1>ACTUALIZAR VENTA</h1>
 
         <form>
-            <button class="button1 right"><a href="javascript: history.go(-1)">Atrás</a></button>                  
+            <Link to="/ListarVentas">
+                <button class="button1 right">Atras</button> 
+            </Link>                
 
             <br></br><br></br><br></br>
             <div>
