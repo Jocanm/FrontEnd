@@ -3,28 +3,25 @@ import {Link} from "react-router-dom"
 
 const Escritorio = () => {
     return (
-        <div>
-            <br></br><br></br><br></br><br></br>
-            <h1>SISTEMA ADMINISTRADOR DE VENTAS</h1>
-            <br></br><br></br><br></br><br></br>
-            <ul class="menu">
+        <div className="mt-28">
+            <h1 className="font-bold text-2xl">SISTEMA ADMINISTRADOR DE VENTAS</h1>
+            <ul className="flex justify-around items-center mt-10">
                 <li>
                 <Link to='/ListarProductos'>
-                    <button class="button" type="submit" name="gproductos"><h3>GESTIÓN DE PRODUCTOS</h3></button>
+                    <button className="button px-10 " type="submit" name="gproductos"><h3>GESTIÓN DE PRODUCTOS</h3></button>
                 </Link>
                 </li>
                 <li>
                 <Link to="/ListarVentas">
-                    <button class="button" type="submit" name="gventa"><h3>GESTIÓN DE VENTAS</h3></button>
+                    <button className="button px-10" type="submit" name="gventa"><h3>GESTIÓN DE VENTAS</h3></button>
                 </Link>
                 </li>
                 <li>
                 <Link to='/ListaUsuarios'>
-                    <button class="button" type="submit" name="gusuarios"><h3>GESTIÓN DE USUARIOS</h3></button>
+                    <button className="button px-10" type="submit" name="gusuarios"><h3>GESTIÓN DE USUARIOS</h3></button>
                 </Link>    
                 </li>
             </ul>
-            <br></br><br></br><br></br><br></br>
         </div>
     )
 }
