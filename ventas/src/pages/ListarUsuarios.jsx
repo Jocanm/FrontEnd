@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"
 import { useState } from "react";
-import UserInfo from "../A_real_components/UserInfo";
+import UserInfo from "../components/UserInfo";
 import usuarios from "../data/users";
 
 const ListarUsuarios = () => {

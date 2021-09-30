@@ -1,15 +1,15 @@
 import './App.css';
 import React from "react";
 import { BrowserRouter, Switch, Route} from "react-router-dom";
-import Escritorio from './components/Escritorio';
-import ListarVentas from './components/ListarVentas';
-import ActualizarVenta from './components/ActualizarVenta';
-import CrearVenta from './components/CrearVenta';
-import ListarUsuarios from './components/ListarUsuarios';
-import ActualizarUsuario from './components/ActualizarUsuario';
-import CrearProducto from './components/CrearProducto';
-import ListarProductos from './components/ListarProductos';
-import ActualizarProducto from './components/ActualizarProducto';
+import Escritorio from './pages/Escritorio';
+import ListarVentas from './pages/ListarVentas';
+import ActualizarVenta from './pages/ActualizarVenta';
+import CrearVenta from './pages/CrearVenta';
+import ListarUsuarios from './pages/ListarUsuarios';
+import ActualizarUsuario from './pages/ActualizarUsuario';
+import CrearProducto from './pages/CrearProducto';
+import ListarProductos from './pages/ListarProductos';
+import ActualizarProducto from './pages/ActualizarProducto';
 
     function App() {
             return (
