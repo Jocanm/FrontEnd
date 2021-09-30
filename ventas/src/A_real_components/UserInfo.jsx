@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import ActualizarUsuario from '../components/ActualizarUsuario';
+import ActualizarUsuario from './ActualizarUsuario';
 
 const UserInfo = ({ usuarios }) => {
 
