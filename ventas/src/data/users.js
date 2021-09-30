@@ -19,18 +19,6 @@ const usuarios = [
         email:"jonathan@innovasoft.com"
     },
     {
-        nombre:'Jonathan Osorio',
-        id:'1001857162',
-        estado:'Pendiente',
-        email:"jonathan@innovasoft.com"
-    },
-    {
-        nombre:'Jonathan Osorio',
-        id:'1001857162',
-        estado:'Pendiente',
-        email:"jonathan@innovasoft.com"
-    },
-    {
         nombre:"Jorge Perez",
         id:"1005675453",
         estado:"Autorizado",

@@ -1,6 +1,4 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import profile from '../images/profile_picture.jpg'
 import { Link } from 'react-router-dom'
 import usuarios from '../data/users'
 
@@ -13,56 +11,50 @@ const ActualizarUsuario = ({indice}) => {
         <>
             <h1>ACTUALIZAR DATOS DEL USUARIO</h1>
 
-            <form className='form-usuarios'>
-                <div className='center'>
-                    <Link to='/ListaUsuarios'>
-                        <button className="boton-usuario">Atras</button>
-                    </Link>
-                </div>
+            <form className='w-96 h-auto'>
 
-                <br></br><br></br>
-                <div>
-                    <div>
-                        <ul className="navbar-usuarios">
-                            <li>
-                                <p>
-                                    <input type="text" name="idencargado" id="idencargado" placeholder={usuarios[0].id} disabled/>
-                                </p>
-                                <p>
-                                    <input type="text" name="nombreencargado" id="nombree" placeholder={usuarios[0].nombre} />
-                                </p>
-                                <p>
-                                    <input type="email" name="correoencargado" id="correoe" placeholder={usuarios[0].email} />
-                                </p>
-                                <p>
-                                    <div className='content-select'>
-                                        <select name="selEstado" id="selEstado">
-                                            <option value="1">{usuarios[0].estado}</option>
-                                            <option value="2">Autorizado</option>
-                                            <option value="3">No autorizado</option>
-                                            <i></i>
-                                        </select>
-                                    </div>
-                                </p>
-                                <p>
-                                <div className='content-select'>
-                                        <select name="selRol" id="selRol">
-                                            <option value="1">{usuarios[0].rol}</option>
-                                            <option value="2">Vendedor</option>
-                                            <i></i>
-                                        </select>
-                                    </div>
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="center">
-                        <br></br><br></br><br></br>
+                <ul className="lista-usuarios flex flex-col items-center justify-center">
+
+                    <li className="mb-2">
+                        <Link to='/ListaUsuarios'>
+                            <button className="boton-usuario">Atras</button>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <input type="text" name="idencargado" id="idencargado" placeholder={usuarios[0].id} disabled/>
+                    </li>
+                    <li>
+                        <input type="text" name="nombreencargado" id="nombree" placeholder={usuarios[0].nombre} />
+                    </li>
+                    <li>
+                    <input type="email" name="correoencargado" id="correoe" placeholder={usuarios[0].email} />
+                    </li>
+                    <li>
+                        <div className="content-select">
+                        <select className="w-52" name="" id="">
+                            <option value="1">Pendiente</option>
+                            <option value="2">Autorizado</option>  
+                            <option value="3">No autorizado</option>
+                        </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="content-select">
+                        <select className="w-52" name="" id="">
+                            <option value="1">Administrador</option>
+                            <option value="2">Vendedor</option>  
+                        </select>
+                        </div>
+                    </li>
+                    <li className="mt-3">
                         <Link to='listaUsuarios'>
                             <button className="button1" type="submit" name="guardarUsuario" onClick={guardado}>Guardar</button>
                         </Link>
-                    </div>
-                </div>
+                    </li>                          
+                </ul>
+
+
             </form>
         </>
     )
