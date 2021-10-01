@@ -59,41 +59,7 @@ function App() {
           </Route>
 
         </Switch>
-      </Router>
-
-        // <div>
-        //   <div>
-        //     <h1 class="header"><img src="logo.png" class="img" alt="Logo"/></h1>
-        //     <br></br><br></br><br></br><br></br>
-        //   </div>
-
-        //   <body>
-        //     <div>
-        //     <BrowserRouter>
-        //       <Switch>
-        //           <Route exact path="/" component={Escritorio}/>
-        //           <Route path="/ListarVentas" component={ListarVentas} />
-        //           <Route path="/ActualizarVenta" component={ActualizarVenta}/>
-        //           <Route path="/CrearVenta" component={CrearVenta}/>
-        //           <Route path="/ListaUsuarios" component={ListarUsuarios}></Route>
-        //           <Route path="/ActualizarUsuario" component={ActualizarUsuario}></Route>
-        //           <Route path="/CrearProducto" component={CrearProducto}/>
-        //           <Route path="/ActualizarProducto" component={ActualizarProducto}/>
-        //           <Route path='/ListarProductos' component={ListarProductos}></Route>
-        //       </Switch>
-        //     </BrowserRouter>
-        //     </div>
-        //   </body>
-        //   <footer>
-        //       <div>
-        //         <br></br><br></br><br></br><br></br>
-        //         <h7 class="footer"> 
-        //           <p>©2021 Derechos reservados</p>
-        //           <p>info@innovasoft.com</p>
-        //         </h7>
-        //       </div>
-        //   </footer>
-        // </div>   
+      </Router>  
       );
 }
     
