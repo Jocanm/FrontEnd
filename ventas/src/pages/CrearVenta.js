@@ -81,16 +81,16 @@ const CrearVenta = () => {
                 <div>
                     <div>
                         <ul class="navbar">
-                            <li>
-                                <p><input type ="text" name="idventa" id="idventa" placeholder="Id Venta"/></p>
+                            <li className="flex flex-col">
+                                <p className="mb-3"><input type ="text" name="idventa" id="idventa" placeholder="Id Venta"/></p>
                                 <p><input type ="text" name="nombreencargado" id="nombree" placeholder="nombre del encargado"/></p>
                                 <p><br></br></p>
                             </li>
                 
-                            <li>
-                                <p><input type ="text" name="nombrecliente" id="nombrec" placeholder="nombre del cliente"/></p>
-                                <p><input type ="text" name="telefonocliente" id="telefonoc" placeholder="teléfono"/></p>
-                                <p><input type ="text" name="idcliente" id="idcliente" placeholder="Id Cliente"/></p>
+                            <li className="flex flex-col">
+                                <p className="mb-3"><input type ="text" name="nombrecliente" id="nombrec" placeholder="nombre del cliente"/></p>
+                                <p className="mb-3"><input type ="text" name="telefonocliente" id="telefonoc" placeholder="teléfono"/></p>
+                                <p className="mb-3"><input type ="text" name="idcliente" id="idcliente" placeholder="Id Cliente"/></p>
                             </li>
                         </ul>
                     </div>

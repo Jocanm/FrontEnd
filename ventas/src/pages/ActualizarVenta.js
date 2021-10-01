@@ -81,16 +81,16 @@ const ActualizarVenta = () => {
             <br></br><br></br><br></br>
             <div>
                 <div>
-                    <ul class="navbar">
+                    <ul className="navbar flex">
                         <li>
                             <p><label>Id Venta</label></p>
                             <p><input type ="text" name="nombreencargado" id="nombree" placeholder="nombre del encargado"/></p>
                             <p><br></br></p>
                         </li>
             
-                        <li>
-                            <p><input type ="text" name="nombrecliente" id="nombrec" placeholder="nombre del cliente"/></p>
-                            <p><input type ="text" name="telefonocliente" id="telefonoc" placeholder="teléfono"/></p>
+                        <li className="flex flex-col">
+                            <p className="mb-3"><input type ="text" name="nombrecliente" id="nombrec" placeholder="nombre del cliente"/></p>
+                            <p className="mb-3"><input type ="text" name="telefonocliente" id="telefonoc" placeholder="teléfono"/></p>
                             <p><input type ="text" name="idcliente" id="idcliente" placeholder="Id Cliente"/></p>
                         </li>
                     </ul>
@@ -105,16 +105,13 @@ const ActualizarVenta = () => {
                                 </p>
                             </li>
                 
-                            <li>
-                                <p>
-                                    <label>Estado de la venta:</label>
+                            <li className="flex ">
+                                    <label className="w-36">Estado de la venta:</label>
                                     <select id="sel1" name="sel1">
                                         <option value="11" selected>En proceso</option>
                                         <option value="22" >Cancelada</option>
                                         <option value="33">Entregada</option>
                                     </select>
-                                <p/>
-                                </p>
                             </li>
                         </ul>
                 </div>
