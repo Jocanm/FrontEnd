@@ -4,7 +4,7 @@ import productos from '../data/productos'
 import { useState, useEffect } from 'react'
 
 
-const ListarProductos = () => {
+const Productos = () => {
 
     const [dataProduct,setDataProduct] = useState([])
     const [indice,setIndice] = useState()
@@ -203,4 +203,4 @@ const Actualizar = ({setListaProductos,indice,data}) =>{
 }
 
 
-export default ListarProductos
+export default Productos

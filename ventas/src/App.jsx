@@ -6,9 +6,7 @@ import ListarVentas from './pages/ListarVentas';
 import ActualizarVenta from './pages/ActualizarVenta';
 import CrearVenta from './pages/CrearVenta';
 import ListarUsuarios from './pages/ListarUsuarios';
-import CrearProducto from './pages/CrearProducto';
 import ListarProductos from './pages/ListarProductos';
-import ActualizarProducto from './pages/ActualizarProducto';
 import MainLayout from './layout/MainLayout';
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","Usuarios","ListarProductos","ActualizarProducto","CrearProducto","/"]}>
+          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","Usuarios","ListarProductos","/"]}>
             <MainLayout>
               <Switch>
 
@@ -36,14 +34,9 @@ function App() {
                 <Route path="/Usuarios">
                   <ListarUsuarios></ListarUsuarios>
                 </Route>
+
                 <Route path="/ListarProductos">
                   <ListarProductos></ListarProductos>
-                </Route>
-                <Route path="/ActualizarProducto">
-                  <ActualizarProducto></ActualizarProducto>
-                </Route>
-                <Route path="/CrearProducto">
-                  <CrearProducto></CrearProducto>
                 </Route>
 
                 <Route path="/">
