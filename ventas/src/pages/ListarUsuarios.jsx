@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import usuarios from "../data/users";
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 
 
 const Usuarios = () =>{
