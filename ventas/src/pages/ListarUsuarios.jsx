@@ -9,20 +9,20 @@ import Button from 'react-bootstrap/Button'
 const Usuarios = () =>{
 
     const [listaUsuarios,setListaUsuarios] = useState(true);
+    const [indice,setIndice] = useState();
 
     return(
         (listaUsuarios) ? (
-            <ListarUsuarios setListaUsuarios={setListaUsuarios}></ListarUsuarios>
-        ):<ActualizarDatosUsuario setListaUsuarios={setListaUsuarios}/>
+            <ListarUsuarios setListaUsuarios={setListaUsuarios} setIndice={setIndice}></ListarUsuarios>
+        ):<ActualizarDatosUsuario setListaUsuarios={setListaUsuarios} indice={indice}/>
     )
 }
 
-const ListarUsuarios = ({setListaUsuarios}) => {
+const ListarUsuarios = ({setListaUsuarios,setIndice}) => {
 
     const [lista,setLista] = useState(usuarios)
-    const handleSubimit = () =>{
-        setListaUsuarios(e=>!e)
-    }
+
+
 
     return (
         <>
@@ -58,7 +58,10 @@ const ListarUsuarios = ({setListaUsuarios}) => {
                                         <td>{e.rol}</td>
                                         <td>{e.email}</td>
                                         <td>
-                                            <button onClick={handleSubimit} class="buttonIco">
+                                            <button onClick={()=>{
+                                                setListaUsuarios(e=>!e);
+                                                setIndice(i);
+                                            }} class="buttonIco">
                                                 <i class="fas fa-search"></i>
                                             </button>
                                         </td>
@@ -74,7 +77,7 @@ const ListarUsuarios = ({setListaUsuarios}) => {
     );
 };
 
-const ActualizarDatosUsuario = ({setListaUsuarios}) => {
+const ActualizarDatosUsuario = ({setListaUsuarios,indice}) => {
 
     const handleSubmit = () => {
         setListaUsuarios(e=>!e)
@@ -99,17 +102,18 @@ const ActualizarDatosUsuario = ({setListaUsuarios}) => {
                     </li>
 
                     <li>
-                        <input className="w-52" type="text" name="idencargado" id="idencargado" placeholder={usuarios[0].id} disabled/>
+                        <input className="w-52" type="text" name="idencargado" id="idencargado" placeholder={usuarios[indice].id} disabled/>
                     </li>
                     <li>
-                        <input className="w-52" type="text" name="nombreencargado" id="nombree" placeholder={usuarios[0].nombre} />
+                        <input className="w-52" type="text" name="nombreencargado" id="nombree" placeholder={usuarios[indice].nombre} />
                     </li>
                     <li>
-                    <input className="w-52" type="email" name="correoencargado" id="correoe" placeholder={usuarios[0].email} />
+                    <input className="w-52" type="email" name="correoencargado" id="correoe" placeholder={usuarios[indice].email} />
                     </li>
                     <li>
                         <div className="content-select">
                         <select className="w-52" name="" id="">
+                            <option value="0">{usuarios[indice].estado}</option>
                             <option value="1">Pendiente</option>
                             <option value="2">Autorizado</option>  
                             <option value="3">No autorizado</option>
@@ -118,7 +122,8 @@ const ActualizarDatosUsuario = ({setListaUsuarios}) => {
                     </li>
                     <li>
                         <div className="content-select">
-                        <select className="w-52" name="" id="">
+                        <select className="w-52" name="" id="" defaultValue={usuarios[indice].rol}>
+                            <option value="0">{usuarios[indice].rol}</option>
                             <option value="1">Administrador</option>
                             <option value="2">Vendedor</option>  
                         </select>
