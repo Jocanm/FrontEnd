@@ -11,7 +11,18 @@ const ListarProductos = () => {
     const [listaProductos,setListaProductos] = useState(true)
     const [crearProducto,setCrearProducto] = useState(false)
     const [titulo,setTitulo] = useState("")
+    const [nuevoProducto,setNuevoProducto] = useState({})
 
+    // const producto = {
+    //     id:"005",
+    //     descripcion:"CPU",
+    //     valor:"500000",
+    //     estado:"Disponible"
+    // }
+
+    // const handleData = ()=>{
+    //     setDataProduct(e=>[...e,producto])
+    // }
 
     useEffect(()=>{
         setDataProduct(productos)
@@ -23,8 +34,10 @@ const ListarProductos = () => {
         else setTitulo("ACTUALIZAR PRODUCTO")
     },[listaProductos,crearProducto])
 
+
     return (
         <div>
+            {/* <button onClick={handleData}>Agregar</button> */}
             <h1>{titulo}</h1>
             {/* <Listar data={dataProduct}/> */}
             {
@@ -139,6 +152,7 @@ const Crear = ({setListaProductos,setCrearProducto}) =>{
         </div>
     )
 }
+
 const Actualizar = ({setListaProductos,indice,data}) =>{
 
     return (
