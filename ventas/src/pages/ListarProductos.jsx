@@ -1,7 +1,17 @@
 import React from 'react'
 import {Link} from "react-router-dom"
+import productos from '../data/productos'
+import { useState, useEffect } from 'react'
+
 
 const ListarProductos = () => {
+
+    const [dataProduct,setDataProduct] = useState([])
+
+    useEffect(()=>{
+        setDataProduct(productos)
+    },[])
+
     return (
         <div>
             
@@ -68,6 +78,68 @@ const ListarProductos = () => {
                 </form>
                                 
         </div>
+    )
+}
+
+const Listar = ({data}) =>{
+
+    return(
+        <form>
+            <h2>Lista de productos</h2>
+            <div>
+                <Link to="/">
+                    <button class="buttonIco right"><i class="fas fa-home"></i></button> 
+                </Link>
+            </div>
+            <label htmlFor="buscar">
+                <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+                <button class="buttonIco" type="submit"><i class="fas fa-search"></i></button>
+            </label>
+            <button class="button1 right" type="submit" name="nuevoproducto">Nuevo Producto</button>
+
+            <table>
+                <thead>
+                    <th>ID producto</th>
+                    <th>Descripción</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                </thead>
+                <tbody>
+                    {
+                        data.map((e,i)=>{
+                            return(
+                                <tr>
+                                    <td>{e.id}</td>
+                                    <td>{e.descripcion}</td>
+                                    <td>{e.valor}</td>
+                                    <td>{e.estado}</td>
+                                    <td>
+                                        <button class="buttonIco">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
+        </form>
+    )
+}
+
+const Actualizar = () =>{
+
+    return (
+        <div></div>
+    )
+}
+
+const crear = () =>{
+
+    return (
+        <div></div>
     )
 }
 
