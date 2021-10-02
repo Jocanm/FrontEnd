@@ -6,7 +6,6 @@ import ListarVentas from './pages/ListarVentas';
 import ActualizarVenta from './pages/ActualizarVenta';
 import CrearVenta from './pages/CrearVenta';
 import ListarUsuarios from './pages/ListarUsuarios';
-import ActualizarUsuario from './pages/ActualizarUsuario';
 import CrearProducto from './pages/CrearProducto';
 import ListarProductos from './pages/ListarProductos';
 import ActualizarProducto from './pages/ActualizarProducto';
@@ -18,7 +17,7 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","ListaUsuarios","ActualizarUsuario","ListarProductos","ActualizarProducto","CrearProducto","/"]}>
+          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","Usuarios","ListarProductos","ActualizarProducto","CrearProducto","/"]}>
             <MainLayout>
               <Switch>
 
@@ -34,11 +33,8 @@ function App() {
                   <CrearVenta></CrearVenta>
                 </Route>
                 
-                <Route path="/ListaUsuarios">
+                <Route path="/Usuarios">
                   <ListarUsuarios></ListarUsuarios>
-                </Route>
-                <Route path="/ActualizarUsuario">
-                  <ActualizarUsuario></ActualizarUsuario>
                 </Route>
                 <Route path="/ListarProductos">
                   <ListarProductos></ListarProductos>
@@ -62,6 +58,5 @@ function App() {
       </Router>  
       );
 }
-    
 
 export default App;

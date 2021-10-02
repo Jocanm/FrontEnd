@@ -17,7 +17,7 @@ const Escritorio = () => {
                 </Link>
                 </li>
                 <li>
-                <Link to='/ListaUsuarios'>
+                <Link to='/Usuarios'>
                     <button className="button px-10" type="submit" name="gusuarios"><h3>GESTIÓN DE USUARIOS</h3></button>
                 </Link>    
                 </li>
