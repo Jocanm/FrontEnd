@@ -88,7 +88,6 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice}) => {
         setListaUsuarios(e=>!e)
     }
     
-
     return(
         <>
             <h1>ACTUALIZAR DATOS DEL USUARIO</h1>
