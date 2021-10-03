@@ -18,19 +18,6 @@ const usuarios = [
         id:'1001857162',
         estado:'Pendiente',
         email:"jonathan@innovasoft.com"
-    },
-    {
-        nombre:'Madeline Escorcia',
-        id:'1002678765',
-        estado:'Autorizado',
-        rol:"Vendedor",
-        email:"jonathan@innovasoft.com"
-    },
-    {
-        nombre:'Juan Torres',
-        id:'1005431233',
-        estado:'Pendiente',
-        email:"juan@innovasoft.com"
     }
 ]
 

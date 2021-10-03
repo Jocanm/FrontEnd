@@ -1,4 +1,5 @@
 const ventas = [
+
     {
         idV:"001",
         valor:40000,
