@@ -50,8 +50,9 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
 
     return(
         <form>
+            
             <div className="flex flex-col">
-                <div className="">
+                <div>
                     <Link to="/">
                         <button class="buttonIco right"><i class="fas fa-home"></i></button> 
                     </Link>
