@@ -10,6 +10,11 @@ const Ventas = () => {
     const [dataVentas,setDataVentas] = useState([])
 
     //Me permite controlar la renderización condicional
+    const [verVentas,setVerVentas] = useState(true)
+    const [verCrearVentas,setVerCrearVentas] = useState(false)
+
+    //Para la pagina de actualizar los datos
+    const [indice,setIndice] = useState()
 
 
     useEffect(()=>{
@@ -18,13 +23,22 @@ const Ventas = () => {
 
     return (
         <div>
-            <ListarVentas dataVentas={dataVentas}/>
+            {
+            (verVentas)?
+                (<ListarVentas 
+                dataVentas={dataVentas}
+                setVerCrearVentas={setVerCrearVentas}
+                setVerVentas={setVerVentas}
+                setIndice={setIndice}
+                />):
+            (verCrearVentas)?<CrearVenta/>:<ActualizarVenta/>
+            }
 
         </div>
     )
 }
 
-const ListarVentas = ({dataVentas}) =>{
+const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
 
     
     return (
@@ -42,7 +56,12 @@ const ListarVentas = ({dataVentas}) =>{
                         <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
                         <button className="buttonIco ml-2" type="submit"><i class="fas fa-search"></i></button>
                     </label>
-                    <button class="button1 right p-6" type="submit" name="nuevaventa">Nueva Venta</button>
+                    <button class="button1 right p-6" type="submit" name="nuevaventa" 
+                    onClick={()=>{
+                        setVerVentas(e=>!e)
+                        setVerCrearVentas(e=>!e)
+                    }}
+                    >Nueva Venta</button>
                 </div>
                 <table class="table" id="tabla">
                         <thead>
@@ -63,7 +82,12 @@ const ListarVentas = ({dataVentas}) =>{
                                             <td>{e.fechaVenta}</td>
                                             <td>{e.valor}</td>
                                             <td>
-                                                <button class="buttonIco mr-1">
+                                                <button 
+                                                class="buttonIco mr-1"
+                                                onClick={()=>{
+                                                    setVerVentas(e=>!e)
+                                                    setIndice(i)
+                                                }}>
                                                 <i class="fas fa-search"></i>
                                                 </button>
                                                 <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>

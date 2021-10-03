@@ -25,6 +25,7 @@ const Productos = () => {
         setDataProduct(productos)
     },[])
 
+    //Controla el titulo dinamico
     useEffect(()=>{
         if(listaProductos) setTitulo("GESTIÓN DE PRODUCTOS")
         else if(crearProducto) setTitulo("CREAR NUEVO PRODUCTO")

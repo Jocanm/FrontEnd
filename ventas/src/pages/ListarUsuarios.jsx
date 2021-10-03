@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom"
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"
 import usuarios from "../data/users";
 
 
@@ -166,4 +166,5 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
         </>
     )
 }
+
 export default Usuarios;
