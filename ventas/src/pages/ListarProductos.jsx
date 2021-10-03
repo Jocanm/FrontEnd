@@ -2,7 +2,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
 import productos from '../data/productos'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef} from 'react'
 
 
 const Productos = () => {
@@ -27,20 +27,22 @@ const Productos = () => {
 
     useEffect(()=>{
         if(listaProductos) setTitulo("GESTIÓN DE PRODUCTOS")
-        else if(crearProducto) setTitulo("NUEVO PRODUCTO")
+        else if(crearProducto) setTitulo("CREAR NUEVO PRODUCTO")
         else setTitulo("ACTUALIZAR PRODUCTO")
     },[listaProductos,crearProducto])
 
 
     return (
         <div>
-            <h1>{titulo}</h1>
+            <h1 className="text-2xl">{titulo}</h1>
             {
                 (listaProductos)?(<Listar data={dataProduct} setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setIndice={setIndice}/>):
-                (crearProducto)?(<Crear setListaProductos={setListaProductos} setCrearProducto={setCrearProducto}/>):
-                (<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct}/>)
+                (crearProducto)?(<Crear setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setDataProduct={setDataProduct}/>):
+                (<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct} setDataProduct={setDataProduct}/>)
             }
+            <ToastContainer position="top-center" autoClose={3000}/>
         </div>
+        
     )
 }
 
@@ -57,7 +59,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                 <div className="flex justify-between mt-2">
                     <label className="flex" htmlFor="buscar">
                         <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-                        <button class="buttonIco" type="submit"><i class="fas fa-search"></i></button>
+                        <button className="buttonIco" type="button"><i class="fas fa-search"></i></button>
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
                         setListaProductos(e=>!e)
@@ -100,69 +102,150 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
     )
 }
 
-const Crear = ({setListaProductos,setCrearProducto}) =>{
+const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
+
+    const form = useRef(null)
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        const data = new FormData(form.current);
+        const nuevoproducto = {};
+
+        data.forEach((valor,llave)=>{
+            nuevoproducto[llave]=valor;
+        })
+
+        toast.success(`Producto "${nuevoproducto.descripcion}" agregado con éxito`)
+        setDataProduct(e=>[...e,nuevoproducto]);
+        setListaProductos(e=>!e)
+        setCrearProducto(e=>!e)
+    }
 
     return (
         <div>
-            <form className="h-auto w-96">
-            <div>
-                <ul className="navbar flex flex-col ul-producto">
-                    <li>
-                        <Link to='/ListarProductos'>
-                            <button class="button1 right" onClick={()=>{
-                                setListaProductos(e=>!e)
-                                setCrearProducto(e=>!e)
-                            }}>Atras</button>
-                        </Link>   
-                    </li>
-                        <li><input className="w-48" type="number" placeholder="ID producto"/></li>
-                        <li><input className="w-48" type ="text" name="Descripcion" id="Descripcion" placeholder="Descripcion"/></li>
-                        <li>
-                            <input className="w-48" type ="text" name="Valor_Unitario" id="Valor_Unitario" placeholder="Valor unitario"/>
-                        </li>
-                        <li>
-                            <div className="content-select">
-                            <select className="w-48" id="sel1" name="sel1">
-                                <option value="11" selected>Disponible</option>
-                                <option value="22" >No disponible</option>
-                            </select>
-                            </div>
-                        </li>
-                        {/* <li>
-                            <label for="file-upload" class="subir">
-                                <input className="w-48" id="file-upload" onchange='cambiar()' type="file"/>
-                            </label>
-                        </li>    */}
-                        <li>
-                            <div class="center">
-                                <button class="button1" type="submit" name="Guardar_Producto" onClick={()=>{
-                                    alert("Producto guardado con exito")
-                                    setListaProductos(e=>!e)
-                                    setCrearProducto(e=>!e)
-                                }}>Guardar</button>
-                            </div>
-                        </li>
-                </ul>
-            </div>
+            <form 
+            className="h-auto w-96 flex flex-col items-center"
+            ref={form}
+            onSubmit={handleSubmit}
+            >
 
+                <button class="button1 right mb-4" onClick={()=>{
+                    setListaProductos(e=>!e)
+                    setCrearProducto(e=>!e)
+                    }}>Atras
+                </button>
+
+                <label className="mb-2" htmlFor="id">
+                    ID producto
+                    <input className="w-48" type="number" name="id" required/>
+                </label>
+                <label className="mb-2" htmlFor="descripcion">
+                    Descripción
+                    <input className="w-48" type ="text" name="descripcion" required/>
+                </label>
+                <label className="mb-2" htmlFor="valor">
+                    Valor unitario
+                    <input className="w-48" type ="number" name="valor" required/>
+                </label>
+                <label htmlFor="estado">
+                    Estado del producto
+                    <div className="content-select">
+                        <select defaultValue={0} className="w-48" name="estado" required>
+                            <option disabled value={0}>Seleccione</option>
+                            <option>Disponible</option>
+                            <option>No disponible</option>
+                        </select>
+                    </div>
+                </label>
+
+                <div class="center mt-4">
+                    <button class="button1" type="submit" name="Guardar_Producto">Guardar</button>
+                </div>
             </form>
         </div>
     )
 }
 
-const Actualizar = ({setListaProductos,indice,data}) =>{
+const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
+
+    const [id,setId] = useState(data[indice].id);
+    const [descripcion,setDescripcion] = useState(data[indice].descripcion)
+    const [valor,setValor] = useState(data[indice].valor)
+    const [estado,setEstado] = useState(data[indice].estado)
+    
+
+    const handleID = (e)=>{
+        setId(e.target.value)
+    }
+    const handleDes =(e)=>{
+        setDescripcion(e.target.value)
+    }
+    const handleVal = (e)=>{
+        setValor(e.target.value)
+    }
+    const handleEstado = (e) =>{
+        setEstado(e.target.value)
+    }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+
+        const nuevosDatos = {id,descripcion,valor,estado}
+
+        setDataProduct(e=>{
+            e[indice]=nuevosDatos
+            return e;
+        })
+
+        toast.success(`Datos del producto "${nuevosDatos.id}-${nuevosDatos.descripcion}" actualizados`)
+        setListaProductos(e=>!e)
+    }
 
     return (
         <div>
-            <form className="h-auto w-96">
-            <div>
+            <form 
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center h-auto w-96">
+
+            <button class="button1 right mb-4" onClick={()=>{
+                setListaProductos(e=>!e)
+            }}>Atras</button>
+
+            <label htmlFor="id">
+                ID producto
+                <input name="id" className="mb-2 w-48" type="number" value={id} onChange={handleID} disabled/>
+            </label>
+
+            <label htmlFor="descripcion">
+                Descripción
+                <input className="mb-2 w-48" type ="text" name="descripcion" id="Descripcion" value={descripcion} onChange={handleDes} required/>
+            </label>
+
+            <label htmlFor="valor">
+                Valor unitario
+                <input className="mb-2 w-48" type ="number" name="valor" id="Valor_Unitario" value={valor} onChange={handleVal} required/>
+            </label>
+
+            <label htmlFor="estado">
+                Estado
+                <div className="content-select">
+                    <select className="w-48" id="sel1" name="estado" value={estado} onChange={handleEstado} required>
+                        <option>Disponible</option>
+                        <option>No disponible</option>
+                    </select>
+                </div>
+            </label>
+
+            <div className="mt-4 center">
+                <button className="button1" type="submit" name="Guardar_Producto">Actualizar</button>
+            </div>
+
+            {/* <div>
                 <ul className="navbar flex flex-col ul-producto">
                     <li>
-                        <Link to='/ListarProductos'>
                             <button class="button1 right" onClick={()=>{
                                 setListaProductos(e=>!e)
-                            }}>Atras</button>
-                        </Link>   
+                            }}>Atras</button>  
                     </li>
                         <li><input className="w-48" type="number" placeholder={data[indice].id}/></li>
                         <li><input className="w-48" type ="text" name="Descripcion" id="Descripcion" placeholder={data[indice].descripcion}/></li>
@@ -177,13 +260,13 @@ const Actualizar = ({setListaProductos,indice,data}) =>{
                                 <option value="22" >No disponible</option>
                             </select>
                             </div>
-                        </li>
+                        </li> */}
                         {/* <li>
                             <label for="file-upload" class="subir">
                                 <input className="w-48" id="file-upload" onchange='cambiar()' type="file"/>
                             </label>
                         </li>    */}
-                        <li>
+                        {/* <li>
                             <div class="center">
                                 <button class="button1" type="submit" name="Guardar_Producto" onClick={()=>{
                                     alert("Producto actualizado con exito")
@@ -192,7 +275,7 @@ const Actualizar = ({setListaProductos,indice,data}) =>{
                             </div>
                         </li>
                 </ul>
-            </div>
+            </div> */}
 
             </form>
         </div>

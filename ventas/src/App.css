@@ -142,6 +142,10 @@ form select {
     cursor: pointer;
 }
 
+.buttonIco:hover{
+    background-color: #1c4d6e;
+}
+
 .button{
     cursor: pointer;
     background-color: #2471A3;
@@ -158,6 +162,10 @@ form select {
     background-color: #2471A3;
     border-radius: 8%;
     padding: 10px 60px;
+}
+
+.button1:hover{
+    background: #1c4d6e;
 }
 
 .raya{

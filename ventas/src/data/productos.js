@@ -2,25 +2,31 @@ const productos = [
     {
         id:"001",
         descripcion:"mouse",
-        valor:"20000",
+        valor:20000,
         estado:"Disponible"
     },
     {
         id:"002",
-        descripcion:"teclado",
-        valor:"30000",
+        descripcion:"Monitor",
+        valor:500000,
         estado:"Disponible"
     },
     {
         id:"003",
-        descripcion:"monitor",
-        valor:"100000",
+        descripcion:"Diademas",
+        valor:30000,
         estado:"Disponible"
     },
     {
         id:"004",
-        descripcion:"audifonos",
-        valor:"10000",
+        descripcion:"CPU",
+        valor:700000,
+        estado:"No disponible"
+    },
+    {
+        id:"005",
+        descripcion:"teclado",
+        valor:20000,
         estado:"Disponible"
     }
 ]
