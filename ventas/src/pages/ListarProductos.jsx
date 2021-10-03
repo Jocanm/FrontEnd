@@ -239,44 +239,6 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
             <div className="mt-4 center">
                 <button className="button1" type="submit" name="Guardar_Producto">Actualizar</button>
             </div>
-
-            {/* <div>
-                <ul className="navbar flex flex-col ul-producto">
-                    <li>
-                            <button class="button1 right" onClick={()=>{
-                                setListaProductos(e=>!e)
-                            }}>Atras</button>  
-                    </li>
-                        <li><input className="w-48" type="number" placeholder={data[indice].id}/></li>
-                        <li><input className="w-48" type ="text" name="Descripcion" id="Descripcion" placeholder={data[indice].descripcion}/></li>
-                        <li>
-                            <input className="w-48" type ="text" name="Valor_Unitario" id="Valor_Unitario" placeholder={data[indice].valor}/>
-                        </li>
-                        <li>
-                            <div className="content-select">
-                            <select className="w-48" id="sel1" name="sel1">
-                                <option value="00">{data[indice].estado}</option>
-                                <option value="11" selected>Disponible</option>
-                                <option value="22" >No disponible</option>
-                            </select>
-                            </div>
-                        </li> */}
-                        {/* <li>
-                            <label for="file-upload" class="subir">
-                                <input className="w-48" id="file-upload" onchange='cambiar()' type="file"/>
-                            </label>
-                        </li>    */}
-                        {/* <li>
-                            <div class="center">
-                                <button class="button1" type="submit" name="Guardar_Producto" onClick={()=>{
-                                    alert("Producto actualizado con exito")
-                                    setListaProductos(e=>!e)
-                                }}>Actualizar</button>
-                            </div>
-                        </li>
-                </ul>
-            </div> */}
-
             </form>
         </div>
     )
