@@ -60,7 +60,7 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
             <form action="">
             <div className="flex flex-col">
                 <div>
-                    <Link to="/">
+                    <Link to="/escritorio">
                         <button class="buttonIco right"><i class="fas fa-home"></i></button>
                     </Link>
                 </div>

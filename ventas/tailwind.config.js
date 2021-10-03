@@ -3,9 +3,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
-    colors:{
-      'blu-innova':'#d4e6f2'
-    }
   },
   variants: {
     extend: {},

@@ -8,6 +8,7 @@ import CrearVenta from './pages/CrearVenta';
 import ListarUsuarios from './pages/ListarUsuarios';
 import ListarProductos from './pages/ListarProductos';
 import MainLayout from './layout/MainLayout';
+import Login from './pages/Login';
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","Usuarios","ListarProductos","/"]}>
+          <Route path={["/ListarVentas","/ActualizarVenta","/CrearVenta","Usuarios","ListarProductos","/","/escritorio"]}>
             <MainLayout>
               <Switch>
 
@@ -38,9 +39,14 @@ function App() {
                 <Route path="/ListarProductos">
                   <ListarProductos></ListarProductos>
                 </Route>
+                
+
+                <Route path="/escritorio">
+                  <Escritorio></Escritorio>
+                </Route>
 
                 <Route path="/">
-                  <Escritorio></Escritorio>
+                  <Login/>
                 </Route>
               </Switch>
 
