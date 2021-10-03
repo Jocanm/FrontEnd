@@ -162,45 +162,6 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
                 </label>
 
                 <button className="button1 mt-4" type="submit" name="guardarUsuario">Guardar</button>
-
-                {/* <ul className="lista-usuarios flex flex-col items-center justify-center">
-
-                    <li className="mb-3">
-                            <button onClick={handleBack} className="boton-usuario">Atras</button>
-                    </li>
-
-                    <li>
-                        <input className="w-52" type="text" name="idencargado" id="idencargado" placeholder={usuarios[indice].id} disabled/>
-                    </li>
-                    <li>
-                        <input className="w-52" type="text" name="nombreencargado" id="nombree" placeholder={usuarios[indice].nombre} />
-                    </li>
-                    <li>
-                    <input className="w-52" type="email" name="correoencargado" id="correoe" placeholder={usuarios[indice].email} />
-                    </li>
-                    <li>
-                        <div className="content-select">
-                        <select className="w-52" name="" id="">
-                            <option value="0">{usuarios[indice].estado}</option>
-                            <option value="1">Pendiente</option>
-                            <option value="2">Autorizado</option>  
-                            <option value="3">No autorizado</option>
-                        </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="content-select">
-                        <select className="w-52" name="" id="" defaultValue={usuarios[indice].rol}>
-                            <option value="0">{usuarios[indice].rol}</option>
-                            <option value="1">Administrador</option>
-                            <option value="2">Vendedor</option>  
-                        </select>
-                        </div>
-                    </li>
-                    <li className="mt-3">
-                        <button className="button1" type="submit" name="guardarUsuario" onClick={handleSubmit}>Guardar</button>
-                    </li>                          
-                </ul> */}
             </form>
         </>
     )
