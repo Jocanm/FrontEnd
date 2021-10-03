@@ -70,10 +70,12 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                 </div>
                 <table className="mt-4">
                     <thead>
-                        <th>ID producto</th>
-                        <th>Descripción</th>
-                        <th>Valor</th>
-                        <th>Estado</th>
+                        <tr>
+                            <th>ID producto</th>
+                            <th>Descripción</th>
+                            <th>Valor</th>
+                            <th>Estado</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {
@@ -106,6 +108,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
 
 const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
 
+    
     const form = useRef(null)
 
     const handleSubmit = (e)=>{

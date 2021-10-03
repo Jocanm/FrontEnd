@@ -153,6 +153,10 @@ form select {
     padding: 50px 100px;
 }
 
+.button:hover{
+    background-color: #1c4d6e;
+}
+
 .botonprodutos {
     margin-right: 1.5%;
 }
