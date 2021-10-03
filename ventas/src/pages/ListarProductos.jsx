@@ -1,4 +1,5 @@
-import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
 import productos from '../data/productos'
 import { useState, useEffect } from 'react'
@@ -6,23 +7,19 @@ import { useState, useEffect } from 'react'
 
 const Productos = () => {
 
+    //Añado la base de datos a una estado
     const [dataProduct,setDataProduct] = useState([])
+
+    //Para actualizar datos
     const [indice,setIndice] = useState()
+
+    //Me permiten hacer la renderización condicional
     const [listaProductos,setListaProductos] = useState(true)
     const [crearProducto,setCrearProducto] = useState(false)
+
+    //titulo dinamico
     const [titulo,setTitulo] = useState("")
-    const [nuevoProducto,setNuevoProducto] = useState({})
 
-    // const producto = {
-    //     id:"005",
-    //     descripcion:"CPU",
-    //     valor:"500000",
-    //     estado:"Disponible"
-    // }
-
-    // const handleData = ()=>{
-    //     setDataProduct(e=>[...e,producto])
-    // }
 
     useEffect(()=>{
         setDataProduct(productos)
@@ -37,11 +34,11 @@ const Productos = () => {
 
     return (
         <div>
-            {/* <button onClick={handleData}>Agregar</button> */}
             <h1>{titulo}</h1>
-            {/* <Listar data={dataProduct}/> */}
             {
-                (listaProductos)?(<Listar data={dataProduct} setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setIndice={setIndice}/>):(crearProducto)?(<Crear setListaProductos={setListaProductos} setCrearProducto={setCrearProducto}/>):(<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct}/>)
+                (listaProductos)?(<Listar data={dataProduct} setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setIndice={setIndice}/>):
+                (crearProducto)?(<Crear setListaProductos={setListaProductos} setCrearProducto={setCrearProducto}/>):
+                (<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct}/>)
             }
         </div>
     )
