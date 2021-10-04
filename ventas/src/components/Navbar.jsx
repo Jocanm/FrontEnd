@@ -7,7 +7,7 @@ const Navbar = () => {
         <nav className="back-layout w-auto mb-4">
             <ul className="flex w-full items-start justify-between">
                 <li className="px-3">
-                <Link to="/">
+                <Link to="/escritorio">
                     <button className="w-28">
                     <img className="" src={logo} alt="" />
                     </button>

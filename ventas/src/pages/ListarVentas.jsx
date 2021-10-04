@@ -44,7 +44,13 @@ const Ventas = () => {
                     dataProduct={dataProduct}
                     setDataProduct={setDataProduct}
                     />):
-            <ActualizarVenta/>
+            <ActualizarVenta
+            setVerVentas={setVerVentas}
+            setDataVentas={setDataVentas}
+            indice={indice}
+            dataVentas={dataVentas}
+            dataProduct={dataProduct}
+            />
             }
             <ToastContainer position="top-center" autoClose={3000}/>
         </div>
@@ -128,7 +134,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     //Para almacenar los productos de la venta
     const [productos,setProductos] = useState([])
 
@@ -286,10 +292,184 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
     )
 }
 
-const ActualizarVenta = () => {
+const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProduct}) => {
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [idV,setIdV] = useState(dataVentas[indice].idV)
+    const [fechaVenta,setFechaVenta] = useState(dataVentas[indice].fechaVenta)
+    const [encargado,setEncargado] = useState(dataVentas[indice].encargado)
+    const [estado,setEstado] = useState(dataVentas[indice].estado)
+    const [nombre,setNombre] = useState(dataVentas[indice].cliente.nombre)
+    const [idC,setIdc] = useState(dataVentas[indice].cliente.idC)
+
+    const handleId = (e) =>{
+        setIdV(e.target.value)
+    }
+    const handleFecha = (e) =>{
+        setFechaVenta(e.target.value)
+    }
+    const handleEncargado = (e) =>{
+        setEncargado(e.target.value)
+    }
+    const handleEstado = (e) =>{
+        setEstado(e.target.value)
+    }
+    const handleNombre = (e) =>{
+        setNombre(e.target.value)
+    }
+    const handleIdc = (e) =>{
+        setIdc(e.target.value)
+    }
+
+    const handleSubmit=(e)=>{
+        e.preventDefault()
+
+        setDataVentas(e=>{
+            e[indice].idV=idV;
+            e[indice].fechaVenta=fechaVenta;
+            e[indice].estado=estado;
+            e[indice].cliente.nombre=nombre;
+            e[indice].cliente.idC=idC;
+            e[indice].encargado=encargado;
+            return e
+        })
+        toast.success(`La venta ${idV} ha sido actualizada exitosamente`)
+        setVerVentas(e=>!e)
+    }
 
     return(
-        <div>Pagina para actualizar una venta</div>
+        <div>
+            <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Agregar productos</Modal.Title>
+            </Modal.Header>
+        <Modal.Body>
+            
+            <input className="w-full" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+            <br></br><br></br>
+            <table class="table" id="tabla">
+                    <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Valor</th>
+                                <th>Estado</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        dataProduct.map((e,i)=>{
+                            return(
+                                <tr>
+                                    <td>{e.id}</td>
+                                    <td>{e.descripcion}</td>
+                                    <td>{e.valor}</td>
+                                    <td>{e.estado}</td>
+                                    <td>
+                                        <input className="inputModal border border-gray-500 mr-1"></input>
+                                        <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </table>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cerrar
+                </Button>
+                <Button class="button1" variant="primary" onClick={handleClose}>Guardar</Button>
+            </Modal.Footer>
+        </Modal>
+
+        <h1 className="text-2xl">ACTUALIZAR LA VENTA</h1>
+        <form onSubmit={handleSubmit}>
+                <button class="buttonIco right" onClick={()=>{
+                    setVerVentas(e=>!e)
+                }}><i class="fas fa-arrow-left"></i></button>           
+            <br></br><br></br><br></br>
+            
+            <div className="flex justify-between">
+                <div className="flex flex-col">
+
+                    <label htmlFor="idV">
+                        ID venta
+                        <input value={idV} onChange={handleId} type ="number" name="idV" disabled/>
+                    </label>
+
+                    <label htmlFor="encargado">
+                        Nombre del encargado
+                        <input value={encargado} onChange={handleEncargado} type ="text" name="encargado" required/>
+                    </label>
+                </div>
+
+                <div className="flex flex-col">
+                    <label htmlFor="nombre">
+                        Nombre del cliente
+                        <input value={nombre} onChange={handleNombre} type ="text" name="nombre" required/>
+                    </label>
+
+                    <label htmlFor="idC">
+                        ID cliente
+                        <input value={idC} onChange={handleIdc} type ="number" name="idC" required/>
+                    </label>
+                </div>
+            </div>
+
+            <div className="flex justify-between my-4">
+                <label className="flex w-full items-center justify-start px-0" htmlFor="fechaVenta">
+                    Fecha de la venta
+                    <input value={fechaVenta} onChange={handleFecha} className="ml-4" type ="text" name="fechaVenta" id="fechav" placeholder="dia/mes/año" required/>
+                </label>
+                
+                <label className="flex w-full items-center justify-end px-0" htmlFor="estado">
+                    Estado de la venta
+                    <select value={estado} onChange={handleEstado} className="w-48 ml-4 h-8" name="estado" required>
+                            <option>En proceso</option>
+                            <option>Cancelada</option>
+                            <option>Entregada</option>
+                    </select>
+                </label>
+            </div>
+
+                <table class="table" id="tabla">
+                    <thead>
+                            <tr>
+                                <th>Id Producto</th>
+                                <th>Descripción</th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Precio total</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
+                            </td>
+                        </tr>
+                        <Button class="buttonIco" variant="primary" onClick={handleShow}>
+                            <i class="fas fa-plus"></i>
+                        </Button>
+                    </tbody> 
+                </table>
+            
+            <div className="flex items-center justify-center">
+                <button className="button1 mt-5 font-bold" type="submit" name="guardarVenta">Guardar</button>
+            </div>
+            
+        </form>
+        </div>
     )
 }
 

@@ -23,7 +23,7 @@ const ventas = [
         valor:40000,
         fechaVenta:"3/10/2021",
         encargado:"Madeline Escorcia",
-        estado:"en proceso",
+        estado:"cancelada",
         cliente:{
             idC:"1001857105",
             nombre:"Daniel Hernandez"
@@ -58,11 +58,11 @@ const ventas = [
         idV:"004",
         valor:40000,
         fechaVenta:"3/10/2021",
-        encargado:"Madeline Escorcia",
-        estado:"en proceso",
+        encargado:"Eliana Ortega",
+        estado:"cancelada",
         cliente:{
             idC:"1001857105",
-            nombre:"Daniel Hernandez"
+            nombre:"Jhuliana Perez"
         },
         productos:[
             {
