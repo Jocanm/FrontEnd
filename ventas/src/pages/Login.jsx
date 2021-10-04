@@ -7,7 +7,7 @@ const Login = () => {
 
     return (
         <div>
-            <div class="min-h-screen text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
+            <div class="text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
                 <div class="relative py-3 sm:max-w-xl mx-auto text-center">
                     <span class="text-2xl font-light">Bienvenido.</span>
                     <div class="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
@@ -18,7 +18,9 @@ const Login = () => {
 
                             <input type ="password" required placeholder="Ingresa tu contraseña" class =" border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-blue-700 rounded-md"/>
                             <div class ="flex justify-between items-baseline">
-                            <button class ="mt-4 bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:shadow-lg button w-auto">Login</button>
+                            <Link to="/escritorio">
+                                <button class ="mt-4 bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:shadow-lg button w-auto">Login</button>
+                            </Link>
                             <a href="#" class ="text-sm hover:underline">¿Olvidaste tu contraseña?</a>
                             </div>
 
