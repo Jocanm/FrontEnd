@@ -2,8 +2,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import usuarios from "../data/users";
+//import usuarios from "../data/users";
+import UsuariosServices from '../services/usuario.service'
 
+let datosUsuarios;
+async function getUsuarios(){
+    const datos =await UsuariosServices.findAll();
+    datosUsuarios = datos.data;
+    return datos.data;
+}
+getUsuarios().then();
+
+async function putUsuarios(){
+    const datos = await UsuariosServices.update();
+    datosUsuarios = datos.data;
+    return datos.data;
+}
+putUsuarios().then();
 
 const Usuarios = () =>{
 
@@ -12,7 +27,7 @@ const Usuarios = () =>{
     const [indice,setIndice] = useState();
 
     useEffect(()=>{
-        setDataUsers(usuarios)
+        setDataUsers(datosUsuarios)
     },[])
 
     return(
@@ -59,7 +74,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             {dataUsers.map((e,i) => {
                                 return (
                                     <tr>
-                                        <td>{e.id}</td>
+                                        <td>{e._id}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
@@ -131,15 +146,15 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="id" id="idencargado" placeholder={usuarios[indice].id} value={id} disabled/>
+                    <input className="w-52 mb-2" type="text" name="id" id="idencargado" placeholder={datosUsuarios[indice].id} value={id} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario
-                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={usuarios[indice].nombre} value={nombre} onChange={handleNombre}/>
+                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={datosUsuarios[indice].nombre} value={nombre} onChange={handleNombre}/>
                 </label>
                 <label htmlFor="email">
                     Correo electrónico
-                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={usuarios[indice].email} value={email} onChange={handleEmail}/>
+                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={datosUsuarios[indice].email} value={email} onChange={handleEmail}/>
                 </label>
                 <label htmlFor="estado">
                     Estado usuario

@@ -1,9 +1,32 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
-import productos from '../data/productos'
+//import productos from '../data/productos'
 import { useState, useEffect, useRef} from 'react'
+import ProductosServices from '../services/producto.service'
 
+let datosProductos;
+
+//traer todos los productos
+async function getProductos(){
+    const datos = await ProductosServices.findAll();
+    datosProductos = datos.data;
+    return datos.data;
+}
+getProductos().then();
+
+//crear un producto
+async function postProducto(producto){
+    const datos = await ProductosServices.create(producto);
+    datosProductos = datos.data;
+    return datos.data;
+}
+
+//actualizar un producto
+async function putProducto(producto){
+    const datos = await ProductosServices.update(producto);
+    return datos.data;
+}
 
 const Productos = () => {
 
@@ -22,7 +45,7 @@ const Productos = () => {
 
 
     useEffect(()=>{
-        setDataProduct(productos)
+        setDataProduct(datosProductos)
     },[])
 
     //Controla el titulo dinamico
@@ -31,7 +54,6 @@ const Productos = () => {
         else if(crearProducto) setTitulo("CREAR NUEVO PRODUCTO")
         else setTitulo("ACTUALIZAR PRODUCTO")
     },[listaProductos,crearProducto])
-
 
     return (
         <div>
@@ -82,7 +104,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                             data.map((e,i)=>{
                                 return(
                                     <tr>
-                                        <td>{e.id}</td>
+                                        <td>{e._id}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
                                         <td>{e.estado}</td>
@@ -120,6 +142,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
             nuevoproducto[llave]=valor;
         })
 
+        postProducto(nuevoproducto).then();
         toast.success(`Producto "${nuevoproducto.descripcion}" agregado con éxito`)
         setDataProduct(e=>[...e,nuevoproducto]);
         setListaProductos(e=>!e)
@@ -140,9 +163,9 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
                     }}>Atras
                 </button>
 
-                <label className="mb-2" htmlFor="id">
+                <label className="mb-2" htmlFor="_id">
                     ID producto
-                    <input className="w-48" type="number" name="id" required/>
+                    <input className="w-48" type="number" name="_id" required/>
                 </label>
                 <label className="mb-2" htmlFor="descripcion">
                     Descripción
@@ -173,7 +196,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
 
 const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
 
-    const [id,setId] = useState(data[indice].id);
+    const [_id,setId] = useState(data[indice]._id);
     const [descripcion,setDescripcion] = useState(data[indice].descripcion)
     const [valor,setValor] = useState(data[indice].valor)
     const [estado,setEstado] = useState(data[indice].estado)
@@ -195,14 +218,15 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
     const handleSubmit = (e)=>{
         e.preventDefault();
 
-        const nuevosDatos = {id,descripcion,valor,estado}
+        const nuevosDatos = {_id,descripcion,valor,estado}
 
         setDataProduct(e=>{
             e[indice]=nuevosDatos
             return e;
         })
 
-        toast.success(`Datos del producto "${nuevosDatos.id}-${nuevosDatos.descripcion}" actualizados`)
+        putProducto(nuevosDatos).then();
+        toast.success(`Datos del producto "${nuevosDatos._id}-${nuevosDatos.descripcion}" actualizados`)
         setListaProductos(e=>!e)
     }
 
@@ -216,9 +240,9 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
                 setListaProductos(e=>!e)
             }}>Atras</button>
 
-            <label htmlFor="id">
+            <label htmlFor="_id">
                 ID producto
-                <input name="id" className="mb-2 w-48" type="number" value={id} onChange={handleID} disabled/>
+                <input name="_id" className="mb-2 w-48" type="number" value={_id} onChange={handleID} disabled/>
             </label>
 
             <label htmlFor="descripcion">
