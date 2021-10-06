@@ -102,7 +102,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}) => {
 
     const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
-    const [id,setId] = useState(dataUsers[indice].id)
+    const [id,setId] = useState(dataUsers[indice]._id)
     const [estado,setEstado] = useState(dataUsers[indice].estado)
     const [rol,setRol] = useState(dataUsers[indice].rol)
     const [email,setEmail] = useState(dataUsers[indice].email)
@@ -128,7 +128,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
             e[indice] = nuevosDatos;
             return e;
         })
-        toast.success(`El usuario "${nuevosDatos.id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
 

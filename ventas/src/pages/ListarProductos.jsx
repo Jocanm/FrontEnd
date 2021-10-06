@@ -28,6 +28,13 @@ async function putProducto(producto){
     return datos.data;
 }
 
+//traer por id o descripcion
+/*async function getProducto(buscar){
+    const datos=await ProductosServices.findById(buscar);
+    datosProductos = datos.data;
+    return datos.data;
+}*/
+
 const Productos = () => {
 
     //Añado la base de datos a una estado
@@ -69,8 +76,14 @@ const Productos = () => {
     )
 }
 
-const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
 
+const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
+    
+    /*function Buscar(){
+        var buscar = document.getElementById('buscar');
+        return buscar.value
+    }*/
+   
     return(
         <form>
             
@@ -83,7 +96,10 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                 <div className="flex justify-between mt-2">
                     <label className="flex" htmlFor="buscar">
                         <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-                        <button className="buttonIco" type="button"><i class="fas fa-search"></i></button>
+                        <button className="buttonIco" type="button" 
+                        onClick={()=>{    
+                            //getProducto(Buscar()).then()
+                        }}><i class="fas fa-search"></i></button>
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
                         setListaProductos(e=>!e)

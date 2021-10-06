@@ -14,3 +14,8 @@ exports.update = (producto) =>{
     console.log(producto);
     return axios.put(url+"/"+producto._id, producto);
 }
+
+exports.findById = (buscar) =>{
+    console.log(buscar);
+    return axios.get(url+"/"+ buscar);
+}
