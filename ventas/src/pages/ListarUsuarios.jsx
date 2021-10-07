@@ -2,35 +2,35 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-//import usuarios from "../data/users";
+import usuarios from "../data/users";
 import UsuariosServices from '../services/usuario.service'
 
-let datosUsuarios;
+// let datosUsuarios;
 
-//traer todos los usuarios
-async function getUsuarios(){
-    const datos =await UsuariosServices.findAll();
-    datosUsuarios = datos.data;
-    return datos.data;
-}
-getUsuarios().then();
+// //traer todos los usuarios
+// async function getUsuarios(){
+//     const datos =await UsuariosServices.findAll();
+//     datosUsuarios = datos.data;
+//     return datos.data;
+// }
+// getUsuarios().then();
 
-//actualizar un usario
-async function putUsuarios(usuario){
-    const datos = await UsuariosServices.update(usuario);
-    datosUsuarios = datos.data;
-    return datos.data;
-}
+// //actualizar un usario
+// async function putUsuarios(usuario){
+//     const datos = await UsuariosServices.update(usuario);
+//     datosUsuarios = datos.data;
+//     return datos.data;
+// }
 
 
 const Usuarios = () =>{
 
     const [listaUsuarios,setListaUsuarios] = useState(true);
-    const [dataUsers,setDataUsers] = useState([])
+    const [dataUsers,setDataUsers] = useState(usuarios)
     const [indice,setIndice] = useState();
 
     useEffect(()=>{
-        setDataUsers(datosUsuarios)
+        setDataUsers(usuarios)
     },[])
 
     return(
@@ -48,6 +48,14 @@ const Usuarios = () =>{
 
 const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 
+    const [busqueda,setBusqueda] = useState("");
+    const [filtrados,setFiltrados] = useState(dataUsers)
+
+    useEffect(()=>{
+        setFiltrados(dataUsers.filter((e)=>{
+            return JSON.stringify(e).toLowerCase().includes(busqueda.toLowerCase())
+        }))
+    },[busqueda,dataUsers])
 
     return (
         <>
@@ -55,15 +63,15 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
             <div className="bg-red">
                 <form>
                     <div className="mb-8">
-                    <input type="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-                    <button class="buttonIco" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <input type="text" name="buscar" id="buscar" placeholder="buscar por id"
+                    value={busqueda}
+                    onChange={(e)=>setBusqueda(e.target.value)}
+                    />
                     <Link to="/escritorio">
                             <button class="buttonIco right botonuser"><i class="fas fa-home"></i></button>
                     </Link>
                     </div>
-                    <table class="table" id="tabla">
+                    <table className="table tablas" id="tabla">
                         <thead>
                             <tr>
                                 <th>ID usuario</th>
@@ -74,10 +82,10 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {dataUsers.map((e,i) => {
+                            {filtrados.map((e,i) => {
                                 return (
                                     <tr>
-                                        <td>{e._id}</td>
+                                        <td>{e.id}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
@@ -131,8 +139,8 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
             e[indice] = nuevosDatos;
             return e;
         })
-        putUsuarios(nuevosDatos).then();
-        toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        // putUsuarios(nuevosDatos).then();
+        // toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
 
@@ -150,15 +158,15 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={datosUsuarios[indice]._id} value={_id} disabled/>
+                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice]._id} value={_id} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario
-                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={datosUsuarios[indice].nombre} value={nombre} onChange={handleNombre}/>
+                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={dataUsers[indice].nombre} value={nombre} onChange={handleNombre}/>
                 </label>
                 <label htmlFor="email">
                     Correo electrónico
-                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={datosUsuarios[indice].email} value={email} onChange={handleEmail}/>
+                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={dataUsers[indice].email} value={email} onChange={handleEmail}/>
                 </label>
                 <label htmlFor="estado">
                     Estado usuario
