@@ -62,7 +62,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
             <h1 className="text-2xl">GESTIÓN DE USUARIOS</h1>
             <div className="bg-red">
                 <form>
-                    <div className="mb-8">
+                    <div className="mb-8 flex justify-between">
                     <input type="text" name="buscar" id="buscar" placeholder="buscar por id"
                     value={busqueda}
                     onChange={(e)=>setBusqueda(e.target.value)}
@@ -113,7 +113,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}) => {
 
     const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
-    const [_id,setId] = useState(dataUsers[indice]._id)
+    const [id,setId] = useState(dataUsers[indice].id)
     const [estado,setEstado] = useState(dataUsers[indice].estado)
     const [rol,setRol] = useState(dataUsers[indice].rol)
     const [email,setEmail] = useState(dataUsers[indice].email)
@@ -134,13 +134,13 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const nuevosDatos = {nombre,_id,estado,rol,email}
+        const nuevosDatos = {nombre,id,estado,rol,email}
         setDataUsers(e=>{
             e[indice] = nuevosDatos;
             return e;
         })
         // putUsuarios(nuevosDatos).then();
-        // toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        toast.success(`El usuario "${nuevosDatos.id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
 
@@ -158,7 +158,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice]._id} value={_id} disabled/>
+                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={id} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario
