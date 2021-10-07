@@ -29,11 +29,11 @@ async function putProducto(producto){
 }
 
 //traer por id o descripcion
-/*async function getProducto(buscar){
+async function getProducto(buscar){
     const datos=await ProductosServices.findById(buscar);
     datosProductos = datos.data;
     return datos.data;
-}*/
+}
 
 const Productos = () => {
 
@@ -53,7 +53,7 @@ const Productos = () => {
 
     useEffect(()=>{
         setDataProduct(datosProductos)
-    },[])
+    },[listaProductos])
 
     //Controla el titulo dinamico
     useEffect(()=>{
@@ -79,10 +79,10 @@ const Productos = () => {
 
 const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
     
-    /*function Buscar(){
+    function Buscar(){
         var buscar = document.getElementById('buscar');
         return buscar.value
-    }*/
+    }
    
     return(
         <form>
@@ -98,7 +98,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                         <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
                         <button className="buttonIco" type="button" 
                         onClick={()=>{    
-                            //getProducto(Buscar()).then()
+                            getProducto(Buscar()).then()
                         }}><i class="fas fa-search"></i></button>
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
@@ -131,7 +131,6 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                                             }}>
                                                 <i class="fas fa-search"></i>
                                             </button>
-                                            <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                 )
@@ -179,7 +178,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
                     }}>Atras
                 </button>
 
-                <label className="mb-2" htmlFor="_id">
+                <label className="mb-2" htmlFor="id">
                     ID producto
                     <input className="w-48" type="number" name="_id" required/>
                 </label>
