@@ -131,7 +131,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
             e[indice] = nuevosDatos;
             return e;
         })
-        putUsuarios().then(nuevosDatos);
+        putUsuarios(nuevosDatos).then();
         toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }

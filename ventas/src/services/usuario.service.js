@@ -7,5 +7,6 @@ exports.findAll = () => {
 }
 
 exports.update = (usuario) =>{
-    return axios.put(url, usuario);
+    console.log(usuario);
+    return axios.put(url+"/"+usuario._id, usuario);
 }
