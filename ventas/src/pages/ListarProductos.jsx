@@ -83,7 +83,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
         var buscar = document.getElementById('buscar');
         return buscar.value
     }*/
-   
+    
     return(
         <form>
             
