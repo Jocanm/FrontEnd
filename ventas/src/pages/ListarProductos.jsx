@@ -29,11 +29,11 @@ async function putProducto(producto){
 }
 
 //traer por id o descripcion
-async function getProducto(buscar){
+/*async function getProducto(buscar){
     const datos=await ProductosServices.findById(buscar);
     datosProductos = datos.data;
     return datos.data;
-}
+}*/
 
 const Productos = () => {
 
@@ -105,8 +105,6 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                             setBusqueda(e.target.value)
                         }}
                         />
-                        <button className="buttonIco" type="button" 
-                        ><i class="fas fa-search"></i></button>
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
                         setListaProductos(e=>!e)

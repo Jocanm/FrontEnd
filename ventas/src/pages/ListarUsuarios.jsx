@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 // import usuarios from "../data/users";
-import Tooltip from '@mui/material/Tooltip';
+//import Tooltip from '@mui/material/Tooltip';
 import UsuariosServices from '../services/usuario.service'
 
 let datosUsuarios;
@@ -140,7 +140,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
             e[indice] = nuevosDatos;
             return e;
         })
-        // putUsuarios(nuevosDatos).then();
+        putUsuarios(nuevosDatos).then();
         toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
