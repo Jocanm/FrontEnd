@@ -2,36 +2,36 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import usuarios from "../data/users";
+// import usuarios from "../data/users";
 import Tooltip from '@mui/material/Tooltip';
 import UsuariosServices from '../services/usuario.service'
 
-// let datosUsuarios;
+let datosUsuarios;
 
-// //traer todos los usuarios
-// async function getUsuarios(){
-//     const datos =await UsuariosServices.findAll();
-//     datosUsuarios = datos.data;
-//     return datos.data;
-// }
-// getUsuarios().then();
+//traer todos los usuarios
+async function getUsuarios(){
+    const datos =await UsuariosServices.findAll();
+    datosUsuarios = datos.data;
+    return datos.data;
+}
+getUsuarios().then();
 
-// //actualizar un usario
-// async function putUsuarios(usuario){
-//     const datos = await UsuariosServices.update(usuario);
-//     datosUsuarios = datos.data;
-//     return datos.data;
-// }
+//actualizar un usario
+async function putUsuarios(usuario){
+    const datos = await UsuariosServices.update(usuario);
+    datosUsuarios = datos.data;
+    return datos.data;
+}
 
 
 const Usuarios = () =>{
 
     const [listaUsuarios,setListaUsuarios] = useState(true);
-    const [dataUsers,setDataUsers] = useState(usuarios)
+    const [dataUsers,setDataUsers] = useState(datosUsuarios)
     const [indice,setIndice] = useState();
 
     useEffect(()=>{
-        setDataUsers(usuarios)
+        setDataUsers(datosUsuarios)
     },[])
 
     return(
@@ -86,7 +86,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             {filtrados.map((e,i) => {
                                 return (
                                     <tr>
-                                        <td>{e.id}</td>
+                                        <td>{e._id}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
@@ -114,7 +114,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}) => {
 
     const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
-    const [id,setId] = useState(dataUsers[indice].id)
+    const [_id,setId] = useState(dataUsers[indice]._id)
     const [estado,setEstado] = useState(dataUsers[indice].estado)
     const [rol,setRol] = useState(dataUsers[indice].rol)
     const [email,setEmail] = useState(dataUsers[indice].email)
@@ -135,13 +135,13 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const nuevosDatos = {nombre,id,estado,rol,email}
+        const nuevosDatos = {nombre,_id,estado,rol,email}
         setDataUsers(e=>{
             e[indice] = nuevosDatos;
             return e;
         })
         // putUsuarios(nuevosDatos).then();
-        toast.success(`El usuario "${nuevosDatos.id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
 
@@ -159,7 +159,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={id} disabled/>
+                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={_id} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario

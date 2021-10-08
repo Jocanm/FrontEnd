@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
-//import productos from '../data/productos'
+// import productos from '../data/productos'
 import { useState, useEffect, useRef} from 'react'
 import ProductosServices from '../services/producto.service'
 
@@ -79,11 +79,15 @@ const Productos = () => {
 
 const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
     
-    function Buscar(){
-        var buscar = document.getElementById('buscar');
-        return buscar.value
-    }
+
+    const [busqueda,setBusqueda] = useState("");
+    const [productosFiltrados,setProductosFiltrados] = useState(data);
     
+    useEffect(()=>{
+        setProductosFiltrados(data.filter((e)=>{
+            return JSON.stringify(e).toLowerCase().includes(busqueda.toLowerCase())
+        }))
+    },[busqueda,data])
     return(
         <form>
             
@@ -95,18 +99,21 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                 </div>
                 <div className="flex justify-between mt-2">
                     <label className="flex" htmlFor="buscar">
-                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"
+                        value={busqueda}
+                        onChange={(e)=>{
+                            setBusqueda(e.target.value)
+                        }}
+                        />
                         <button className="buttonIco" type="button" 
-                        onClick={()=>{    
-                            getProducto(Buscar()).then()
-                        }}><i class="fas fa-search"></i></button>
+                        ><i class="fas fa-search"></i></button>
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
                         setListaProductos(e=>!e)
                         setCrearProducto(e=>!e)
                     }}>Nuevo Producto</button>
                 </div>
-                <table className="mt-4">
+                <table className="mt-4 tablas">
                     <thead>
                         <tr>
                             <th>ID producto</th>
@@ -117,7 +124,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                     </thead>
                     <tbody>
                         {
-                            data.map((e,i)=>{
+                            productosFiltrados.map((e,i)=>{
                                 return(
                                     <tr>
                                         <td>{e._id}</td>
