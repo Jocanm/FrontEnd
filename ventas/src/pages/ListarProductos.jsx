@@ -127,7 +127,12 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                                         <td>
                                             <button class="buttonIco mr-1"  onClick={()=>{
                                                 setListaProductos(e=>!e)
-                                                setIndice(i)
+                                                setIndice((indice)=>{
+                                                    data.forEach((el,i)=>{
+                                                        if(el._id === e._id) indice = i;
+                                                    })
+                                                    return indice;
+                                                });
                                             }}>
                                                 <i class="fas fa-search"></i>
                                             </button>

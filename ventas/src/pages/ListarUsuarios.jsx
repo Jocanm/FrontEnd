@@ -106,13 +106,14 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                                         <td>{e.email}</td>
                                         <td>
                                             <button onClick={()=>{
-                                                setIndice(i)
+                                                // setIndice(i)
                                                 setListaUsuarios(e=>!e);
-                                                // setIndice((e)=>{
-                                                //     const nuevo = dataUsers.filter((el)=>{
-                                                //         return el._id === 
-                                                //     })
-                                                // });
+                                                setIndice((indice)=>{
+                                                    dataUsers.forEach((el,i)=>{
+                                                        if(el._id === e._id) indice = i;
+                                                    })
+                                                    return indice;
+                                                });
                                             }} class="buttonIco">
                                                 <i class="fas fa-search"></i>
                                             </button>
