@@ -7,14 +7,6 @@ import ProductosServices from '../services/producto.service'
 
 let datosProductos;
 
-//traer todos los productos
-async function getProductos(){
-    const datos = await ProductosServices.findAll();
-    datosProductos = datos.data;
-    return datos.data;
-}
-getProductos().then();
-
 //crear un producto
 async function postProducto(producto){
     const datos = await ProductosServices.create(producto);
@@ -28,12 +20,6 @@ async function putProducto(producto){
     return datos.data;
 }
 
-//traer por id o descripcion
-/*async function getProducto(buscar){
-    const datos=await ProductosServices.findById(buscar);
-    datosProductos = datos.data;
-    return datos.data;
-}*/
 
 const Productos = () => {
 
@@ -50,10 +36,19 @@ const Productos = () => {
     //titulo dinamico
     const [titulo,setTitulo] = useState("")
 
-
     useEffect(()=>{
-        setDataProduct(datosProductos)
+        async function getProductos(){
+            const datos = await ProductosServices.findAll();
+            datosProductos = datos.data;
+            setDataProduct(datosProductos)
+            return datos.data;
+        }
+        getProductos().then();
     },[listaProductos])
+
+    // useEffect(()=>{
+    //     setDataProduct(datosProductos)
+    // },[listaProductos])
 
     //Controla el titulo dinamico
     useEffect(()=>{

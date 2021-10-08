@@ -8,13 +8,14 @@ import UsuariosServices from '../services/usuario.service'
 
 let datosUsuarios;
 
-//traer todos los usuarios
-async function getUsuarios(){
-    const datos =await UsuariosServices.findAll();
-    datosUsuarios = datos.data;
-    return datos.data;
-}
-getUsuarios().then();
+// traer todos los usuarios
+// async function getUsuarios(){
+//     const datos =await UsuariosServices.findAll();
+//     datosUsuarios = datos.data;
+//     return datos.data;
+// }
+
+// getUsuarios().then();
 
 //actualizar un usario
 async function putUsuarios(usuario){
@@ -27,12 +28,24 @@ async function putUsuarios(usuario){
 const Usuarios = () =>{
 
     const [listaUsuarios,setListaUsuarios] = useState(true);
-    const [dataUsers,setDataUsers] = useState(datosUsuarios)
+    const [dataUsers,setDataUsers] = useState([])
     const [indice,setIndice] = useState();
 
+    // useEffect(()=>{
+    //     setDataUsers(datosUsuarios)
+    // },[])
+
     useEffect(()=>{
-        setDataUsers(datosUsuarios)
-    },[])
+        if(listaUsuarios){
+            async function getUsuarios(){
+                const datos =await UsuariosServices.findAll();
+                datosUsuarios = datos.data;
+                setDataUsers(datosUsuarios)
+                return datos.data;
+            }
+            getUsuarios().then()
+        }
+    },[listaUsuarios])
 
     return(
         <div>
@@ -93,8 +106,13 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                                         <td>{e.email}</td>
                                         <td>
                                             <button onClick={()=>{
+                                                setIndice(i)
                                                 setListaUsuarios(e=>!e);
-                                                setIndice(i);
+                                                // setIndice((e)=>{
+                                                //     const nuevo = dataUsers.filter((el)=>{
+                                                //         return el._id === 
+                                                //     })
+                                                // });
                                             }} class="buttonIco">
                                                 <i class="fas fa-search"></i>
                                             </button>
