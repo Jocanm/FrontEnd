@@ -42,7 +42,7 @@ const Productos = () => {
             return datos.data;
         }
         getProductos().then();
-    },[listaProductos])
+    },[listaProductos,crearProducto])
 
     // useEffect(()=>{
     //     setDataProduct(datosProductos)
