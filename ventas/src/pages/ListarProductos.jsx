@@ -1,9 +1,23 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
-import productos from '../data/productos'
 import { useState, useEffect, useRef} from 'react'
+import ProductosServices from '../services/producto.service'
 
+let datosProductos;
+
+//crear un producto
+async function postProducto(producto){
+    const datos = await ProductosServices.create(producto);
+    datosProductos = datos.data;
+    return datos.data;
+}
+
+//actualizar un producto
+async function putProducto(producto){
+    const datos = await ProductosServices.update(producto);
+    return datos.data;
+}
 
 const Productos = () => {
 
@@ -20,10 +34,15 @@ const Productos = () => {
     //titulo dinamico
     const [titulo,setTitulo] = useState("")
 
-
     useEffect(()=>{
-        setDataProduct(productos)
-    },[])
+        async function getProductos(){
+            const datos = await ProductosServices.findAll();
+            datosProductos = datos.data;
+            setDataProduct(datosProductos)
+            return datos.data;
+        }
+        getProductos().then();
+    },[listaProductos,crearProducto])
 
     //Controla el titulo dinamico
     useEffect(()=>{
@@ -31,7 +50,6 @@ const Productos = () => {
         else if(crearProducto) setTitulo("CREAR NUEVO PRODUCTO")
         else setTitulo("ACTUALIZAR PRODUCTO")
     },[listaProductos,crearProducto])
-
 
     return (
         <div>
@@ -48,7 +66,16 @@ const Productos = () => {
 }
 
 const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
+    
 
+    const [busqueda,setBusqueda] = useState("");
+    const [productosFiltrados,setProductosFiltrados] = useState(data);
+    
+    useEffect(()=>{
+        setProductosFiltrados(data.filter((e)=>{
+            return JSON.stringify(e).toLowerCase().includes(busqueda.toLowerCase())
+        }))
+    },[busqueda,data])
     return(
         <form>
             
@@ -59,16 +86,20 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                     </Link>
                 </div>
                 <div className="flex justify-between mt-2">
-                    <label className="flex" htmlFor="buscar">
-                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-                        <button className="buttonIco" type="button"><i class="fas fa-search"></i></button>
+                    <label className="flex p-0" htmlFor="buscar">
+                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder=" buscar por id"
+                        value={busqueda}
+                        onChange={(e)=>{
+                            setBusqueda(e.target.value)
+                        }}
+                        />
                     </label>
                     <button className="button1 right p-6 h" type="submit" name="nuevoproducto" onClick={()=>{
                         setListaProductos(e=>!e)
                         setCrearProducto(e=>!e)
                     }}>Nuevo Producto</button>
                 </div>
-                <table className="mt-4">
+                <table className="mt-4 tablas">
                     <thead>
                         <tr>
                             <th>ID producto</th>
@@ -79,21 +110,25 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                     </thead>
                     <tbody>
                         {
-                            data.map((e,i)=>{
+                            productosFiltrados.map((e,i)=>{
                                 return(
                                     <tr>
-                                        <td>{e.id}</td>
+                                        <td>{e._id}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
                                         <td>{e.estado}</td>
                                         <td>
                                             <button class="buttonIco mr-1"  onClick={()=>{
                                                 setListaProductos(e=>!e)
-                                                setIndice(i)
+                                                setIndice((indice)=>{
+                                                    data.forEach((el,i)=>{
+                                                        if(el._id === e._id) indice = i;
+                                                    })
+                                                    return indice;
+                                                });
                                             }}>
                                                 <i class="fas fa-search"></i>
                                             </button>
-                                            <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                 )
@@ -120,6 +155,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
             nuevoproducto[llave]=valor;
         })
 
+        postProducto(nuevoproducto).then();
         toast.success(`Producto "${nuevoproducto.descripcion}" agregado con éxito`)
         setDataProduct(e=>[...e,nuevoproducto]);
         setListaProductos(e=>!e)
@@ -142,7 +178,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
 
                 <label className="mb-2" htmlFor="id">
                     ID producto
-                    <input className="w-48" type="number" name="id" required/>
+                    <input className="w-48" type="number" name="_id" required/>
                 </label>
                 <label className="mb-2" htmlFor="descripcion">
                     Descripción
@@ -173,7 +209,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
 
 const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
 
-    const [id,setId] = useState(data[indice].id);
+    const [_id,setId] = useState(data[indice]._id);
     const [descripcion,setDescripcion] = useState(data[indice].descripcion)
     const [valor,setValor] = useState(data[indice].valor)
     const [estado,setEstado] = useState(data[indice].estado)
@@ -195,14 +231,15 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
     const handleSubmit = (e)=>{
         e.preventDefault();
 
-        const nuevosDatos = {id,descripcion,valor,estado}
+        const nuevosDatos = {_id,descripcion,valor,estado}
 
         setDataProduct(e=>{
             e[indice]=nuevosDatos
             return e;
         })
 
-        toast.success(`Datos del producto "${nuevosDatos.id}-${nuevosDatos.descripcion}" actualizados`)
+        putProducto(nuevosDatos).then();
+        toast.success(`Datos del producto "${nuevosDatos._id}-${nuevosDatos.descripcion}" actualizados`)
         setListaProductos(e=>!e)
     }
 
@@ -216,9 +253,9 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
                 setListaProductos(e=>!e)
             }}>Atras</button>
 
-            <label htmlFor="id">
+            <label htmlFor="_id">
                 ID producto
-                <input name="id" className="mb-2 w-48" type="number" value={id} onChange={handleID} disabled/>
+                <input name="_id" className="mb-2 w-48" type="number" value={_id} onChange={handleID} disabled/>
             </label>
 
             <label htmlFor="descripcion">

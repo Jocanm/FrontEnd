@@ -3,9 +3,11 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ventas from '../data/ventas'
-import productos from "../data/productos";
+import ProductosServices from '../services/producto.service'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+
+let datosProductos;
 
 const Ventas = () => {
 
@@ -22,8 +24,14 @@ const Ventas = () => {
 
 
     useEffect(()=>{
+        async function getProductos(){
+            const datos = await ProductosServices.findAll();
+            datosProductos = datos.data;
+            setDataProduct(datosProductos)
+            return datos.data;
+        }
         setDataVentas(ventas)
-        setDataProduct(productos)
+        getProductos().then();
     },[])
 
     return (
@@ -72,7 +80,7 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                 </div>
                 <div className="flex justify-between mt-2">
                     <label className="flex" htmlFor="buscar">
-                        <input type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+                        <input type ="text" name="buscar" id="buscar" placeholder=" buscar por id"/>
                         <button className="buttonIco ml-2" type="submit"><i class="fas fa-search"></i></button>
                     </label>
                     <button class="button1 right p-6 font-bold" type="submit" name="nuevaventa" 

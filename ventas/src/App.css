@@ -270,9 +270,6 @@ a {
     border-color: #2471A3;
 }
 
-.lista-usuarios{
-
-}
 
 .lista-usuarios > li{
     margin-top: 1rem;
@@ -280,4 +277,32 @@ a {
 
 .ul-producto > li{
     padding-top: 1rem;
+}
+
+.tablas td,
+.tablas th{
+    padding: 8px;
+    /* border: 1px solid gray; */
+}
+
+.tablas th{
+    /* background-color: #04aa6d; */
+    /* color: white; */
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+.tablas{
+    width: 100%;
+    margin: 10px;
+}
+
+/* .tablas tr:nth-child(even){
+    background-color: #8aacc2;
+} */
+
+.tablas tr:hover{
+    background-color: #8aacc2;
+    cursor: pointer;
 }

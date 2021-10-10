@@ -2,7 +2,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import usuarios from "../data/users";
+import UsuariosServices from '../services/usuario.service'
+
+let datosUsuarios;
+
+//actualizar un usario
+async function putUsuarios(usuario){
+    const datos = await UsuariosServices.update(usuario);
+    datosUsuarios = datos.data;
+    return datos.data;
+}
 
 
 const Usuarios = () =>{
@@ -11,9 +20,18 @@ const Usuarios = () =>{
     const [dataUsers,setDataUsers] = useState([])
     const [indice,setIndice] = useState();
 
+
     useEffect(()=>{
-        setDataUsers(usuarios)
-    },[])
+        if(listaUsuarios){
+            async function getUsuarios(){
+                const datos =await UsuariosServices.findAll();
+                datosUsuarios = datos.data;
+                setDataUsers(datosUsuarios)
+                return datos.data;
+            }
+            getUsuarios().then()
+        }
+    },[listaUsuarios])
 
     return(
         <div>
@@ -30,22 +48,30 @@ const Usuarios = () =>{
 
 const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 
+    const [busqueda,setBusqueda] = useState("");
+    const [filtrados,setFiltrados] = useState(dataUsers)
+
+    useEffect(()=>{
+        setFiltrados(dataUsers.filter((e)=>{
+            return JSON.stringify(e).toLowerCase().includes(busqueda.toLowerCase())
+        }))
+    },[busqueda,dataUsers])
 
     return (
         <>
             <h1 className="text-2xl">GESTIÓN DE USUARIOS</h1>
             <div className="bg-red">
                 <form>
-                    <div className="mb-8">
-                    <input type="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-                    <button class="buttonIco" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <div className="mb-8 flex justify-between">
+                    <input type="text" name="buscar" id="buscar" placeholder=" buscar por id"
+                    value={busqueda}
+                    onChange={(e)=>setBusqueda(e.target.value)}
+                    />
                     <Link to="/escritorio">
                             <button class="buttonIco right botonuser"><i class="fas fa-home"></i></button>
                     </Link>
                     </div>
-                    <table class="table" id="tabla">
+                    <table className="table tablas" id="tabla">
                         <thead>
                             <tr>
                                 <th>ID usuario</th>
@@ -56,18 +82,24 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {dataUsers.map((e,i) => {
+                            {filtrados.map((e,i) => {
                                 return (
                                     <tr>
-                                        <td>{e.id}</td>
+                                        <td>{e._id}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
                                         <td>{e.email}</td>
                                         <td>
                                             <button onClick={()=>{
+                                                // setIndice(i)
                                                 setListaUsuarios(e=>!e);
-                                                setIndice(i);
+                                                setIndice((indice)=>{
+                                                    dataUsers.forEach((el,i)=>{
+                                                        if(el._id === e._id) indice = i;
+                                                    })
+                                                    return indice;
+                                                });
                                             }} class="buttonIco">
                                                 <i class="fas fa-search"></i>
                                             </button>
@@ -87,7 +119,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}) => {
 
     const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
-    const [id,setId] = useState(dataUsers[indice].id)
+    const [_id,setId] = useState(dataUsers[indice]._id)
     const [estado,setEstado] = useState(dataUsers[indice].estado)
     const [rol,setRol] = useState(dataUsers[indice].rol)
     const [email,setEmail] = useState(dataUsers[indice].email)
@@ -108,12 +140,13 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const nuevosDatos = {nombre,id,estado,rol,email}
+        const nuevosDatos = {nombre,_id,estado,rol,email}
         setDataUsers(e=>{
             e[indice] = nuevosDatos;
             return e;
         })
-        toast.success(`El usuario "${nuevosDatos.id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        putUsuarios(nuevosDatos).then();
+        toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
         setListaUsuarios(e=>!e)
     }
 
@@ -131,15 +164,15 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="id" id="idencargado" placeholder={usuarios[indice].id} value={id} disabled/>
+                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={_id} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario
-                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={usuarios[indice].nombre} value={nombre} onChange={handleNombre}/>
+                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={dataUsers[indice].nombre} value={nombre} onChange={handleNombre}/>
                 </label>
                 <label htmlFor="email">
                     Correo electrónico
-                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={usuarios[indice].email} value={email} onChange={handleEmail}/>
+                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={dataUsers[indice].email} value={email} onChange={handleEmail}/>
                 </label>
                 <label htmlFor="estado">
                     Estado usuario
