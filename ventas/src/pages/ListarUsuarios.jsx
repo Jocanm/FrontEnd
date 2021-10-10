@@ -2,20 +2,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-// import usuarios from "../data/users";
-//import Tooltip from '@mui/material/Tooltip';
 import UsuariosServices from '../services/usuario.service'
 
 let datosUsuarios;
-
-// traer todos los usuarios
-// async function getUsuarios(){
-//     const datos =await UsuariosServices.findAll();
-//     datosUsuarios = datos.data;
-//     return datos.data;
-// }
-
-// getUsuarios().then();
 
 //actualizar un usario
 async function putUsuarios(usuario){
@@ -31,9 +20,6 @@ const Usuarios = () =>{
     const [dataUsers,setDataUsers] = useState([])
     const [indice,setIndice] = useState();
 
-    // useEffect(()=>{
-    //     setDataUsers(datosUsuarios)
-    // },[])
 
     useEffect(()=>{
         if(listaUsuarios){
@@ -77,7 +63,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
             <div className="bg-red">
                 <form>
                     <div className="mb-8 flex justify-between">
-                    <input type="text" name="buscar" id="buscar" placeholder="buscar por id"
+                    <input type="text" name="buscar" id="buscar" placeholder=" buscar por id"
                     value={busqueda}
                     onChange={(e)=>setBusqueda(e.target.value)}
                     />

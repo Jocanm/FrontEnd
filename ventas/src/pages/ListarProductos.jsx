@@ -1,7 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
-// import productos from '../data/productos'
 import { useState, useEffect, useRef} from 'react'
 import ProductosServices from '../services/producto.service'
 
@@ -94,7 +93,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                 </div>
                 <div className="flex justify-between mt-2">
                     <label className="flex p-0" htmlFor="buscar">
-                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder="buscar por id"
+                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder=" buscar por id"
                         value={busqueda}
                         onChange={(e)=>{
                             setBusqueda(e.target.value)
