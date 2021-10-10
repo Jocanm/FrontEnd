@@ -44,10 +44,6 @@ const Productos = () => {
         getProductos().then();
     },[listaProductos,crearProducto])
 
-    // useEffect(()=>{
-    //     setDataProduct(datosProductos)
-    // },[listaProductos])
-
     //Controla el titulo dinamico
     useEffect(()=>{
         if(listaProductos) setTitulo("GESTIÓN DE PRODUCTOS")
