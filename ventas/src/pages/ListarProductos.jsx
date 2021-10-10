@@ -19,7 +19,6 @@ async function putProducto(producto){
     return datos.data;
 }
 
-
 const Productos = () => {
 
     //Añado la base de datos a una estado
@@ -69,7 +68,6 @@ const Productos = () => {
         
     )
 }
-
 
 const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
     
