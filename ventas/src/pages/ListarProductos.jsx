@@ -7,7 +7,8 @@ import ProductosServices from '../services/producto.service'
 let datosProductos;
 
 //crear un producto
-async function postProducto(producto){
+
+const postProducto = async (producto)=>{
     const datos = await ProductosServices.create(producto);
     datosProductos = datos.data;
     return datos.data;
