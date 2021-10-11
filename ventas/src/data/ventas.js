@@ -1,74 +1,50 @@
 const ventas = [
 
     {
-        idV:"001",
-        valor:40000,
-        fechaVenta:"3/10/2021",
-        encargado:"Madeline Escorcia",
+        _id:"00145",
+        valor:20000,
+        fechaVenta:"11/10/2021",
+        encargado:"Jorge Perez",
         estado:"en proceso",
-        cliente:{
-            idC:"1001857105",
-            nombre:"Daniel Hernandez"
-        },
+        idC:"1001456104",
+        nombreCliente:"Adriana Pacheco",
         productos:[
             {
-                idP:"001",
-                cantidad:2,
-                precioUnitario:20000
+                _id:"001",
+                descripcion:"Monitor",
+                valor:20000,
             }
         ]
     },
     {
-        idV:"002",
-        valor:40000,
+        _id:"002123",
+        valor:50000,
         fechaVenta:"3/10/2021",
         encargado:"Madeline Escorcia",
         estado:"cancelada",
-        cliente:{
-            idC:"1001857105",
-            nombre:"Daniel Hernandez"
-        },
+        idC:"1001855604",
+        nombreCliente:"Hugo Tinoco",
         productos:[
             {
-                idP:"001",
-                cantidad:2,
-                precioUnitario:20000
+                _id:"001",
+                descripcion:"Mouse",
+                valor:50000,
             }
         ]
     },
     {
-        idV:"003",
-        valor:40000,
+        _id:"00345",
+        valor:10000,
         fechaVenta:"3/10/2021",
         encargado:"Madeline Escorcia",
         estado:"en proceso",
-        cliente:{
-            idC:"1001857105",
-            nombre:"Daniel Hernandez"
-        },
+        idC:"1001857764",
+        nombreCliente:"Daniel Hernandez",
         productos:[
             {
-                idP:"001",
-                cantidad:2,
-                precioUnitario:20000
-            }
-        ]
-    },
-    {
-        idV:"004",
-        valor:40000,
-        fechaVenta:"3/10/2021",
-        encargado:"Eliana Ortega",
-        estado:"cancelada",
-        cliente:{
-            idC:"1001857105",
-            nombre:"Jhuliana Perez"
-        },
-        productos:[
-            {
-                idP:"001",
-                cantidad:2,
-                precioUnitario:20000
+                _id:"001",
+                descripcion:"Teclado",
+                valor:10000,
             }
         ]
     }

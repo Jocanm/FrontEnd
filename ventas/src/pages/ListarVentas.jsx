@@ -1,19 +1,26 @@
 import {Link} from "react-router-dom"
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ventas from '../data/ventas'
 import ProductosServices from '../services/producto.service'
+import UsuariosServices from '../services/usuario.service'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 let datosProductos;
+let datosUsuarios;
 
 const Ventas = () => {
 
-    //Añade los datos de las ventas y de los productos a un estado
+    //Añade los datos de las ventas, de los productos y de los usuarios a un estado
     const [dataVentas,setDataVentas] = useState([])
     const [dataProduct,setDataProduct] = useState([])
+    const [dataUsers,setDataUsers] = useState([]);
+
+    //Creamos estados donde se alamacenen los productos en estado disponible y los usuarios que sean vendedores
+    const [productosDisponibles,setProductosDisponibles] = useState([])
+    const [vendedores,setVendedores] = useState([]);
 
     //Me permite controlar la renderización condicional
     const [verVentas,setVerVentas] = useState(true)
@@ -21,8 +28,7 @@ const Ventas = () => {
 
     //Para la pagina de actualizar los datos
     const [indice,setIndice] = useState()
-
-
+    
     useEffect(()=>{
         async function getProductos(){
             const datos = await ProductosServices.findAll();
@@ -30,10 +36,32 @@ const Ventas = () => {
             setDataProduct(datosProductos)
             return datos.data;
         }
-        setDataVentas(ventas)
         getProductos().then();
+        
+        async function getUsuarios(){
+            const datos =await UsuariosServices.findAll();
+            datosUsuarios = datos.data;
+            setDataUsers(datosUsuarios)
+            return datos.data;
+        }
+        getUsuarios().then()
+        setDataVentas(ventas)
     },[])
 
+    
+    //Filtro para productos y vendedores
+    useEffect(()=>{
+            setProductosDisponibles(dataProduct.filter(e=>{
+                return e.estado === "Disponible"
+            }))
+    },[dataProduct])
+
+
+    useEffect(()=>{
+        setVendedores(dataUsers.filter(e=>{
+            return e.rol === "Vendedor"
+        }))
+    },[dataUsers])
     return (
         <div>
             {
@@ -49,15 +77,17 @@ const Ventas = () => {
                     setVerCrearVentas={setVerCrearVentas} 
                     setVerVentas= {setVerVentas}
                     setDataVentas={setDataVentas}
-                    dataProduct={dataProduct}
+                    dataProduct={productosDisponibles}
                     setDataProduct={setDataProduct}
+                    dataUsers={vendedores}
                     />):
             <ActualizarVenta
             setVerVentas={setVerVentas}
             setDataVentas={setDataVentas}
             indice={indice}
             dataVentas={dataVentas}
-            dataProduct={dataProduct}
+            dataProduct={productosDisponibles}
+            dataUsers = {vendedores}
             />
             }
             <ToastContainer position="top-center" autoClose={3000}/>
@@ -65,9 +95,17 @@ const Ventas = () => {
     )
 }
 
-const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
+const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
 
-    
+    const [busqueda,setBusqueda] = useState("");
+    const [ventasFiltradas,setVentasFiltradas] = useState([]);
+
+    useEffect(()=>{
+        setVentasFiltradas(dataVentas.filter(e=>{
+            return JSON.stringify(e).toLowerCase().includes(busqueda.toLowerCase())
+        }))
+    },[busqueda,dataVentas])
+
     return (
         <div>
             <h1 className="text-2xl">GESTIÓN DE VENTAS</h1>
@@ -79,9 +117,11 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                     </Link>
                 </div>
                 <div className="flex justify-between mt-2">
-                    <label className="flex" htmlFor="buscar">
-                        <input type ="text" name="buscar" id="buscar" placeholder=" buscar por id"/>
-                        <button className="buttonIco ml-2" type="submit"><i class="fas fa-search"></i></button>
+                    <label className="flex p-0" htmlFor="buscar">
+                        <input type ="text" name="buscar" id="buscar" placeholder=" Buscar"
+                        value={busqueda}
+                        onChange={(e)=>setBusqueda(e.target.value)}
+                        />
                     </label>
                     <button class="button1 right p-6 font-bold" type="submit" name="nuevaventa" 
                     onClick={()=>{
@@ -95,19 +135,21 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                 <tr>
                                     <th>ID Venta</th>
                                     <th>Encargado</th>
-                                    <th>Fecha de la venta</th>
+                                    <th>Cliente</th>
+                                    <th>ID cliente</th>
                                     <th>Estado</th>
                                     <th>Precio Total</th>
                                 </tr>
                         </thead>
                         <tbody>
                             {
-                                dataVentas.map((e,i)=>{
+                                ventasFiltradas.map((e,i)=>{
                                     return(
                                         <tr>
-                                            <td>{e.idV}</td>
+                                            <td>{e._id}</td>
                                             <td>{e.encargado}</td>
-                                            <td>{e.fechaVenta}</td>
+                                            <td>{e.nombreCliente}</td>
+                                            <td>{e.idC}</td>
                                             <td>{e.estado}</td>
                                             <td>{e.valor}</td>
                                             <td>
@@ -115,7 +157,12 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                                 class="buttonIco mr-1"
                                                 onClick={()=>{
                                                     setVerVentas(e=>!e)
-                                                    setIndice(i)
+                                                    setIndice((indice)=>{
+                                                        dataVentas.forEach((el,ind)=>{
+                                                            if(el._id===e._id) {indice = ind}
+                                                        })
+                                                        return indice
+                                                    })
                                                 }}>
                                                 <i class="fas fa-search"></i>
                                                 </button>
@@ -135,7 +182,7 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
     )
 }
 
-const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) => {
+const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,dataUsers}) => {
 
     const form = useRef(null)
 
@@ -146,6 +193,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
     //Para almacenar los productos de la venta
     const [productos,setProductos] = useState([])
 
+
     const handleSubmit = (e) =>{
         e.preventDefault();
 
@@ -155,6 +203,14 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
         data.forEach((valor,llave)=>{
             nuevaVenta[llave]=valor
         })
+
+        nuevaVenta.productos = productos;
+        let precioTotal = 0;
+        nuevaVenta.productos.forEach(e=>{
+            precioTotal += e.valor;
+        })
+
+        nuevaVenta.valor = precioTotal;
 
         toast.success("La venta ha sido creada con éxito")
         setDataVentas(e=>[...e,nuevaVenta])
@@ -170,7 +226,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
             </Modal.Header>
         <Modal.Body>
             
-            <input className="w-full" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
+            <input className="w-full" type ="text" name="buscar" id="buscar" placeholder=" Buscar"/>
             <br></br><br></br>
             <table class="table" id="tabla">
                     <thead>
@@ -186,13 +242,17 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
                         dataProduct.map((e,i)=>{
                             return(
                                 <tr>
-                                    <td>{e.id}</td>
+                                    <td>{e._id}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
                                     <td>{e.estado}</td>
                                     <td>
-                                        <input className="inputModal border border-gray-500 mr-1"></input>
-                                        <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                        <button class="buttonIco" type="button"
+                                        onClick={()=>{
+                                            setProductos([...productos,e])
+                                        }}
+                                        ><i class="fas fa-plus"
+                                        ></i></button>
                                     </td>
                                 </tr>
                             )
@@ -205,7 +265,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button class="button1" variant="primary" onClick={handleClose}>Guardar</Button>
+                {/* <Button class="button1" variant="primary" onClick={handleClose}>Guardar</Button> */}
             </Modal.Footer>
         </Modal>
 
@@ -215,29 +275,37 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
                     setVerVentas(e=>!e)
                     setVerCrearVentas(e=>!e)
                 }}><i class="fas fa-arrow-left"></i></button>           
-            <br></br><br></br><br></br>
+
             
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-16">
                 <div className="flex flex-col">
 
-                    <label htmlFor="idV">
+                    <label htmlFor="_id">
                         ID venta
-                        <input type ="number" name="idV" required/>
+                        <input type ="number" name="_id" disabled placeholder="El sistema define el ID"/>
                     </label>
 
-                    <label htmlFor="encargado">
-                        Nombre del encargado
-                        <input type ="text" name="encargado" required/>
+                    <label htmlFor="encargado" className="flex flex-col mt-2">
+                        Vendedor
+                        {/* <input type ="text" name="encargado" required/> */}
+                        <select className="w-48 h-8" name="encargado" required defaultValue={0}>
+                            <option disabled value={0}>Seleccione</option>
+                            {dataUsers.map(e=>{
+                                return (
+                                    <option>{e.nombre}</option>
+                                )
+                            })}
+                        </select>
                     </label>
                 </div>
 
                 <div className="flex flex-col">
                     <label htmlFor="nombre">
                         Nombre del cliente
-                        <input type ="text" name="nombre" required/>
+                        <input type ="text" name="nombreCliente" required/>
                     </label>
 
-                    <label htmlFor="idC">
+                    <label htmlFor="idC" className="mt-2">
                         ID cliente
                         <input type ="number" name="idC" required/>
                     </label>
@@ -267,24 +335,28 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
                                 <th>Id Producto</th>
                                 <th>Descripción</th>
                                 <th>Precio Unitario</th>
-                                <th>Cantidad</th>
                                 <th>Precio total</th>
                             </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
-                            </td>
-                        </tr>
-                        <Button class="buttonIco" variant="primary" onClick={handleShow}>
-                            <i class="fas fa-plus"></i>
-                        </Button>
+                        {
+                            productos.map((e,i)=>{
+                                return (
+                                    <tr>
+                                        <td>{e._id}</td>
+                                        <td>{e.descripcion}</td>
+                                        <td>{e.valor}</td>
+                                        <td>{e.valor}</td>
+                                        <td>
+                                            <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                            <Button className="buttonIco mt-8" variant="primary" onClick={handleShow}>
+                                <i class="fas fa-plus"></i>
+                            </Button>
                     </tbody> 
                 </table>
             
@@ -293,28 +365,27 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas}) 
             </div>
             
         </form>
-
-        
-
     </div>
     )
 }
 
-const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProduct}) => {
+const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProduct,dataUsers}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [idV,setIdV] = useState(dataVentas[indice].idV)
+    const [_id,set_id] = useState(dataVentas[indice]._id)
     const [fechaVenta,setFechaVenta] = useState(dataVentas[indice].fechaVenta)
     const [encargado,setEncargado] = useState(dataVentas[indice].encargado)
     const [estado,setEstado] = useState(dataVentas[indice].estado)
-    const [nombre,setNombre] = useState(dataVentas[indice].cliente.nombre)
-    const [idC,setIdc] = useState(dataVentas[indice].cliente.idC)
+    const [nombre,setNombre] = useState(dataVentas[indice].nombreCliente)
+    const [idC,setIdc] = useState(dataVentas[indice].idC)
+    const [productos,setProductos] = useState(dataVentas[indice].productos)
+
 
     const handleId = (e) =>{
-        setIdV(e.target.value)
+        set_id(e.target.value)
     }
     const handleFecha = (e) =>{
         setFechaVenta(e.target.value)
@@ -336,15 +407,16 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
         e.preventDefault()
 
         setDataVentas(e=>{
-            e[indice].idV=idV;
+            e[indice]._id=_id;
             e[indice].fechaVenta=fechaVenta;
             e[indice].estado=estado;
-            e[indice].cliente.nombre=nombre;
-            e[indice].cliente.idC=idC;
+            e[indice].nombreCliente=nombre;
+            e[indice].idC=idC;
             e[indice].encargado=encargado;
+            e[indice].productos = productos;
             return e
         })
-        toast.success(`La venta ${idV} ha sido actualizada exitosamente`)
+        toast.success(`La venta ${_id} ha sido actualizada exitosamente`)
         setVerVentas(e=>!e)
     }
 
@@ -356,9 +428,9 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             </Modal.Header>
         <Modal.Body>
             
-            <input className="w-full" type ="text" name="buscar" id="buscar" placeholder="buscar por id"/>
-            <br></br><br></br>
-            <table class="table" id="tabla">
+            <input className="w-full" type ="text" name="buscar" id="buscar" placeholder=" Buscar"/>
+
+            <table className="table mt-16" id="tabla">
                     <thead>
                             <tr>
                                 <th>ID</th>
@@ -372,13 +444,14 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                         dataProduct.map((e,i)=>{
                             return(
                                 <tr>
-                                    <td>{e.id}</td>
+                                    <td>{e._id}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
                                     <td>{e.estado}</td>
                                     <td>
-                                        <input className="inputModal border border-gray-500 mr-1"></input>
-                                        <button class="buttonIco" type="submit"><i class="fas fa-plus"></i></button>
+                                        <button class="buttonIco" type="submit"
+                                        onClick={()=>setProductos([...productos,e])}
+                                        ><i class="fas fa-plus"></i></button>
                                     </td>
                                 </tr>
                             )
@@ -405,9 +478,9 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             <div className="flex justify-between">
                 <div className="flex flex-col">
 
-                    <label htmlFor="idV">
+                    <label htmlFor="_id">
                         ID venta
-                        <input value={idV} onChange={handleId} type ="number" name="idV" disabled/>
+                        <input value={_id} onChange={handleId} type ="number" name="_id" disabled/>
                     </label>
 
                     <label htmlFor="encargado">
@@ -456,16 +529,21 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                             </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="buttonIco" type="submit"><i class="fas fa-minus-circle"></i></button>
-                            </td>
-                        </tr>
+                        {
+                            productos.map((e,i)=>{
+                                return (
+                                    <tr>
+                                        <td>{e._id}</td>
+                                        <td>{e.descripcion}</td>
+                                        <td>{e.valor}</td>
+                                        <td>{e.valor}</td>
+                                        <td>
+                                            <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
                         <Button class="buttonIco" variant="primary" onClick={handleShow}>
                             <i class="fas fa-plus"></i>
                         </Button>
