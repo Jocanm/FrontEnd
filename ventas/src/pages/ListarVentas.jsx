@@ -406,6 +406,12 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
     const handleSubmit=(e)=>{
         e.preventDefault()
 
+        let precioTotal = 0;
+
+        productos.forEach(e=>{
+            precioTotal+=e.valor
+        })
+
         setDataVentas(e=>{
             e[indice]._id=_id;
             e[indice].fechaVenta=fechaVenta;
@@ -414,6 +420,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             e[indice].idC=idC;
             e[indice].encargado=encargado;
             e[indice].productos = productos;
+            e[indice].valor = precioTotal;
             return e
         })
         toast.success(`La venta ${_id} ha sido actualizada exitosamente`)
