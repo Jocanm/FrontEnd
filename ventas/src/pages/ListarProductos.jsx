@@ -2,24 +2,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from 'react'
-import ProductosServices from '../services/producto.service'
-import {obtenerProductos, crearProducto, actualizarProducto,eliminarProducto} from '../utils/api'
-
-let datosProductos;
-
-//crear un producto
-
-const postProducto = async (producto)=>{
-    const datos = await ProductosServices.create(producto);
-    datosProductos = datos.data;
-    return datos.data;
-}
-
-//actualizar un producto
-async function putProducto(producto){
-    const datos = await ProductosServices.update(producto);
-    return datos.data;
-}
+import {obtenerProductos, crearProducto, actualizarProducto} from '../utils/api'
 
 const Productos = () => {
 
@@ -140,12 +123,12 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
     )
 }
 
-const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
+const Crear = ({setListaProductos,setCrearProducto}) =>{
 
     
     const form = useRef(null)
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault();
         const data = new FormData(form.current);
         const nuevoproducto = {};
@@ -154,9 +137,19 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
             nuevoproducto[llave]=valor;
         })
 
-        postProducto(nuevoproducto).then();
-        toast.success(`Producto "${nuevoproducto.descripcion}" agregado con éxito`)
-        setDataProduct(e=>[...e,nuevoproducto]);
+        nuevoproducto.valor = Number(nuevoproducto.valor)
+
+        await crearProducto(nuevoproducto,
+            (res)=>{
+                console.log(res.data)
+                toast.success(`Producto "${nuevoproducto.descripcion}" agregado con éxito`)
+            },
+            (err)=>{
+                console.warn(err)
+                toast.error("Error creando producto")
+            }
+            )
+        // setDataProduct(e=>[...e,nuevoproducto]);
         setListaProductos(e=>!e)
         setCrearProducto(e=>!e)
     }
@@ -177,7 +170,7 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
 
                 <label className="mb-2" htmlFor="id">
                     ID producto
-                    <input className="w-48" type="number" name="_id" required/>
+                    <input className="w-48 text-center" type="number" name="_id" required placeholder="Asignado por el sistema" disabled/>
                 </label>
                 <label className="mb-2" htmlFor="descripcion">
                     Descripción
@@ -206,17 +199,13 @@ const Crear = ({setListaProductos,setCrearProducto,setDataProduct}) =>{
     )
 }
 
-const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
+const Actualizar = ({setListaProductos,indice,data}) =>{
 
     const [_id,setId] = useState(data[indice]._id);
     const [descripcion,setDescripcion] = useState(data[indice].descripcion)
     const [valor,setValor] = useState(data[indice].valor)
     const [estado,setEstado] = useState(data[indice].estado)
     
-
-    const handleID = (e)=>{
-        setId(e.target.value)
-    }
     const handleDes =(e)=>{
         setDescripcion(e.target.value)
     }
@@ -227,18 +216,21 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
         setEstado(e.target.value)
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault();
 
-        const nuevosDatos = {_id,descripcion,valor,estado}
-
-        setDataProduct(e=>{
-            e[indice]=nuevosDatos
-            return e;
-        })
-
-        putProducto(nuevosDatos).then();
-        toast.success(`Datos del producto "${nuevosDatos._id}-${nuevosDatos.descripcion}" actualizados`)
+        const nuevosDatos = {descripcion,valor:Number(valor),estado}
+        
+        await actualizarProducto(_id,nuevosDatos,
+            (res)=>{
+                console.log(res.data)
+                toast.success(`Datos del producto "${_id.slice(20)} - ${nuevosDatos.descripcion}" actualizados`)
+            },
+            (err)=>{
+                console.log(err)
+                toast.error("Ocurrió un error al actualzar el producto")
+            }
+            )
         setListaProductos(e=>!e)
     }
 
@@ -254,7 +246,7 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
 
             <label htmlFor="_id">
                 ID producto
-                <input name="_id" className="mb-2 w-48" type="number" value={_id} onChange={handleID} disabled/>
+                <input name="_id" className="mb-2 w-48 border-2 border-black" type="text" value={_id.slice(20)}disabled/>
             </label>
 
             <label htmlFor="descripcion">
