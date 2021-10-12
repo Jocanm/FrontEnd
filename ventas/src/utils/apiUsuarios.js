@@ -2,9 +2,9 @@ import axios from "axios";
 
 //PETICIONES PARA PRODUCTOS
 
-export const obtenerProductos = async(succesCallback,errorCallback) =>{
+export const obtenerUsuarios = async(succesCallback,errorCallback) =>{
 
-    const options = { method: "GET", url: "http://localhost:5000/productos/"};
+    const options = { method: "GET", url: "http://localhost:5000/usuarios/"};
 
     await axios
         .request(options)
@@ -12,10 +12,10 @@ export const obtenerProductos = async(succesCallback,errorCallback) =>{
         .catch(errorCallback);
 }
 
-export const crearProducto = async(data,succesCalback,errorCalback) =>{
+export const crearUsuario = async(data,succesCalback,errorCalback) =>{
     const options = {
         method: "POST",
-        url: "http://localhost:5000/productos/",
+        url: "http://localhost:5000/usuarios/",
         headers: { 'Content-Type': 'application/json' },
         data,
     }
@@ -26,11 +26,11 @@ export const crearProducto = async(data,succesCalback,errorCalback) =>{
             .catch(errorCalback)
 }
 
-export const actualizarProducto = async(id,data,succesCalback,errorCalback)=>{
+export const actualizarUsuario = async(id,data,succesCalback,errorCalback)=>{
     
     const options = {
         method: 'PATCH',
-        url: `http://localhost:5000/productos/${id}`,
+        url: `http://localhost:5000/usuarios/${id}`,
         headers: { 'Content-Type': 'application/json' },
         data
         };
@@ -42,10 +42,10 @@ export const actualizarProducto = async(id,data,succesCalback,errorCalback)=>{
 
 }
 
-export const eliminarProducto = async (id,succesCalback,errorCalback)=>{
+export const eliminarUsuario = async (id,succesCalback,errorCalback)=>{
     const options = {
         method: 'DELETE',
-        url: `http://localhost:5000/productos/${id}`,
+        url: `http://localhost:5000/usuarios/${id}`,
         headers: { 'Content-Type': 'application/json' },
         data: {},
         };

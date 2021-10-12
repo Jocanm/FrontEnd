@@ -2,16 +2,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import UsuariosServices from '../services/usuario.service'
-
-let datosUsuarios;
-
-//actualizar un usario
-async function putUsuarios(usuario){
-    const datos = await UsuariosServices.update(usuario);
-    datosUsuarios = datos.data;
-    return datos.data;
-}
+import { obtenerUsuarios,actualizarUsuario } from '../utils/apiUsuarios'
 
 
 const Usuarios = () =>{
@@ -22,15 +13,17 @@ const Usuarios = () =>{
 
 
     useEffect(()=>{
-        if(listaUsuarios){
-            async function getUsuarios(){
-                const datos =await UsuariosServices.findAll();
-                datosUsuarios = datos.data;
-                setDataUsers(datosUsuarios)
-                return datos.data;
-            }
-            getUsuarios().then()
+        
+        const traerUsuarios = async()=>{
+
+            await obtenerUsuarios(
+                (res)=>{
+                    setDataUsers(res.data)
+                },
+                (err)=>{console.error(err)})
         }
+        traerUsuarios();
+
     },[listaUsuarios])
 
     return(
@@ -85,7 +78,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             {filtrados.map((e,i) => {
                                 return (
                                     <tr>
-                                        <td>{e._id}</td>
+                                        <td>{e._id.slice(17)}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
@@ -137,16 +130,18 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
         setEmail(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const nuevosDatos = {nombre,_id,estado,rol,email}
-        setDataUsers(e=>{
-            e[indice] = nuevosDatos;
-            return e;
-        })
-        putUsuarios(nuevosDatos).then();
-        toast.success(`El usuario "${nuevosDatos._id} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+        const nuevosDatos = {nombre,estado,rol,email}
+
+        await actualizarUsuario(_id,nuevosDatos,
+            (res)=>{
+                console.log(res.data)
+                toast.success(`El usuario "${_id.slice(17)} - ${nuevosDatos.nombre}" ha sido Actualizado`)
+            },
+            (err)=>{console.error(err)})
+
         setListaUsuarios(e=>!e)
     }
 
@@ -160,11 +155,11 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
 
             <form onSubmit={handleSubmit} className='w-96 h-auto flex flex-col items-center'>
 
-                <button onClick={handleBack} className="boton-usuario mb-4">Atras</button>   
+                <button onClick={handleBack} className="boton-usuario mb-4 font-bold">Atras</button>   
 
                 <label htmlFor="id">
                     ID usuario
-                    <input className="w-52 mb-2" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={_id} disabled/>
+                    <input className="w-52 mb-2 border-2 border-black" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={_id.slice(17)} disabled/>
                 </label>
                 <label htmlFor="nombre">
                     Nombre usuario
@@ -194,7 +189,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}
                     </div>
                 </label>
 
-                <button className="button1 mt-4" type="submit" name="guardarUsuario">Guardar</button>
+                <button className="button1 mt-4 font-bold" type="submit" name="guardarUsuario">Guardar</button>
             </form>
         </>
     )
