@@ -2,21 +2,46 @@ import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ventas from '../data/ventas'
+//import ventas from '../data/ventas'
 import ProductosServices from '../services/producto.service'
 import UsuariosServices from '../services/usuario.service'
+import VentasServices from '../services/ventas.service'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 let datosProductos;
 let datosUsuarios;
+let datosVentas;
+
+//crear una venta
+const postVenta = async (venta)=>{
+    const datos = await VentasServices.create(venta);
+    datosVentas = datos.data;
+    return datos.data;
+}
+
+//actualizar un producto
+async function putVenta(venta){
+    const datos = await VentasServices.update(venta);
+    return datos.data;
+}
+
+//traer todas las ventas
+/*async function getVentas(){
+    const datos = await VentasServices.findAll();
+    datosVentas = datos.data;
+    //setDataVentas(datosVentas)
+    return datos.data;
+}*/
+
+//getVentas().then();
 
 const Ventas = () => {
 
     //Añade los datos de las ventas, de los productos y de los usuarios a un estado
     const [dataVentas,setDataVentas] = useState([])
     const [dataProduct,setDataProduct] = useState([])
-    const [dataUsers,setDataUsers] = useState([]);
+    const [dataUsers,setDataUsers] = useState([])
 
     //Creamos estados donde se alamacenen los productos en estado disponible y los usuarios que sean vendedores
     const [productosDisponibles,setProductosDisponibles] = useState([])
@@ -29,7 +54,26 @@ const Ventas = () => {
     //Para la pagina de actualizar los datos
     const [indice,setIndice] = useState()
     
+    /*useEffect(()=>{
+        async function getVentas(){
+            const datos = await VentasServices.findAll();
+            datosVentas = datos.data;
+            setDataVentas(datosVentas)
+            return datos.data;
+        }
+        getVentas().then();
+    }, [verVentas, verCrearVentas])*/
+
     useEffect(()=>{
+
+        async function getVentas(){
+            const datos = await VentasServices.findAll();
+            datosVentas = datos.data;
+            setDataVentas(datosVentas)
+            return datos.data;
+        }
+        getVentas().then();
+
         async function getProductos(){
             const datos = await ProductosServices.findAll();
             datosProductos = datos.data;
@@ -43,11 +87,9 @@ const Ventas = () => {
             datosUsuarios = datos.data;
             setDataUsers(datosUsuarios)
             return datos.data;
-        }
-        getUsuarios().then()
-        setDataVentas(ventas)
-    },[])
-
+        }                
+        getUsuarios().then();
+    }, [verVentas, verCrearVentas])
     
     //Filtro para productos y vendedores
     useEffect(()=>{
@@ -66,7 +108,7 @@ const Ventas = () => {
         <div>
             {
             (verVentas)?
-                (<ListarVentas 
+                (<Listar 
                 dataVentas={dataVentas}
                 setVerCrearVentas={setVerCrearVentas}
                 setVerVentas={setVerVentas}
@@ -95,7 +137,7 @@ const Ventas = () => {
     )
 }
 
-const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
+const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
 
     const [busqueda,setBusqueda] = useState("");
     const [ventasFiltradas,setVentasFiltradas] = useState([]);
@@ -161,12 +203,11 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                                         dataVentas.forEach((el,ind)=>{
                                                             if(el._id===e._id) {indice = ind}
                                                         })
-                                                        return indice
-                                                    })
+                                                        return indice;
+                                                    });
                                                 }}>
                                                 <i class="fas fa-search"></i>
                                                 </button>
-                                                <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                             </td>
                                         </tr>
                                     )
@@ -212,6 +253,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
 
         nuevaVenta.valor = precioTotal;
 
+        postVenta(nuevaVenta).then();    
         toast.success("La venta ha sido creada con éxito")
         setDataVentas(e=>[...e,nuevaVenta])
         setVerVentas(e=>!e)
