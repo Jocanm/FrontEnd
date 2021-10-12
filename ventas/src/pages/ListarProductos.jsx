@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from 'react'
 import ProductosServices from '../services/producto.service'
+import {obtenerProductos, crearProducto, actualizarProducto,eliminarProducto} from '../utils/api'
 
 let datosProductos;
 
@@ -36,14 +37,11 @@ const Productos = () => {
     const [titulo,setTitulo] = useState("")
 
     useEffect(()=>{
-        async function getProductos(){
-            const datos = await ProductosServices.findAll();
-            datosProductos = datos.data;
-            setDataProduct(datosProductos)
-            return datos.data;
-        }
-        getProductos().then();
-    },[listaProductos,crearProducto])
+        obtenerProductos(
+            (res)=>{setDataProduct(res.data)},
+            (err)=>{console.log(err)})
+
+    },[listaProductos])
 
     //Controla el titulo dinamico
     useEffect(()=>{
@@ -114,7 +112,7 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                             productosFiltrados.map((e,i)=>{
                                 return(
                                     <tr>
-                                        <td>{e._id}</td>
+                                        <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
                                         <td>{e.estado}</td>
