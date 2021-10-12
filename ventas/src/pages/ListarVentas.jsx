@@ -54,7 +54,7 @@ const Ventas = () => {
     //Para la pagina de actualizar los datos
     const [indice,setIndice] = useState()
     
-    /*useEffect(()=>{
+    useEffect(()=>{
         async function getVentas(){
             const datos = await VentasServices.findAll();
             datosVentas = datos.data;
@@ -62,18 +62,9 @@ const Ventas = () => {
             return datos.data;
         }
         getVentas().then();
-    }, [verVentas, verCrearVentas])*/
+    }, [verVentas, verCrearVentas])
 
     useEffect(()=>{
-
-        async function getVentas(){
-            const datos = await VentasServices.findAll();
-            datosVentas = datos.data;
-            setDataVentas(datosVentas)
-            return datos.data;
-        }
-        getVentas().then();
-
         async function getProductos(){
             const datos = await ProductosServices.findAll();
             datosProductos = datos.data;
