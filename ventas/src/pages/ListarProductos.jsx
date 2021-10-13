@@ -234,11 +234,6 @@ const Actualizar = ({setListaProductos,indice,data,setDataProduct}) =>{
 
         const nuevosDatos = {_id,descripcion,valor,estado}
 
-        setDataProduct(e=>{
-            e[indice]=nuevosDatos
-            return e;
-        })
-
         putProducto(nuevosDatos).then();
         toast.success(`Datos del producto "${nuevosDatos._id}-${nuevosDatos.descripcion}" actualizados`)
         setListaProductos(e=>!e)

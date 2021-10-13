@@ -179,12 +179,12 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                 ventasFiltradas.map((e,i)=>{
                                     return(
                                         <tr>
-                                            <td>{e._id}</td>
+                                            <td>{e._id.slice(18)}</td>
                                             <td>{e.encargado}</td>
                                             <td>{e.nombreCliente}</td>
                                             <td>{e.idC}</td>
                                             <td>{e.estado}</td>
-                                            <td>{e.valor}</td>
+                                            <td>{e.valorTotal}</td>
                                             <td>
                                                 <button 
                                                 class="buttonIco mr-1"
@@ -214,7 +214,7 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
     )
 }
 
-const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,dataUsers}) => {
+const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
 
     const form = useRef(null)
 
@@ -242,11 +242,11 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
             precioTotal += e.valor;
         })
 
-        nuevaVenta.valor = precioTotal;
+        nuevaVenta.valorTotal = precioTotal;
 
+        console.log(nuevaVenta)
         postVenta(nuevaVenta).then();    
         toast.success("La venta ha sido creada con éxito")
-        setDataVentas(e=>[...e,nuevaVenta])
         setVerVentas(e=>!e)
         setVerCrearVentas(e=>!e)
     }
@@ -416,10 +416,6 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
     const [idC,setIdc] = useState(dataVentas[indice].idC)
     const [productos,setProductos] = useState(dataVentas[indice].productos)
 
-
-    const handleId = (e) =>{
-        set_id(e.target.value)
-    }
     const handleFecha = (e) =>{
         setFechaVenta(e.target.value)
     }
@@ -445,17 +441,9 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             precioTotal+=e.valor
         })
 
-        setDataVentas(e=>{
-            e[indice]._id=_id;
-            e[indice].fechaVenta=fechaVenta;
-            e[indice].estado=estado;
-            e[indice].nombreCliente=nombre;
-            e[indice].idC=idC;
-            e[indice].encargado=encargado;
-            e[indice].productos = productos;
-            e[indice].valor = precioTotal;
-            return e
-        })
+        const nuevo = {_id,fechaVenta,encargado,estado,nombreCliente:nombre,idC,productos}
+        console.log(nuevo)
+        putVenta(nuevo).then();
         toast.success(`La venta ${_id} ha sido actualizada exitosamente`)
         setVerVentas(e=>!e)
     }
@@ -504,7 +492,6 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button class="button1" variant="primary" onClick={handleClose}>Guardar</Button>
             </Modal.Footer>
         </Modal>
 
@@ -520,12 +507,16 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
 
                     <label htmlFor="_id">
                         ID venta
-                        <input value={_id} onChange={handleId} type ="number" name="_id" disabled/>
+                        <input value={_id.slice(15)} type ="text" name="_id" disabled/>
                     </label>
 
-                    <label htmlFor="encargado">
-                        Nombre del encargado
-                        <input value={encargado} onChange={handleEncargado} type ="text" name="encargado" required/>
+                    <label htmlFor="encargado" className="flex flex-col">
+                        Vendedor
+                        <select className="w-48 h-8" name="encargado" value={encargado} onChange={handleEncargado}>
+                            {
+                                dataUsers.map(e=><option>{e.nombre}</option>)
+                            }
+                        </select>
                     </label>
                 </div>
 
