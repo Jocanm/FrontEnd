@@ -240,7 +240,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
         
         let precioTotal = 0;
         nuevaVenta.productos.forEach(e=>{
-            precioTotal += e.valorTotal;
+            precioTotal += e.valor;
         })
 
         nuevaVenta.valorTotal = precioTotal;
@@ -278,7 +278,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                 <tr>
                                     <td>{e._id}</td>
                                     <td>{e.descripcion}</td>
-                                    <td>{e.valor}</td>
+                                    <td>{e.valorTotal}</td>
                                     <td>{e.estado}</td>
                                     <td>
                                         <button class="buttonIco" type="button"
@@ -378,7 +378,6 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                     <tr>
                                         <td>{e._id}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
                                         <td>{e.valor}</td>
                                         <td>
                                             <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
