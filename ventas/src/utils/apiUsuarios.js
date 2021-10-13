@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//PETICIONES PARA PRODUCTOS
+//PETICIONES PARA USUARIO
 
 export const obtenerUsuarios = async(succesCallback,errorCallback) =>{
 

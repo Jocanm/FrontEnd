@@ -20,9 +20,14 @@ const Productos = () => {
     const [titulo,setTitulo] = useState("")
 
     useEffect(()=>{
-        obtenerProductos(
-            (res)=>{setDataProduct(res.data)},
-            (err)=>{console.log(err)})
+
+        const getProductos = async()=>{
+
+            await obtenerProductos(
+                (res)=>{setDataProduct(res.data)},
+                (err)=>{console.log(err)})
+        }
+        getProductos();
 
     },[listaProductos])
 

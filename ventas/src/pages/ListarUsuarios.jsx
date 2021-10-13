@@ -55,7 +55,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
             <h1 className="text-2xl">GESTIÓN DE USUARIOS</h1>
             <div className="bg-red">
                 <form>
-                    <div className="mb-8 flex justify-between">
+                    <div className="mb-8 mt-4 flex justify-between">
                     <input type="text" name="buscar" id="buscar" placeholder=" buscar por id"
                     value={busqueda}
                     onChange={(e)=>setBusqueda(e.target.value)}
@@ -109,7 +109,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
     );
 };
 
-const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers,setDataUsers}) => {
+const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
 
     const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
     const [_id,setId] = useState(dataUsers[indice]._id)

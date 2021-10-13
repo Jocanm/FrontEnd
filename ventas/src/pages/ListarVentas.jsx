@@ -2,14 +2,12 @@ import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ventas from '../data/ventas'
-import ProductosServices from '../services/producto.service'
-import UsuariosServices from '../services/usuario.service'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { obtenerUsuarios } from '../utils/apiUsuarios'
+import { obtenerProductos } from '../utils/api'
+import { obtenerVentas,crearVenta,actualizarVenta } from '../utils/apiVentas'
 
-let datosProductos;
-let datosUsuarios;
 
 const Ventas = () => {
 
@@ -30,23 +28,22 @@ const Ventas = () => {
     const [indice,setIndice] = useState()
     
     useEffect(()=>{
-        async function getProductos(){
-            const datos = await ProductosServices.findAll();
-            datosProductos = datos.data;
-            setDataProduct(datosProductos)
-            return datos.data;
-        }
-        getProductos().then();
         
-        async function getUsuarios(){
-            const datos =await UsuariosServices.findAll();
-            datosUsuarios = datos.data;
-            setDataUsers(datosUsuarios)
-            return datos.data;
+        const getInfo = async() => {
+            await obtenerProductos(
+                (res)=>{setDataProduct(res.data)},
+                (err)=>{console.error(err)})
+            await obtenerUsuarios(
+                (res)=>{setDataUsers(res.data)},
+                (err)=>{console.error(err)})
+            await obtenerVentas(
+                (res)=>{setDataVentas(res.data)},
+                (err)=>{console.error(err)}
+            )
         }
-        getUsuarios().then()
-        setDataVentas(ventas)
-    },[])
+
+        getInfo()
+    },[verVentas])
 
     
     //Filtro para productos y vendedores
@@ -62,6 +59,7 @@ const Ventas = () => {
             return e.rol === "Vendedor"
         }))
     },[dataUsers])
+
     return (
         <div>
             {
@@ -146,8 +144,8 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                 ventasFiltradas.map((e,i)=>{
                                     return(
                                         <tr>
-                                            <td>{e._id}</td>
-                                            <td>{e.encargado}</td>
+                                            <td>{e._id.slice(17)}</td>
+                                            <td>{e.encargado.nombre}</td>
                                             <td>{e.nombreCliente}</td>
                                             <td>{e.idC}</td>
                                             <td>{e.estado}</td>
@@ -194,7 +192,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
     const [productos,setProductos] = useState([])
 
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault();
 
         const data = new FormData(form.current)
@@ -209,11 +207,22 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
         nuevaVenta.productos.forEach(e=>{
             precioTotal += e.valor;
         })
-
         nuevaVenta.valor = precioTotal;
 
-        toast.success("La venta ha sido creada con éxito")
-        setDataVentas(e=>[...e,nuevaVenta])
+        const ventaFinal = {...nuevaVenta, encargado:dataUsers.filter(e=>e._id===nuevaVenta.encargado)[0]}
+
+        await crearVenta(ventaFinal,
+            (res)=>{
+                console.log(res.data)
+                toast.success("La venta ha sido creada con éxito")
+            },
+            (err)=>{
+                console.error(err)
+                toast.error("Error al crear la venta")
+            }
+            )
+
+        
         setVerVentas(e=>!e)
         setVerCrearVentas(e=>!e)
     }
@@ -242,7 +251,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
                         dataProduct.map((e,i)=>{
                             return(
                                 <tr>
-                                    <td>{e._id}</td>
+                                    <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
                                     <td>{e.estado}</td>
@@ -292,7 +301,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
                             <option disabled value={0}>Seleccione</option>
                             {dataUsers.map(e=>{
                                 return (
-                                    <option>{e.nombre}</option>
+                                    <option value={e._id}>{e.nombre}</option>
                                 )
                             })}
                         </select>
@@ -343,7 +352,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
                             productos.map((e,i)=>{
                                 return (
                                     <tr>
-                                        <td>{e._id}</td>
+                                        <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
                                         <td>{e.valor}</td>
@@ -377,16 +386,12 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
 
     const [_id,set_id] = useState(dataVentas[indice]._id)
     const [fechaVenta,setFechaVenta] = useState(dataVentas[indice].fechaVenta)
-    const [encargado,setEncargado] = useState(dataVentas[indice].encargado)
+    const [encargado,setEncargado] = useState(dataVentas[indice].encargado.nombre)
     const [estado,setEstado] = useState(dataVentas[indice].estado)
     const [nombre,setNombre] = useState(dataVentas[indice].nombreCliente)
     const [idC,setIdc] = useState(dataVentas[indice].idC)
     const [productos,setProductos] = useState(dataVentas[indice].productos)
 
-
-    const handleId = (e) =>{
-        set_id(e.target.value)
-    }
     const handleFecha = (e) =>{
         setFechaVenta(e.target.value)
     }
@@ -412,18 +417,20 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             precioTotal+=e.valor
         })
 
-        setDataVentas(e=>{
-            e[indice]._id=_id;
-            e[indice].fechaVenta=fechaVenta;
-            e[indice].estado=estado;
-            e[indice].nombreCliente=nombre;
-            e[indice].idC=idC;
-            e[indice].encargado=encargado;
-            e[indice].productos = productos;
-            e[indice].valor = precioTotal;
-            return e
-        })
-        toast.success(`La venta ${_id} ha sido actualizada exitosamente`)
+        const encargadoF = dataUsers.filter(e=>e.nombre === encargado)[0]
+
+        const nuevaVenta = {encargado:encargadoF,nombreCliente:nombre,idC,fechaVenta,estado,productos,valor:precioTotal}
+
+        actualizarVenta(_id,nuevaVenta,
+            (res)=>{
+                console.log(res.data)
+                toast.success(`La venta ${_id.slice(17)} ha sido actualizada exitosamente`)
+            },
+            (err)=>{
+                console.error(err)
+                toast.error("Error al actualizar la venta")
+            }
+            )
         setVerVentas(e=>!e)
     }
 
@@ -437,7 +444,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             
             <input className="w-full" type ="text" name="buscar" id="buscar" placeholder=" Buscar"/>
 
-            <table className="table mt-16" id="tabla">
+            <table className="table mt-7" id="tabla">
                     <thead>
                             <tr>
                                 <th>ID</th>
@@ -451,7 +458,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                         dataProduct.map((e,i)=>{
                             return(
                                 <tr>
-                                    <td>{e._id}</td>
+                                    <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
                                     <td>{e.estado}</td>
@@ -471,7 +478,6 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                 <Button variant="secondary" onClick={handleClose}>
                     Cerrar
                 </Button>
-                <Button class="button1" variant="primary" onClick={handleClose}>Guardar</Button>
             </Modal.Footer>
         </Modal>
 
@@ -487,12 +493,16 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
 
                     <label htmlFor="_id">
                         ID venta
-                        <input value={_id} onChange={handleId} type ="number" name="_id" disabled/>
+                        <input className="border-2 border-black" value={_id.slice(17)} type ="text" name="_id" disabled/>
                     </label>
 
                     <label htmlFor="encargado">
-                        Nombre del encargado
-                        <input value={encargado} onChange={handleEncargado} type ="text" name="encargado" required/>
+                        Vendedor
+                        <select className="w-48 h-8" name="encargado" required value={encargado} onChange={handleEncargado}>
+                            {
+                                dataUsers.map(e=>(<option>{e.nombre}</option>))
+                            }
+                        </select>
                     </label>
                 </div>
 
@@ -531,7 +541,6 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                                 <th>Id Producto</th>
                                 <th>Descripción</th>
                                 <th>Precio Unitario</th>
-                                <th>Cantidad</th>
                                 <th>Precio total</th>
                             </tr>
                     </thead>
@@ -540,7 +549,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                             productos.map((e,i)=>{
                                 return (
                                     <tr>
-                                        <td>{e._id}</td>
+                                        <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
                                         <td>{e.valor}</td>
