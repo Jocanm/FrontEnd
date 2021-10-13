@@ -245,7 +245,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
 
         nuevaVenta.valorTotal = precioTotal;
 
-        console.log(nuevaVenta)
+        //console.log(nuevaVenta)
         postVenta(nuevaVenta).then();    
         toast.success("La venta ha sido creada con éxito")
         setVerVentas(e=>!e)
