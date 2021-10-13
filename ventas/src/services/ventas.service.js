@@ -12,7 +12,7 @@ exports.findAll = () => {
 
 exports.update = (venta) =>{
     console.log(venta);
-    return axios.put(url+"/"+venta.idV, venta);
+    return axios.put(url+"/"+venta._id, venta);
 }
 
 exports.findById = (buscar) =>{
