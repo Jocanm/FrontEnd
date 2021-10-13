@@ -278,7 +278,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                 <tr>
                                     <td>{e._id}</td>
                                     <td>{e.descripcion}</td>
-                                    <td>{e.valorTotal}</td>
+                                    <td>{e.valor}</td>
                                     <td>{e.estado}</td>
                                     <td>
                                         <button class="buttonIco" type="button"
@@ -440,10 +440,10 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             precioTotal+=e.valor
         })
 
-        const nuevo = {_id,fechaVenta,encargado,estado,nombreCliente:nombre,idC,productos}
+        const nuevo = {_id,fechaVenta,encargado,estado,nombreCliente:nombre,idC,productos,valorTotal:precioTotal}
         console.log(nuevo)
         putVenta(nuevo).then();
-        toast.success(`La venta ${_id} ha sido actualizada exitosamente`)
+        toast.success(`La venta ${_id.slice(18)} ha sido actualizada exitosamente`)
         setVerVentas(e=>!e)
     }
 
@@ -457,7 +457,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
             
             <input className="w-full" type ="text" name="buscar" id="buscar" placeholder=" Buscar"/>
 
-            <table className="table mt-16" id="tabla">
+            <table className="table mt-6" id="tabla">
                     <thead>
                             <tr>
                                 <th>ID</th>
