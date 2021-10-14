@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+
 
 const PrivateRoute = ({children}) => {
 
@@ -21,7 +22,7 @@ const PrivateRoute = ({children}) => {
 
     },[isAuthenticated,getAccessTokenSilently])
 
-    if(isLoading) return (<div>Loading...</div>)
+    if(isLoading) return (<div className="h-screen w-screen flex justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={300} width={300} /></div>)
 
     if (!isAuthenticated) {
         return loginWithRedirect();
