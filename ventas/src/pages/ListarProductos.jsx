@@ -35,11 +35,16 @@ const Productos = () => {
     //titulo dinamico
     const [titulo,setTitulo] = useState("")
 
+    //Loading
+    const [loading,setLoading] = useState(false);
+
     useEffect(()=>{
         async function getProductos(){
+            setLoading(true)
             const datos = await ProductosServices.findAll();
             datosProductos = datos.data;
             setDataProduct(datosProductos)
+            setLoading(false)
             return datos.data;
         }
         getProductos().then();
