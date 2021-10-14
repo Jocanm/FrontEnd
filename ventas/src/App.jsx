@@ -6,8 +6,8 @@ import ListarVentas from './pages/ListarVentas';
 import ListarUsuarios from './pages/ListarUsuarios';
 import ListarProductos from './pages/ListarProductos';
 import MainLayout from './layout/MainLayout';
-import PublicLayout from './layout/PublicLayout';
-import Login from './pages/Login';
+// import PublicLayout from './layout/PublicLayout';
+// import Login from './pages/Login';
 import { Auth0Provider } from "@auth0/auth0-react";
 
 
@@ -17,6 +17,7 @@ function App() {
       domain="mintic-concesionario.us.auth0.com"
       clientId="zrbYaWyFWyQ3DipYMohDBs0dCs40Ngvu"
       redirectUri={window.location.origin}
+      audience="api-autenticacion-ventas"
     >
       <Router>
         <Switch>
