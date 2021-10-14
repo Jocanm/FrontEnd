@@ -6,15 +6,22 @@ import ListarVentas from './pages/ListarVentas';
 import ListarUsuarios from './pages/ListarUsuarios';
 import ListarProductos from './pages/ListarProductos';
 import MainLayout from './layout/MainLayout';
+import PublicLayout from './layout/PublicLayout';
 import Login from './pages/Login';
+import { Auth0Provider } from "@auth0/auth0-react";
+
 
 function App() {
     return (
-
+    <Auth0Provider
+      domain="mintic-concesionario.us.auth0.com"
+      clientId="zrbYaWyFWyQ3DipYMohDBs0dCs40Ngvu"
+      redirectUri={window.location.origin}
+    >
       <Router>
         <Switch>
 
-          <Route path={["/ListarVentas","Usuarios","ListarProductos","/","/escritorio"]}>
+          <Route path={["/ListarVentas","/Usuarios","/ListarProductos","/escritorio"]}>
             <MainLayout>
               <Switch>
 
@@ -35,16 +42,27 @@ function App() {
                   <Escritorio></Escritorio>
                 </Route>
 
-                <Route path="/">
-                  <Login/>
-                </Route>
+                
               </Switch>
 
             </MainLayout>
           </Route>
 
+          <Route path={["/"]}>
+            <PublicLayout>
+              <Switch>
+
+                <Route path="/">
+                  <Login/>
+                </Route>
+
+              </Switch>
+            </PublicLayout>
+          </Route>
+
         </Switch>
       </Router>  
+    </Auth0Provider>
       );
 }
 
