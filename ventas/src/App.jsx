@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path={["/ListarVentas","/Usuarios","/ListarProductos","/escritorio"]}>
+          <Route path={["/ListarVentas","/Usuarios","/ListarProductos","/"]}>
             <MainLayout>
               <Switch>
 
@@ -38,7 +38,7 @@ function App() {
                 </Route>
                 
 
-                <Route path="/escritorio">
+                <Route path="/">
                   <Escritorio></Escritorio>
                 </Route>
 
@@ -48,7 +48,7 @@ function App() {
             </MainLayout>
           </Route>
 
-          <Route path={["/"]}>
+          {/* <Route path={["/"]}>
             <PublicLayout>
               <Switch>
 
@@ -58,7 +58,7 @@ function App() {
 
               </Switch>
             </PublicLayout>
-          </Route>
+          </Route> */}
 
         </Switch>
       </Router>  
