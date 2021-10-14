@@ -12,11 +12,14 @@ const PrivateRoute = ({children}) => {
             const accesToken = await getAccessTokenSilently({
                 audience: `api-autenticacion-ventas`
             })
-            console.log(accesToken)
+            localStorage.setItem("token",accesToken)
         }
-    
-        fetchAuth0token()
-    },[])
+
+        if(isAuthenticated){
+            fetchAuth0token()
+        }
+
+    },[isAuthenticated,getAccessTokenSilently])
 
     if(isLoading) return (<div>Loading...</div>)
 

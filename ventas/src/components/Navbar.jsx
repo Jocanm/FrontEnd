@@ -8,7 +8,10 @@ const Navbar = () => {
 
     const { logout, user } = useAuth0();
     
-    console.log(user)
+    const handleClose = ()=>{
+        logout({ returnTo: window.location.origin })
+        localStorage.setItem('token',null)
+    }
     
     return (
         <nav className="back-layout w-auto mb-4">
@@ -23,7 +26,7 @@ const Navbar = () => {
                 <li className=" flex w-full h-full items-center justify-end mr-4">
                     <span className="text-center mr-4 font-bold text-xl">{user.name}</span>
                     <Link to="/">
-                        <i className="fas fa-sign-out-alt fa-3x" onClick={() => logout({ returnTo: window.location.origin })}></i>
+                        <i className="fas fa-sign-out-alt fa-3x" onClick={handleClose}></i>
                     </Link>
                 </li>
             </ul>

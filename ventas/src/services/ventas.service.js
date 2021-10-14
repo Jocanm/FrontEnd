@@ -1,5 +1,11 @@
 const axios = require('axios').default;
 
+// const getToken = () =>{
+//     return `Bearer ${localStorage.getItem("token")}`
+// }
+
+// axios.defaults.headers.common = {'Authorization': getToken()}
+
 const url = "http://localhost:5000/api/v1/venta";
 
 exports.create = (venta) =>{
