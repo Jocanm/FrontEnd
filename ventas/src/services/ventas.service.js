@@ -26,7 +26,7 @@ exports.update = (venta) =>{
     return axios.put(url+"/"+venta._id, venta,config);
 }
 
-exports.findById = (buscar) =>{
-    console.log(buscar);
-    return axios.get(url+"/"+ buscar,config);
-}
+// exports.findById = (buscar) =>{
+//     console.log(buscar);
+//     return axios.get(url+"/"+ buscar,config);
+// }
