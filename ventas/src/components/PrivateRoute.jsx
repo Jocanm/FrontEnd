@@ -22,7 +22,7 @@ const PrivateRoute = ({children}) => {
 
     },[isAuthenticated,getAccessTokenSilently])
 
-    if(isLoading) return (<div className="h-screen w-screen flex justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={300} width={300} /></div>)
+    if(isLoading) return (<div className="h-screen w-screen flex justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={200} width={200} /></div>)
 
     if (!isAuthenticated) {
         return loginWithRedirect();
