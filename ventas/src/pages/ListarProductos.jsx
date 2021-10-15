@@ -3,6 +3,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from 'react'
 import {obtenerProductos, crearProducto, actualizarProducto} from '../utils/api'
+import ReactLoading from 'react-loading';
+
 
 const Productos = () => {
 
@@ -18,6 +20,9 @@ const Productos = () => {
 
     //titulo dinamico
     const [titulo,setTitulo] = useState("")
+
+    //Loading
+    const [loading,setLoading] = useState(false);
 
     useEffect(()=>{
 
@@ -42,7 +47,12 @@ const Productos = () => {
         <div>
             <h1 className="text-2xl">{titulo}</h1>
             {
-                (listaProductos)?(<Listar data={dataProduct} setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setIndice={setIndice}/>):
+                (listaProductos)?(<Listar 
+                    data={dataProduct} 
+                    setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} 
+                    setIndice={setIndice}
+                    loading = {loading}
+                    />):
                 (crearProducto)?(<Crear setListaProductos={setListaProductos} setCrearProducto={setCrearProducto} setDataProduct={setDataProduct}/>):
                 (<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct} setDataProduct={setDataProduct}/>)
             }
@@ -52,7 +62,7 @@ const Productos = () => {
     )
 }
 
-const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
+const Listar = ({loading,data,setListaProductos,setCrearProducto,setIndice}) =>{
     
 
     const [busqueda,setBusqueda] = useState("");
@@ -86,7 +96,10 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                         setCrearProducto(e=>!e)
                     }}>Nuevo Producto</button>
                 </div>
-                <table className="mt-4 tablas">
+                {
+                    (loading)?
+                    (<div className="flex flex-col justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={64} width={64} /></div>):
+                    (<table className="mt-4 tablas">
                     <thead>
                         <tr>
                             <th>ID producto</th>
@@ -122,7 +135,8 @@ const Listar = ({data,setListaProductos,setCrearProducto,setIndice}) =>{
                             })
                         }
                     </tbody>
-                </table>
+                </table>)
+                }
             </div>
         </form>
     )

@@ -10,13 +10,23 @@ const config = {
     headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
 }
 
-const url = 'http://localhost:5000/api/v1/usuario';
+
+const url = "http://localhost:5000/api/v1/venta";
+
+exports.create = (venta) =>{
+    return axios.post(url, venta,config);
+};
 
 exports.findAll = () => {
     return axios.get(url,config).then();
 }
 
-exports.update = (usuario) =>{
-    console.log(usuario);
-    return axios.put(url+"/"+usuario._id, usuario,config);
+exports.update = (venta) =>{
+    console.log(venta);
+    return axios.put(url+"/"+venta._id, venta,config);
+}
+
+exports.findById = (buscar) =>{
+    console.log(buscar);
+    return axios.get(url+"/"+ buscar,config);
 }

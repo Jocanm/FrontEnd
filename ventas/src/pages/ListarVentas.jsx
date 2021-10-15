@@ -14,7 +14,7 @@ const Ventas = () => {
     //Añade los datos de las ventas, de los productos y de los usuarios a un estado
     const [dataVentas,setDataVentas] = useState([])
     const [dataProduct,setDataProduct] = useState([])
-    const [dataUsers,setDataUsers] = useState([]);
+    const [dataUsers,setDataUsers] = useState([])
 
     //Creamos estados donde se alamacenen los productos en estado disponible y los usuarios que sean vendedores
     const [productosDisponibles,setProductosDisponibles] = useState([])
@@ -64,7 +64,7 @@ const Ventas = () => {
         <div>
             {
             (verVentas)?
-                (<ListarVentas 
+                (<Listar 
                 dataVentas={dataVentas}
                 setVerCrearVentas={setVerCrearVentas}
                 setVerVentas={setVerVentas}
@@ -93,7 +93,7 @@ const Ventas = () => {
     )
 }
 
-const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
+const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
 
     const [busqueda,setBusqueda] = useState("");
     const [ventasFiltradas,setVentasFiltradas] = useState([]);
@@ -149,7 +149,7 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                             <td>{e.nombreCliente}</td>
                                             <td>{e.idC}</td>
                                             <td>{e.estado}</td>
-                                            <td>{e.valor}</td>
+                                            <td>{e.valorTotal}</td>
                                             <td>
                                                 <button 
                                                 class="buttonIco mr-1"
@@ -159,12 +159,11 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                                         dataVentas.forEach((el,ind)=>{
                                                             if(el._id===e._id) {indice = ind}
                                                         })
-                                                        return indice
-                                                    })
+                                                        return indice;
+                                                    });
                                                 }}>
                                                 <i class="fas fa-search"></i>
                                                 </button>
-                                                <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                             </td>
                                         </tr>
                                     )
@@ -180,7 +179,7 @@ const ListarVentas = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
     )
 }
 
-const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,dataUsers}) => {
+const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
 
     const form = useRef(null)
 
@@ -203,6 +202,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
         })
 
         nuevaVenta.productos = productos;
+        
         let precioTotal = 0;
         nuevaVenta.productos.forEach(e=>{
             precioTotal += e.valor;
@@ -344,7 +344,6 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
                                 <th>Id Producto</th>
                                 <th>Descripción</th>
                                 <th>Precio Unitario</th>
-                                <th>Precio total</th>
                             </tr>
                     </thead>
                     <tbody>
@@ -354,7 +353,6 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,setDataVentas,da
                                     <tr>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
                                         <td>{e.valor}</td>
                                         <td>
                                             <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
@@ -551,7 +549,6 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                                     <tr>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
                                         <td>{e.valor}</td>
                                         <td>
                                             <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
