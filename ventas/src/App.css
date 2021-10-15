@@ -306,3 +306,27 @@ a {
     background-color: #8aacc2;
     cursor: pointer;
 }
+
+
+.elBoton{
+    cursor: pointer;
+    background-color: #2471A3;
+    border-radius: 20px;
+    padding: 50px 100px;
+    @apply px-24 font-bold
+}
+
+.elBoton:hover{
+    background-color: #1c4d6e;
+}
+
+.botonGris{
+    background-color: rgb(133, 131, 131);
+    
+}
+
+.botonGris:hover{
+    background-color: rgb(87, 85, 85);
+    color: black;
+    cursor: not-allowed;
+}

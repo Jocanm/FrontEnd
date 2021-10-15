@@ -18,20 +18,6 @@ export const obtenerUsuarios = async(succesCallback,errorCallback) =>{
         .catch(errorCallback);
 }
 
-export const crearUsuario = async(data,succesCalback,errorCalback) =>{
-    const options = {
-        method: "POST",
-        url: "http://localhost:5000/usuarios/",
-        headers: { 'Content-Type': 'application/json',Authorization: getToken() },
-        data,
-    }
-
-    await axios
-            .request(options)
-            .then(succesCalback)
-            .catch(errorCalback)
-}
-
 export const actualizarUsuario = async(id,data,succesCalback,errorCalback)=>{
     
     const options = {
@@ -39,25 +25,52 @@ export const actualizarUsuario = async(id,data,succesCalback,errorCalback)=>{
         url: `http://localhost:5000/usuarios/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data
-        };
-
-        await axios
-        .request(options)
-        .then(succesCalback)
-        .catch(errorCalback);
-
+    };
+    
+    await axios
+    .request(options)
+    .then(succesCalback)
+    .catch(errorCalback);
+    
 }
 
-export const eliminarUsuario = async (id,succesCalback,errorCalback)=>{
-    const options = {
-        method: 'DELETE',
-        url: `http://localhost:5000/usuarios/${id}`,
-        headers: { 'Content-Type': 'application/json',Authorization: getToken() },
-        data: {},
-        };
-        
-        await axios
-        .request(options)
-        .then(succesCalback)
-        .catch(errorCalback);
+export const obtenerDatosUsuarios = async(succesCallback,errorCallback) =>{
+    
+    const options = { method: "GET", url: "http://localhost:5000/usuarios/self/",headers: {
+        Authorization: getToken(),
+    }};
+    
+    await axios
+    .request(options)
+    .then(succesCallback)
+    .catch(errorCallback);
 }
+
+// export const crearUsuario = async(data,succesCalback,errorCalback) =>{
+//     const options = {
+//         method: "POST",
+//         url: "http://localhost:5000/usuarios/",
+//         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
+//         data,
+//     }
+
+//     await axios
+//             .request(options)
+//             .then(succesCalback)
+//             .catch(errorCalback)
+// }
+
+
+// export const eliminarUsuario = async (id,succesCalback,errorCalback)=>{
+//     const options = {
+//         method: 'DELETE',
+//         url: `http://localhost:5000/usuarios/${id}`,
+//         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
+//         data: {},
+//     };
+    
+//     await axios
+//     .request(options)
+//     .then(succesCalback)
+//     .catch(errorCalback);
+// }

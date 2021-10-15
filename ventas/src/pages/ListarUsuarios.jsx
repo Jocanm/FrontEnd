@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import { obtenerUsuarios,actualizarUsuario } from '../utils/apiUsuarios'
 import { nanoid } from 'nanoid';
-
+import ReactLoading from 'react-loading';
 
 const Usuarios = () =>{
 
@@ -12,16 +12,22 @@ const Usuarios = () =>{
     const [dataUsers,setDataUsers] = useState([])
     const [indice,setIndice] = useState();
 
+    //Pagina de loading
+    const [loading,setLoading] = useState(false)
 
     useEffect(()=>{
         
         const traerUsuarios = async()=>{
-
+            setLoading(true)
             await obtenerUsuarios(
                 (res)=>{
                     setDataUsers(res.data)
+                    setLoading(false)
                 },
-                (err)=>{console.error(err)})
+                (err)=>{
+                    console.error(err)
+                    setLoading(false)
+                })
         }
         traerUsuarios();
 
@@ -31,7 +37,12 @@ const Usuarios = () =>{
         <div>
             {
                 (listaUsuarios) ? (
-                    <ListarUsuarios setListaUsuarios={setListaUsuarios} setIndice={setIndice} dataUsers={dataUsers}></ListarUsuarios>
+                    <ListarUsuarios 
+                    setListaUsuarios={setListaUsuarios} 
+                    setIndice={setIndice} 
+                    dataUsers={dataUsers}
+                    loading={loading}
+                    ></ListarUsuarios>
                 ):<ActualizarDatosUsuario setListaUsuarios={setListaUsuarios} indice={indice} dataUsers={dataUsers} setDataUsers={setDataUsers}/>
             }
             <ToastContainer position="top-center" autoClose={3000}/>
@@ -40,7 +51,7 @@ const Usuarios = () =>{
     )
 }
 
-const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
+const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers,loading}) => {
 
     const [busqueda,setBusqueda] = useState("");
     const [filtrados,setFiltrados] = useState(dataUsers)
@@ -65,7 +76,10 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                             <button class="buttonIco right botonuser"><i class="fas fa-home"></i></button>
                     </Link>
                     </div>
-                    <table className="table tablas" id="tabla">
+                    {
+                        (loading)?
+                        (<div className="flex flex-col justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={64} width={64} /></div>):
+                        (<table className="table tablas" id="tabla">
                         <thead>
                             <tr>
                                 <th>ID usuario</th>
@@ -80,7 +94,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                                 return (
                                     <tr key={nanoid()}>
                                         <td>{e._id.slice(17)}</td>
-                                        <td>{e.nombre}</td>
+                                        <td>{e.name}</td>
                                         <td>{e.estado}</td>
                                         <td>{e.rol}</td>
                                         <td>{e.email}</td>
@@ -103,7 +117,9 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                                 })
                             }
                         </tbody>
-                    </table>
+                    </table>)
+                    }
+                    
                 </form>
                 </div>
         </>
@@ -112,7 +128,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
 
 const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
 
-    const [nombre,setNombre] = useState(dataUsers[indice].nombre) 
+    const [name,setNombre] = useState(dataUsers[indice].name) 
     const [_id,setId] = useState(dataUsers[indice]._id)
     const [estado,setEstado] = useState(dataUsers[indice].estado)
     const [rol,setRol] = useState(dataUsers[indice].rol)
@@ -134,16 +150,29 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const nuevosDatos = {nombre,estado,rol,email}
+        const nuevosDatos = {name,estado,rol,email}
 
-        await actualizarUsuario(_id,nuevosDatos,
-            (res)=>{
-                console.log(res.data)
-                toast.success(`El usuario "${_id.slice(17)} - ${nuevosDatos.nombre}" ha sido Actualizado`)
-            },
-            (err)=>{console.error(err)})
-
-        setListaUsuarios(e=>!e)
+        if(estado !== "Autorizado"){
+            if(rol === "Vendedor" || rol === "Administrador"){
+                toast.warn(`Si desea asignar un rol debe cambiar el estado a Autorizado!`)
+            }else{
+                await actualizarUsuario(_id,nuevosDatos,
+                    (res)=>{
+                        console.log(res.data)
+                        toast.success(`El usuario "${_id.slice(17)} - ${nuevosDatos.name}" ha sido Actualizado`)
+                    },
+                    (err)=>{console.error(err)})
+                    setListaUsuarios(e=>!e)
+            }
+        }else{
+            await actualizarUsuario(_id,nuevosDatos,
+                (res)=>{
+                    console.log(res.data)
+                    toast.success(`El usuario "${_id.slice(17)} - ${nuevosDatos.name}" ha sido Actualizado`)
+                },
+                (err)=>{console.error(err)})
+                setListaUsuarios(e=>!e)
+        }
     }
 
     const handleBack = () =>{
@@ -162,13 +191,13 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
                     ID usuario
                     <input className="w-52 mb-2 border-2 border-black" type="text" name="_id" id="idencargado" placeholder={dataUsers[indice].id} value={_id.slice(17)} disabled/>
                 </label>
-                <label htmlFor="nombre">
+                <label htmlFor="name">
                     Nombre usuario
-                    <input className="w-52 mb-2" type="text" name="nombre" id="nombree" placeholder={dataUsers[indice].nombre} value={nombre} onChange={handleNombre}/>
+                    <input className="w-52 mb-2" type="text" name="name" id="namee" placeholder={dataUsers[indice].name} value={name} onChange={handleNombre}/>
                 </label>
                 <label htmlFor="email">
                     Correo electrónico
-                    <input className="w-52 mb-2" type="email" name="email" id="correoe" placeholder={dataUsers[indice].email} value={email} onChange={handleEmail}/>
+                    <input className="w-52 mb-2 border-2 border-black" type="email" name="email" id="correoe" placeholder={dataUsers[indice].email} value={email} onChange={handleEmail} disabled/>
                 </label>
                 <label htmlFor="estado">
                     Estado usuario
@@ -186,6 +215,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
                         <select className="w-52" name="rol" id="" value={rol} onChange={handleRol}>
                             <option>Administrador</option>
                             <option>Vendedor</option>  
+                            <option>Por definir</option>
                         </select>
                     </div>
                 </label>

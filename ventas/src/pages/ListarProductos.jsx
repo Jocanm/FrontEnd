@@ -28,10 +28,16 @@ const Productos = () => {
     useEffect(()=>{
 
         const getProductos = async()=>{
-
+            setLoading(true)
             await obtenerProductos(
-                (res)=>{setDataProduct(res.data)},
-                (err)=>{console.log(err)})
+                (res)=>{
+                    setDataProduct(res.data)
+                    setLoading(false)
+                },
+                (err)=>{
+                    console.log(err)
+                    setLoading(false)
+                })
         }
         getProductos();
 

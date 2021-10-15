@@ -8,6 +8,7 @@ import { obtenerUsuarios } from '../utils/apiUsuarios'
 import { obtenerProductos } from '../utils/api'
 import { obtenerVentas,crearVenta,actualizarVenta } from '../utils/apiVentas'
 import { nanoid } from "nanoid";
+import ReactLoading from 'react-loading';
 
 
 const Ventas = () => {
@@ -27,10 +28,14 @@ const Ventas = () => {
 
     //Para la pagina de actualizar los datos
     const [indice,setIndice] = useState()
-    
+
+    //Pagina de loading
+    const [loading,setLoading] = useState(false)
+
     useEffect(()=>{
         
         const getInfo = async() => {
+            setLoading(true)
             await obtenerProductos(
                 (res)=>{setDataProduct(res.data)},
                 (err)=>{console.error(err)})
@@ -38,7 +43,7 @@ const Ventas = () => {
                 (res)=>{setDataUsers(res.data)},
                 (err)=>{console.error(err)})
             await obtenerVentas(
-                (res)=>{setDataVentas(res.data)},
+                (res)=>{setDataVentas(res.data); setLoading(false);},
                 (err)=>{console.error(err)}
             )
         }
@@ -70,19 +75,17 @@ const Ventas = () => {
                 setVerCrearVentas={setVerCrearVentas}
                 setVerVentas={setVerVentas}
                 setIndice={setIndice}
+                loading={loading}
                 />):
             (verCrearVentas)?
                 (<CrearVenta 
                     setVerCrearVentas={setVerCrearVentas} 
                     setVerVentas= {setVerVentas}
-                    setDataVentas={setDataVentas}
                     dataProduct={productosDisponibles}
-                    setDataProduct={setDataProduct}
                     dataUsers={vendedores}
                     />):
             <ActualizarVenta
             setVerVentas={setVerVentas}
-            setDataVentas={setDataVentas}
             indice={indice}
             dataVentas={dataVentas}
             dataProduct={productosDisponibles}
@@ -94,7 +97,7 @@ const Ventas = () => {
     )
 }
 
-const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{    
+const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas,loading}) =>{    
 
     const [busqueda,setBusqueda] = useState("");
     const [ventasFiltradas,setVentasFiltradas] = useState([]);
@@ -111,7 +114,7 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
             <form action="">
             <div className="flex flex-col">
                 <div>
-                    <Link to="/escritorio">
+                    <Link to="/" >
                         <button class="buttonIco right"><i class="fas fa-home"></i></button>
                     </Link>
                 </div>
@@ -129,49 +132,54 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                     }}
                     >Nueva Venta</button>
                 </div>
-                <table class="table mt-3" id="tabla">
-                        <thead>
-                                <tr>
-                                    <th>ID Venta</th>
-                                    <th>Encargado</th>
-                                    <th>Cliente</th>
-                                    <th>ID cliente</th>
-                                    <th>Estado</th>
-                                    <th>Precio Total</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                ventasFiltradas.map((e,i)=>{
-                                    return(
-                                        <tr>
-                                            <td>{e._id.slice(17)}</td>
-                                            <td>{e.encargado.nombre}</td>
-                                            <td>{e.nombreCliente}</td>
-                                            <td>{e.idC}</td>
-                                            <td>{e.estado}</td>
-                                            <td>{e.valor}</td>
-                                            <td>
-                                                <button 
-                                                class="buttonIco mr-1"
-                                                onClick={()=>{
-                                                    setVerVentas(e=>!e)
-                                                    setIndice((indice)=>{
-                                                        dataVentas.forEach((el,ind)=>{
-                                                            if(el._id===e._id) {indice = ind}
-                                                        })
-                                                        return indice;
-                                                    });
-                                                }}>
-                                                <i class="fas fa-search"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                {
+                    (loading)?
+                    (<div className="flex flex-col justify-center items-center"><ReactLoading type="spin" color="#1c4d6e" height={64} width={64} /></div>):
+                    (<table class="table mt-3" id="tabla">
+                    <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Encargado</th>
+                                <th>Cliente</th>
+                                <th>ID cliente</th>
+                                <th>Estado</th>
+                                <th>Precio Total</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            ventasFiltradas.map((e,i)=>{
+                                return(
+                                    <tr>
+                                        <td>{e._id.slice(17)}</td>
+                                        <td>{e.encargado.nombre}</td>
+                                        <td>{e.nombreCliente}</td>
+                                        <td>{e.idC}</td>
+                                        <td>{e.estado}</td>
+                                        <td>{e.valor}</td>
+                                        <td>
+                                            <button 
+                                            class="buttonIco mr-1"
+                                            onClick={()=>{
+                                                setVerVentas(e=>!e)
+                                                setIndice((indice)=>{
+                                                    dataVentas.forEach((el,ind)=>{
+                                                        if(el._id===e._id) {indice = ind}
+                                                    })
+                                                    return indice;
+                                                });
+                                            }}>
+                                            <i class="fas fa-search"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>)
+                }
+                
             </div>
 
         </form>
@@ -302,7 +310,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                             <option disabled value={0}>Seleccione</option>
                             {dataUsers.map(e=>{
                                 return (
-                                    <option value={e._id}>{e.nombre}</option>
+                                    <option key={nanoid()} value={e._id}>{e.nombre}</option>
                                 )
                             })}
                         </select>
