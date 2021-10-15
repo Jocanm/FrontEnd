@@ -48,19 +48,7 @@ function App() {
 
             </MainLayout>
           </Route>
-
-          {/* <Route path={["/"]}>
-            <PublicLayout>
-              <Switch>
-
-                <Route path="/">
-                  <Login/>
-                </Route>
-
-              </Switch>
-            </PublicLayout>
-          </Route> */}
-
+          
         </Switch>
       </Router>  
     </Auth0Provider>

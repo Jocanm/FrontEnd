@@ -1,10 +1,21 @@
 import axios from "axios";
 
+const getToken = () => {
+        return `Bearer ${localStorage.getItem('token')}`;
+};
+
+
 //PETICIONES PARA PRODUCTOS
 
 export const obtenerProductos = async(succesCallback,errorCallback) =>{
 
-    const options = { method: "GET", url: "http://localhost:5000/productos/"};
+    const options = { 
+        method: "GET", 
+        url: "http://localhost:5000/productos/",
+        headers: {
+            Authorization: getToken(),
+        }
+    };
 
     await axios
         .request(options)
@@ -16,7 +27,7 @@ export const crearProducto = async(data,succesCalback,errorCalback) =>{
     const options = {
         method: "POST",
         url: "http://localhost:5000/productos/",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data,
     }
 
@@ -31,7 +42,7 @@ export const actualizarProducto = async(id,data,succesCalback,errorCalback)=>{
     const options = {
         method: 'PATCH',
         url: `http://localhost:5000/productos/${id}`,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data
         };
 
@@ -46,7 +57,7 @@ export const eliminarProducto = async (id,succesCalback,errorCalback)=>{
     const options = {
         method: 'DELETE',
         url: `http://localhost:5000/productos/${id}`,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data: {},
         };
         

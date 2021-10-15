@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import { obtenerUsuarios,actualizarUsuario } from '../utils/apiUsuarios'
+import { nanoid } from 'nanoid';
 
 
 const Usuarios = () =>{
@@ -77,7 +78,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers}) => {
                         <tbody>
                             {filtrados.map((e,i) => {
                                 return (
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{e._id.slice(17)}</td>
                                         <td>{e.nombre}</td>
                                         <td>{e.estado}</td>

@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import { obtenerUsuarios } from '../utils/apiUsuarios'
 import { obtenerProductos } from '../utils/api'
 import { obtenerVentas,crearVenta,actualizarVenta } from '../utils/apiVentas'
+import { nanoid } from "nanoid";
 
 
 const Ventas = () => {
@@ -149,7 +150,7 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas}) =>{
                                             <td>{e.nombreCliente}</td>
                                             <td>{e.idC}</td>
                                             <td>{e.estado}</td>
-                                            <td>{e.valorTotal}</td>
+                                            <td>{e.valor}</td>
                                             <td>
                                                 <button 
                                                 class="buttonIco mr-1"
@@ -250,7 +251,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                     {
                         dataProduct.map((e,i)=>{
                             return(
-                                <tr>
+                                <tr key={nanoid()}>
                                     <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
@@ -350,7 +351,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                         {
                             productos.map((e,i)=>{
                                 return (
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
@@ -376,7 +377,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
     )
 }
 
-const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProduct,dataUsers}) => {
+const ActualizarVenta = ({setVerVentas,indice,dataVentas,dataProduct,dataUsers}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -455,7 +456,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                     {
                         dataProduct.map((e,i)=>{
                             return(
-                                <tr>
+                                <tr key={nanoid()}>
                                     <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
@@ -546,7 +547,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,setDataVentas,dataProdu
                         {
                             productos.map((e,i)=>{
                                 return (
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from 'react'
 import {obtenerProductos, crearProducto, actualizarProducto} from '../utils/api'
 import ReactLoading from 'react-loading';
+import { nanoid } from 'nanoid';
 
 
 const Productos = () => {
@@ -112,7 +113,7 @@ const Listar = ({loading,data,setListaProductos,setCrearProducto,setIndice}) =>{
                         {
                             productosFiltrados.map((e,i)=>{
                                 return(
-                                    <tr>
+                                    <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
                                         <td>{e.valor}</td>
