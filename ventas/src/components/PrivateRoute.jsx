@@ -21,9 +21,9 @@ const PrivateRoute = ({ children }) => {
             // console.log(accesToken)
             await obtenerDatosUsuarios(
                 (res) => { 
-                    console.log("Datos usuarios"); 
-                    console.log(res) 
-                    console.log(res.data) 
+                    // console.log("Datos usuarios"); 
+                    // console.log(res) 
+                    // console.log(res.data) 
                     setUserData(res.data)
                 },
                 (err) => { console.error(err) }
