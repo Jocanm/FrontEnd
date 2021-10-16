@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import { useState, useEffect, useRef} from 'react'
 import {obtenerProductos, crearProducto, actualizarProducto} from '../utils/api'
 import ReactLoading from 'react-loading';
+import PrivateComponent from '../components/PrivateComponent';
 import { nanoid } from 'nanoid';
 
 
@@ -51,7 +52,7 @@ const Productos = () => {
     },[listaProductos,crearProducto])
 
     return (
-        <div>
+        <PrivateComponent roleList={"Administrador"}>
             <h1 className="text-2xl">{titulo}</h1>
             {
                 (listaProductos)?(<Listar 
@@ -64,7 +65,7 @@ const Productos = () => {
                 (<Actualizar setListaProductos={setListaProductos} indice={indice} data={dataProduct} setDataProduct={setDataProduct}/>)
             }
             <ToastContainer position="top-center" autoClose={3000}/>
-        </div>
+        </PrivateComponent>
         
     )
 }

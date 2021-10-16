@@ -9,6 +9,7 @@ import { obtenerProductos } from '../utils/api'
 import { obtenerVentas,crearVenta,actualizarVenta } from '../utils/apiVentas'
 import { nanoid } from "nanoid";
 import ReactLoading from 'react-loading';
+import PrivateComponent from "../components/PrivateComponent";
 
 
 const Ventas = () => {
@@ -67,7 +68,7 @@ const Ventas = () => {
     },[dataUsers])
 
     return (
-        <div>
+        <PrivateComponent roleList={["Administrador","Vendedor"]}>
             {
             (verVentas)?
                 (<Listar 
@@ -93,7 +94,7 @@ const Ventas = () => {
             />
             }
             <ToastContainer position="top-center" autoClose={3000}/>
-        </div>
+        </PrivateComponent>
     )
 }
 

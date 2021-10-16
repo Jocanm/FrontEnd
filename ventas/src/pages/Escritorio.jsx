@@ -2,32 +2,24 @@ import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
 import { useUser } from '../context/userContext'
 import { ToastContainer, toast } from 'react-toastify';
-import { obtenerDatosUsuarios } from '../utils/apiUsuarios';
+// import { obtenerDatosUsuarios } from '../utils/apiUsuarios';
 
 
 const Escritorio = () => {
 
-    // const {userData} = useUser();
+    const {userData} = useUser();
+
     const [admin,setAdmin] = useState(false)
     const [vendedor,setVendedor] = useState(false)
-    const [userData,setUserData] = useState({})
-
-    useEffect(()=>{
-
-        const fetchUsuarios = async() =>{
-            await obtenerDatosUsuarios(
-                (res)=>{setUserData(res.data)},
-                (err)=>{console.error(err)})
-        }
-        fetchUsuarios();
-    },[])
+    // const [userData,setUserData] = useState({})
 
     useEffect(()=>{
         if(userData.rol === "Administrador"){
             setAdmin(true)
-        }else if(userData.rol==="Vendedor"){
+        }else if(userData.rol ==="Vendedor"){
             setVendedor(true)
         }
+        // console.log(userData)
     },[userData])
     
 

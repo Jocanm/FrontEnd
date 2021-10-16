@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { obtenerUsuarios,actualizarUsuario } from '../utils/apiUsuarios'
 import { nanoid } from 'nanoid';
 import ReactLoading from 'react-loading';
+import PrivateComponent from '../components/PrivateComponent';
 
 const Usuarios = () =>{
 
@@ -34,7 +35,7 @@ const Usuarios = () =>{
     },[listaUsuarios])
 
     return(
-        <div>
+        <PrivateComponent roleList={"Administrador"}>
             {
                 (listaUsuarios) ? (
                     <ListarUsuarios 
@@ -46,7 +47,7 @@ const Usuarios = () =>{
                 ):<ActualizarDatosUsuario setListaUsuarios={setListaUsuarios} indice={indice} dataUsers={dataUsers} setDataUsers={setDataUsers}/>
             }
             <ToastContainer position="top-center" autoClose={3000}/>
-        </div>
+        </PrivateComponent>
         
     )
 }
@@ -72,7 +73,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers,loading}) => {
                     value={busqueda}
                     onChange={(e)=>setBusqueda(e.target.value)}
                     />
-                    <Link to="/escritorio">
+                    <Link to="/">
                             <button class="buttonIco right botonuser"><i class="fas fa-home"></i></button>
                     </Link>
                     </div>
@@ -215,7 +216,7 @@ const ActualizarDatosUsuario = ({setListaUsuarios,indice,dataUsers}) => {
                         <select className="w-52" name="rol" id="" value={rol} onChange={handleRol}>
                             <option>Administrador</option>
                             <option>Vendedor</option>  
-                            <option>Por definir</option>
+                            <option>Sin rol</option>
                         </select>
                     </div>
                 </label>
