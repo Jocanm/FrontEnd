@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import logo from '../images/logo.jpg'
 import { Link } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react";
@@ -7,15 +7,15 @@ import { useUser } from '../context/userContext';
 
 const Navbar = () => {
 
-    const { logout, user } = useAuth0();
+    const { logout} = useAuth0();
     const {userData} = useUser()
-
-    console.log(user,userData)
 
     const handleClose = ()=>{
         logout({ returnTo: window.location.origin })
         localStorage.setItem('token',null)
     }
+
+
     
     return (
         <nav className="back-layout w-auto mb-4">
@@ -29,7 +29,7 @@ const Navbar = () => {
                 </li>
                 <li className=" flex w-full items-center justify-end mr-4">
                     <img src={userData.picture} alt="foto" className="rounded-full w-10 mr-4"/>
-                    <span className="text-center mr-4 font-bold text-2xl">{`${user.name} - ${userData.rol}`}</span>
+                    <span className="text-center mr-4 font-bold text-2xl">{`${userData.name} - ${userData.rol}`}</span>
                     <Link to="/">
                         <i className="fas fa-sign-out-alt fa-3x" onClick={handleClose}></i>
                     </Link>
