@@ -10,6 +10,8 @@ const Navbar = () => {
     const { logout, user } = useAuth0();
     const {userData} = useUser()
 
+    console.log(user,userData)
+
     const handleClose = ()=>{
         logout({ returnTo: window.location.origin })
         localStorage.setItem('token',null)
@@ -26,6 +28,7 @@ const Navbar = () => {
                 </Link>
                 </li>
                 <li className=" flex w-full items-center justify-end mr-4">
+                    <img src={userData.picture} alt="foto" className="rounded-full w-10 mr-4"/>
                     <span className="text-center mr-4 font-bold text-2xl">{`${user.name} - ${userData.rol}`}</span>
                     <Link to="/">
                         <i className="fas fa-sign-out-alt fa-3x" onClick={handleClose}></i>

@@ -69,7 +69,7 @@ const ListarUsuarios = ({setListaUsuarios,setIndice,dataUsers,loading}) => {
             <div className="bg-red">
                 <form>
                     <div className="mb-8 mt-4 flex justify-between">
-                    <input type="text" name="buscar" id="buscar" placeholder=" buscar por id"
+                    <input type="text" name="buscar" id="buscar" placeholder=" Buscar"
                     value={busqueda}
                     onChange={(e)=>setBusqueda(e.target.value)}
                     />

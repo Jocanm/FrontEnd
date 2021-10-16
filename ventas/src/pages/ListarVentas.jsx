@@ -153,11 +153,11 @@ const Listar = ({dataVentas,setIndice,setVerCrearVentas,setVerVentas,loading}) =
                                 return(
                                     <tr>
                                         <td>{e._id.slice(17)}</td>
-                                        <td>{e.encargado.nombre}</td>
+                                        <td>{e.encargado.name}</td>
                                         <td>{e.nombreCliente}</td>
                                         <td>{e.idC}</td>
                                         <td>{e.estado}</td>
-                                        <td>{e.valor}</td>
+                                        <td>{`$${e.valor}`}</td>
                                         <td>
                                             <button 
                                             class="buttonIco mr-1"
@@ -264,7 +264,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                     <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
                                     <td>{e.valor}</td>
-                                    <td>{e.estado}</td>
+                                    <td>{`$${e.estado}`}</td>
                                     <td>
                                         <button class="buttonIco" type="button"
                                         onClick={()=>{
@@ -311,7 +311,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                             <option disabled value={0}>Seleccione</option>
                             {dataUsers.map(e=>{
                                 return (
-                                    <option key={nanoid()} value={e._id}>{e.nombre}</option>
+                                    <option key={nanoid()} value={e._id}>{e.name}</option>
                                 )
                             })}
                         </select>
@@ -363,7 +363,7 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                     <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
+                                        <td>{`$${e.valor}`}</td>
                                         <td>
                                             <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                         </td>
@@ -468,7 +468,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,dataProduct,dataUsers})
                                 <tr key={nanoid()}>
                                     <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
-                                    <td>{e.valor}</td>
+                                    <td>{`$${e.valor}`}</td>
                                     <td>{e.estado}</td>
                                     <td>
                                         <button class="buttonIco" type="submit"
@@ -508,7 +508,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,dataProduct,dataUsers})
                         Vendedor
                         <select className="w-48 h-8" name="encargado" required value={encargado} onChange={handleEncargado}>
                             {
-                                dataUsers.map(e=>(<option>{e.nombre}</option>))
+                                dataUsers.map(e=>(<option>{e.name}</option>))
                             }
                         </select>
                     </label>
@@ -559,7 +559,7 @@ const ActualizarVenta = ({setVerVentas,indice,dataVentas,dataProduct,dataUsers})
                                     <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
+                                        <td>{`$${e.valor}`}</td>
                                         <td>
                                             <button class="buttonIco" type="button"><i class="fas fa-minus-circle"></i></button>
                                         </td>

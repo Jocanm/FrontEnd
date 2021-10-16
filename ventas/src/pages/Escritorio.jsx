@@ -29,7 +29,7 @@ const Escritorio = () => {
 
     return (
         <div className="mt-20">
-            <h1 className="font-bold text-2xl">SISTEMA ADMINISTRADOR DE VENTAS</h1>
+            <h1 className="font-bold text-3xl">SISTEMA ADMINISTRADOR DE VENTAS</h1>
             <ul className="flex flex-col xl:flex-row justify-around items-center mt-10 rounded">
                 <li className="mb-4">
                     {

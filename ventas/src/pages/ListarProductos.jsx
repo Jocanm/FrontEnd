@@ -92,7 +92,7 @@ const Listar = ({loading,data,setListaProductos,setCrearProducto,setIndice}) =>{
                 </div>
                 <div className="flex justify-between mt-2">
                     <label className="flex p-0" htmlFor="buscar">
-                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder=" buscar por id"
+                        <input className="mr-2" type ="text" name="buscar" id="buscar" placeholder=" Buscar"
                         value={busqueda}
                         onChange={(e)=>{
                             setBusqueda(e.target.value)
