@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
     const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
-    const {setUserData} = useUser();
+    const { setUserData } = useUser();
 
     useEffect(() => {
 
@@ -18,12 +18,8 @@ const PrivateRoute = ({ children }) => {
                 audience: `api-autenticacion-ventas`
             })
             localStorage.setItem("token", accesToken)
-            // console.log(accesToken)
             await obtenerDatosUsuarios(
-                (res) => { 
-                    // console.log("Datos usuarios"); 
-                    // console.log(res) 
-                    // console.log(res.data) 
+                (res) => {
                     setUserData(res.data)
                 },
                 (err) => { console.error(err) }

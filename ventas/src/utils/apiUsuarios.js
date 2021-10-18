@@ -6,6 +6,18 @@ const getToken = () => {
 
 //PETICIONES PARA USUARIO
 
+export const obtenerDatosUsuarios = async(succesCallback,errorCallback) =>{
+    
+    const options = { method: "GET", url: "http://localhost:5000/usuarios/self/",headers: {
+        Authorization: getToken(),
+    }};
+    
+    await axios
+    .request(options)
+    .then(succesCallback)
+    .catch(errorCallback);
+}
+
 export const obtenerUsuarios = async(succesCallback,errorCallback) =>{
 
     const options = { method: "GET", url: "http://localhost:5000/usuarios/",headers: {
@@ -32,18 +44,6 @@ export const actualizarUsuario = async(id,data,succesCalback,errorCalback)=>{
     .then(succesCalback)
     .catch(errorCalback);
     
-}
-
-export const obtenerDatosUsuarios = async(succesCallback,errorCallback) =>{
-    
-    const options = { method: "GET", url: "http://localhost:5000/usuarios/self/",headers: {
-        Authorization: getToken(),
-    }};
-    
-    await axios
-    .request(options)
-    .then(succesCallback)
-    .catch(errorCallback);
 }
 
 // export const crearUsuario = async(data,succesCalback,errorCalback) =>{

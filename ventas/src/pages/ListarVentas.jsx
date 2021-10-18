@@ -263,8 +263,8 @@ const CrearVenta = ({dataProduct,setVerCrearVentas,setVerVentas,dataUsers}) => {
                                 <tr key={nanoid()}>
                                     <td>{e._id.slice(20)}</td>
                                     <td>{e.descripcion}</td>
-                                    <td>{e.valor}</td>
-                                    <td>{`$${e.estado}`}</td>
+                                    <td>{`$${e.valor}`}</td>
+                                    <td>{e.estado}</td>
                                     <td>
                                         <button class="buttonIco" type="button"
                                         onClick={()=>{
