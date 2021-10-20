@@ -8,7 +8,7 @@ const getToken = () => {
 
 export const obtenerVentas = async(succesCallback,errorCallback) =>{
 
-    const options = { method: "GET", url: "http://localhost:5000/ventas/",headers: {
+    const options = { method: "GET", url: "https://blooming-coast-29889.herokuapp.com/ventas/",headers: {
         Authorization: getToken(),
     }};
 
@@ -21,7 +21,7 @@ export const obtenerVentas = async(succesCallback,errorCallback) =>{
 export const crearVenta = async(data,succesCalback,errorCalback) =>{
     const options = {
         method: "POST",
-        url: "http://localhost:5000/ventas/",
+        url: "https://blooming-coast-29889.herokuapp.com/ventas/",
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data,
     }
@@ -36,7 +36,7 @@ export const actualizarVenta = async(id,data,succesCalback,errorCalback)=>{
     
     const options = {
         method: 'PATCH',
-        url: `http://localhost:5000/ventas/${id}`,
+        url: `https://blooming-coast-29889.herokuapp.com/ventas/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data
         };
@@ -51,7 +51,7 @@ export const actualizarVenta = async(id,data,succesCalback,errorCalback)=>{
 export const eliminarVenta = async (id,succesCalback,errorCalback)=>{
     const options = {
         method: 'DELETE',
-        url: `http://localhost:5000/ventas/${id}`,
+        url: `https://blooming-coast-29889.herokuapp.com/ventas/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data: {},
         };
