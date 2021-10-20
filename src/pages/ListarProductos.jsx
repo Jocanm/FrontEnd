@@ -86,7 +86,7 @@ const Listar = ({loading,data,setListaProductos,setCrearProducto,setIndice}) =>{
             
             <div className="flex flex-col">
                 <div>
-                    <Link to="/escritorio">
+                    <Link to="/">
                         <button class="buttonIco right"><i class="fas fa-home"></i></button> 
                     </Link>
                 </div>
