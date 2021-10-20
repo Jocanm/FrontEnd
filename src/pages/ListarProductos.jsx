@@ -123,7 +123,7 @@ const Listar = ({loading,data,setListaProductos,setCrearProducto,setIndice}) =>{
                                     <tr key={nanoid()}>
                                         <td>{e._id.slice(20)}</td>
                                         <td>{e.descripcion}</td>
-                                        <td>{e.valor}</td>
+                                        <td>{`$${e.valor}`}</td>
                                         <td>{e.estado}</td>
                                         <td>
                                             <button class="buttonIco mr-1"  onClick={()=>{
