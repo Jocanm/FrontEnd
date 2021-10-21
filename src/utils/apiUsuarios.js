@@ -8,7 +8,7 @@ const getToken = () => {
 
 export const obtenerDatosUsuarios = async(succesCallback,errorCallback) =>{
     
-    const options = { method: "GET", url: "https://blooming-coast-29889.herokuapp.com/usuarios/self/",headers: {
+    const options = { method: "GET", url: "https://backend-innova.herokuapp.com/usuarios/self/",headers: {
         Authorization: getToken(),
     }};
     
@@ -20,7 +20,7 @@ export const obtenerDatosUsuarios = async(succesCallback,errorCallback) =>{
 
 export const obtenerUsuarios = async(succesCallback,errorCallback) =>{
 
-    const options = { method: "GET", url: "https://blooming-coast-29889.herokuapp.com/usuarios/",headers: {
+    const options = { method: "GET", url: "https://backend-innova.herokuapp.com/usuarios/",headers: {
         Authorization: getToken(),
     }};
 
@@ -34,7 +34,7 @@ export const actualizarUsuario = async(id,data,succesCalback,errorCalback)=>{
     
     const options = {
         method: 'PATCH',
-        url: `https://blooming-coast-29889.herokuapp.com/usuarios/${id}`,
+        url: `https://backend-innova.herokuapp.com/usuarios/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data
     };

@@ -11,7 +11,7 @@ export const obtenerProductos = async(succesCallback,errorCallback) =>{
 
     const options = { 
         method: "GET", 
-        url: "https://blooming-coast-29889.herokuapp.com/productos/",
+        url: "https://backend-innova.herokuapp.com/productos/",
         headers: {
             Authorization: getToken(),
         }
@@ -26,7 +26,7 @@ export const obtenerProductos = async(succesCallback,errorCallback) =>{
 export const crearProducto = async(data,succesCalback,errorCalback) =>{
     const options = {
         method: "POST",
-        url: "https://blooming-coast-29889.herokuapp.com/productos/",
+        url: "https://backend-innova.herokuapp.com/productos/",
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data,
     }
@@ -41,7 +41,7 @@ export const actualizarProducto = async(id,data,succesCalback,errorCalback)=>{
     
     const options = {
         method: 'PATCH',
-        url: `https://blooming-coast-29889.herokuapp.com/productos/${id}`,
+        url: `https://backend-innova.herokuapp.com/productos/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data
         };
@@ -56,7 +56,7 @@ export const actualizarProducto = async(id,data,succesCalback,errorCalback)=>{
 export const eliminarProducto = async (id,succesCalback,errorCalback)=>{
     const options = {
         method: 'DELETE',
-        url: `https://blooming-coast-29889.herokuapp.com/productos/${id}`,
+        url: `https://backend-innova.herokuapp.com/productos/${id}`,
         headers: { 'Content-Type': 'application/json',Authorization: getToken() },
         data: {},
         };
