@@ -1,4 +1,4 @@
-# PROYECTO INNOVASOFT 
+# PROYECTO MINTIC CLICO 3 - INNOVASOFT 
 
 ## Software web para la adiminstración de ventas y productos
 
